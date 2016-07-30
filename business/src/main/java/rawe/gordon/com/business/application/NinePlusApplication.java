@@ -10,7 +10,7 @@ import rawe.gordon.com.business.db.DBManager;
 /**
  * Created by gordon on 16/5/4.
  */
-public class FruitApplication extends Application {
+public class NinePlusApplication extends Application {
 
     @Override
     public void onCreate() {

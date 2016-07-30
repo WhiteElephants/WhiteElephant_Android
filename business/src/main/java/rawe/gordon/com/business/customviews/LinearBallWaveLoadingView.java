@@ -1,12 +1,12 @@
-package rawe.gordon.com.business.views;
+package rawe.gordon.com.business.customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -15,23 +15,23 @@ import android.view.SurfaceView;
 /**
  * Created by gordon on 16/5/29.
  */
-public class RectWaveLoadingView extends SurfaceView implements SurfaceHolder.Callback {
+public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHolder.Callback {
     private Canvas canvas;
     private Paint paint;
     private SurfaceHolder holder;
     private Runnable drawingRunnable;
     private int containerWidth, containerHeight;
     private int factor;
-    private int totalWidth, itemHeight;
+    private int basicRadius;
     private boolean exitFlag = true;
-    private int startX, startY;
+    private Point[] positions;
+    private int[] colors;
     private int xGap;
     private int count;
-
     /**
      * set this params larger is bigger amplitude is required.
      */
-    private static final int AMPLITUDE = 50;
+    private static final int AMPLITUDE = 20;
     /**
      * set this params larger is faster speed is required.
      */
@@ -42,17 +42,17 @@ public class RectWaveLoadingView extends SurfaceView implements SurfaceHolder.Ca
     private static final int DELAY = 8;
 
 
-    public RectWaveLoadingView(Context context) {
+    public LinearBallWaveLoadingView(Context context) {
         super(context);
         init();
     }
 
-    public RectWaveLoadingView(Context context, AttributeSet attrs) {
+    public LinearBallWaveLoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public RectWaveLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LinearBallWaveLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -62,31 +62,31 @@ public class RectWaveLoadingView extends SurfaceView implements SurfaceHolder.Ca
         getHolder().addCallback(this);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
         factor = 0;
-        totalWidth = 120;
-        itemHeight = 80;
+        basicRadius = 20;
         count = 5;
         paint = new Paint();
         paint.setColor(Color.BLACK);
-        final int step = (totalWidth - (count - 1) * xGap) / count;
         drawingRunnable = new Runnable() {
             @Override
             public void run() {
                 containerWidth = getWidth();
                 containerHeight = getHeight();
-                startX = (containerWidth - totalWidth) / 2;
-                startY = (containerHeight - itemHeight) / 2;
-                xGap = 10;
-                Rect dirtyArea = new Rect(startX, startY, startX + totalWidth, startY + itemHeight);
+                xGap = (containerWidth - count * basicRadius * 2) / (count + 1);
+                positions = new Point[count];
+                colors = new int[count];
+                for (int i = 0; i < count; i++) {
+                    positions[i] = new Point();
+                    colors[i] = i == 0 ? Color.RED : i == 1 ? Color.GREEN : i == 2 ? Color.BLUE : i == 3 ? Color.YELLOW : i == 4 ? Color.BLACK : Color.RED;
+                    positions[i].set(xGap + basicRadius + (xGap + 2 * basicRadius) * i, containerHeight / 2);
+                }
                 while (exitFlag) {
-                    canvas = holder.lockCanvas(dirtyArea);
-//                    canvas = holder.lockCanvas();
+                    canvas = holder.lockCanvas();
                     if (canvas == null) return;
                     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清除画布
                     for (int i = 0; i < count; i++) {
                         int wave = calcFactor(i, factor);
-                        canvas.drawRect(startX + (xGap + step) * i, startY - wave / 2,
-                                startX + step + (xGap + step) * i,
-                                startY + itemHeight + wave / 2, paint);
+                        paint.setColor(colors[i]);
+                        canvas.drawCircle(positions[i].x, positions[i].y, basicRadius + wave, paint);
                     }
                     factor += SPEED;
                     holder.unlockCanvasAndPost(canvas);// 更新屏幕显示内容
@@ -110,17 +110,19 @@ public class RectWaveLoadingView extends SurfaceView implements SurfaceHolder.Ca
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
         new Thread(drawingRunnable).start();
-        Log.d("loading","created");
+        Log.d("loading", "created");
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.d("loading","changed");
+        Log.d("loading", "changed");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         exitFlag = false;
-        Log.d("loading","destroyed");
+        Log.d("loading", "destroyed");
     }
+
+
 }

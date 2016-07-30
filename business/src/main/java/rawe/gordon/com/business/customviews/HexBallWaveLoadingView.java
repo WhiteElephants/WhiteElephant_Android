@@ -1,4 +1,4 @@
-package rawe.gordon.com.business.views;
+package rawe.gordon.com.business.customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -16,7 +15,7 @@ import android.view.SurfaceView;
 /**
  * Created by gordon on 16/5/29.
  */
-public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHolder.Callback {
+public class HexBallWaveLoadingView extends SurfaceView implements SurfaceHolder.Callback {
     private Canvas canvas;
     private Paint paint;
     private SurfaceHolder holder;
@@ -24,36 +23,35 @@ public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHol
     private int containerWidth, containerHeight;
     private int factor;
     private int basicRadius;
+    private int mainRadius;
     private boolean exitFlag = true;
     private Point[] positions;
-    private int[] colors;
-    private int xGap;
     private int count;
     /**
      * set this params larger is bigger amplitude is required.
      */
-    private static final int AMPLITUDE = 20;
+    private static final int AMPLITUDE = 10;
     /**
      * set this params larger is faster speed is required.
      */
-    private static final int SPEED = 12;
+    private static final int SPEED = 6;
     /**
      * if equal to count, then no delay at all, set this params larger if no delay is required.
      */
     private static final int DELAY = 8;
 
 
-    public LinearBallWaveLoadingView(Context context) {
+    public HexBallWaveLoadingView(Context context) {
         super(context);
         init();
     }
 
-    public LinearBallWaveLoadingView(Context context, AttributeSet attrs) {
+    public HexBallWaveLoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public LinearBallWaveLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HexBallWaveLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -63,8 +61,9 @@ public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHol
         getHolder().addCallback(this);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
         factor = 0;
-        basicRadius = 20;
-        count = 5;
+        basicRadius = 15;
+        mainRadius = 150;
+        count = 12;
         paint = new Paint();
         paint.setColor(Color.BLACK);
         drawingRunnable = new Runnable() {
@@ -72,21 +71,20 @@ public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHol
             public void run() {
                 containerWidth = getWidth();
                 containerHeight = getHeight();
-                xGap = (containerWidth - count * basicRadius * 2) / (count + 1);
                 positions = new Point[count];
-                colors = new int[count];
+                int centerX = containerWidth / 2, centerY = containerHeight / 2;
                 for (int i = 0; i < count; i++) {
                     positions[i] = new Point();
-                    colors[i] = i == 0 ? Color.RED : i == 1 ? Color.GREEN : i == 2 ? Color.BLUE : i == 3 ? Color.YELLOW : i == 4 ? Color.BLACK : Color.RED;
-                    positions[i].set(xGap + basicRadius + (xGap + 2 * basicRadius) * i, containerHeight / 2);
+                    double increment = i * (Math.PI * 2 / count);
+                    positions[i].set((int) (Math.sin(increment) * mainRadius) + centerX, (int) (Math.cos(increment) * mainRadius) + centerY);
                 }
+                Log.d("positions", positions.toString());
                 while (exitFlag) {
                     canvas = holder.lockCanvas();
                     if (canvas == null) return;
                     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);// 清除画布
                     for (int i = 0; i < count; i++) {
                         int wave = calcFactor(i, factor);
-                        paint.setColor(colors[i]);
                         canvas.drawCircle(positions[i].x, positions[i].y, basicRadius + wave, paint);
                     }
                     factor += SPEED;
@@ -103,8 +101,8 @@ public class LinearBallWaveLoadingView extends SurfaceView implements SurfaceHol
 
     private int calcFactor(int index, int factor) {
         double diff = Math.PI / (DELAY);
-        int res = (int) (AMPLITUDE * Math.cos(Math.PI * factor / 360 - index * diff));
-        return res < 0 ? 0 : res;
+        int res = (int) (AMPLITUDE * Math.cos(Math.PI * factor / 360 + index * diff));
+        return res;
     }
 
     @Override

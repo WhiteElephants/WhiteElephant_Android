@@ -3,7 +3,7 @@
     package="rawe.gordon.com.fruitmarketclient">
 
     <application
-        android:name="rawe.gordon.com.business.application.FruitApplication"
+        android:name="rawe.gordon.com.business.application.NinePlusApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

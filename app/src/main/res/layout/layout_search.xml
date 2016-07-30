@@ -113,7 +113,7 @@
         android:background="@color/containerLightGray"
         android:visibility="gone">
 
-        <rawe.gordon.com.business.views.LinearBallWaveLoadingView
+        <rawe.gordon.com.business.customviews.LinearBallWaveLoadingView
             android:id="@+id/loading_view"
             android:layout_width="200dp"
             android:layout_height="200dp"

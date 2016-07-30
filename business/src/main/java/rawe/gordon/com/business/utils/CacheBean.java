@@ -1,30 +1,7 @@
 package rawe.gordon.com.business.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
-
-import com.gordon.rawe.business.models.CartOrder;
-import com.gordon.rawe.business.models.User;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import rawe.gordon.com.business.application.ContextHolder;
-import rawe.gordon.com.business.application.SharedParameter;
-import rawe.gordon.com.business.db.DBManager;
-import rawe.gordon.com.business.network.responses.pojo.CommodityModel;
 
 public class CacheBean {
 
