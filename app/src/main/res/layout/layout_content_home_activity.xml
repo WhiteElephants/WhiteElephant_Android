@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="@dimen/actionbar_height">
+
+    <rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout
+        android:id="@+id/fresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_refresh_head" />
+
+        <rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullableScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <rawe.gordon.com.fruitmarketclient.views.generals.slides.SlideView
+                    android:id="@+id/slides"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scrollbars="none" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/search_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/slides"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="20dp">
+
+                    <RelativeLayout
+                        android:padding="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginLeft="30dp"
+                            app:srcCompat="@drawable/ic_search_dark"/>
+
+                        <TextView
+                            android:layout_centerInParent="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center"
+                            android:text="@string/search_a_item"
+                            style="@style/searchTextStyle" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/search_area"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Our Popular Products"
+                        android:textColor="#444444"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorPrimary" />
+                </LinearLayout>
+
+                <rawe.gordon.com.fruitmarketclient.views.homepage.populars.PopularGrids
+                    android:id="@+id/populars"
+                    android:layout_marginLeft="@dimen/material_design_smaller"
+                    android:layout_marginRight="@dimen/material_design_smaller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
+            </LinearLayout>
+
+        </rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullableScrollView>
+
+        <include layout="@layout/layout_load_more" />
+    </rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout>
+
+</RelativeLayout>

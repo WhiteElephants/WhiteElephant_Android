@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">@color/colorTitleBar</color>
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorTitleBar">#67B1D6</color>
+    <color name="colorTitleBarDark">#558FB4</color>
+    <color name="lookFor">#39464F</color>
+    <color name="lookForSub">#2B363C</color>
+    <color name="textDarkGray">#999999</color>
+    <color name="textLightGray">#cccccc</color>
+    <color name="containerDarkerGray">#aaaaaa</color>
+    <color name="containerLightGray">#cccccc</color>
+    <color name="iconGrey">#FF8A8AAA</color>
+    <color name="iconOrange">#FFFFA694</color>
+    <color name="iconDark">#FF21414B</color>
+    <color name="iconLight">#FFF8F9F3</color>
+    <color name="baseGrey">#FFefefef</color>
+    <color name="navGray">#FFC8C8C8</color>
+    <color name="normalTextColor">#FF666666</color>
+    <color name="arrowRightLight">#999999</color>
+    <color name="okColor">#FF66cc66</color>
+</resources>

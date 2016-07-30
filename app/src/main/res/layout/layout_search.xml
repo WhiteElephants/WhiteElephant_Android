@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <rawe.gordon.com.fruitmarketclient.views.generals.DetectableHorizontalScrollView
+        android:id="@+id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/iconOrange" />
+        </LinearLayout>
+    </rawe.gordon.com.fruitmarketclient.views.generals.DetectableHorizontalScrollView>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/nav_left"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:alpha="0"
+        android:background="#435498"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/nav_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:alpha="0"
+        android:background="#435498"
+        android:rotation="180"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <TextView
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:alpha="1"
+        android:text="search" />
+
+    <RelativeLayout
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/containerLightGray"
+        android:visibility="gone">
+
+        <rawe.gordon.com.business.views.LinearBallWaveLoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

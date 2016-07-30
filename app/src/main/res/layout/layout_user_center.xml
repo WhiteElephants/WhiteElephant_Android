@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="#cccccc">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_design_smaller"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_pressable"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logo" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="@dimen/setting_segment"
+                android:layout_height="@dimen/setting_segment"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="5dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/logo"
+                    android:layout_width="@dimen/setting_segment"
+                    android:layout_height="@dimen/setting_segment" />
+            </android.support.v7.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_design_smaller"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/name_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/bg_1_px_bottom_grey_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nick_name" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/nickname"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gordon_rawe" />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/bg_1_px_bottom_grey"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_id" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/user_id"
+                style="@style/normalStyle"
+                android:layout_marginRight="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/uuid" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deliver_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/background_pressable"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delivery_address" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/delivery_address"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="San Francisco Abel Street No 1920 Rd." />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_design_smaller"
+        android:orientation="vertical"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/bg_1_px_bottom_grey_selector"
+            android:clickable="true"
+            android:id="@+id/gender_area"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/gender"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male" />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/district_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/bg_1_px_bottom_grey_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/district" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/district"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shanghai" />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phone_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/bg_1_px_bottom_grey_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/phone"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15121030486" />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/email_area"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/background_pressable"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_design_smaller">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/email"
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gordon_tongji_hotmail_com" />
+
+            <RelativeLayout
+                android:layout_width="24dp"
+                android:layout_height="48dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_design_smaller"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_segment"
+            android:background="@drawable/background_pressable_warn"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingRight="@dimen/material_padding">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

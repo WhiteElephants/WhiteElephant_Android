@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/material_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTitleBarDark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/material_padding">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:srcCompat="@drawable/ic_add_shopping_cart" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/titleStyleLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/material_design_smaller"
+            android:text="@string/select_required_params" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/material_padding"
+        android:layout_marginRight="@dimen/material_padding"
+        android:layout_marginTop="@dimen/material_padding"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_colors" />
+
+            <TextView
+                style="@style/superBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_design_smaller"
+                android:layout_marginTop="-2dp"
+                android:text="@string/color" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/color_grids"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="6" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/material_padding"
+        android:layout_marginRight="@dimen/material_padding"
+        android:layout_marginTop="@dimen/material_padding"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_colors" />
+
+            <TextView
+                style="@style/superBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_design_smaller"
+                android:layout_marginTop="-2dp"
+                android:text="Sizes" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/size_grids"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="6" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="@dimen/material_padding"
+        android:layout_marginTop="@dimen/material_padding"
+        android:background="@color/containerDarkerGray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            app:cardBackgroundColor="@color/containerDarkerGray">
+
+            <TextView
+                style="@style/normalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="@dimen/material_padding_larger"
+                android:paddingRight="@dimen/material_padding_larger"
+                android:paddingTop="8dp"
+                android:text="OK"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+
+        <View
+            android:layout_width="@dimen/material_padding"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

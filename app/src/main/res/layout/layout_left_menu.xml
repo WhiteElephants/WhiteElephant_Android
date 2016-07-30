@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lookFor"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp"
+        android:text="@string/you_are_looking_for"
+        android:textColor="@android:color/white"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/left_menu_left"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/lookForSub"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="13dp"
+                android:text="MAN"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/left_menu_right"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/lookForSub"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="13dp"
+                android:text="WOMAN"
+                android:textColor="@android:color/white" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="26dp"
+        android:id="@+id/expand_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

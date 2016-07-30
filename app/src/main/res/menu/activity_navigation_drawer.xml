@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<group> android:checkableBehavior="single">-->
+    <group>
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_person_gray"
+            android:title="@string/user_profile" />
+        <item
+            android:id="@+id/cart"
+            android:icon="@drawable/ic_add_shopping_cart"
+            android:title="@string/cart" />
+
+        <item
+            android:id="@+id/payment"
+            android:icon="@drawable/ic_credit_card_grey"
+            android:title="@string/payment" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_grey"
+            android:title="@string/settings" />
+    </group>
+</menu>
