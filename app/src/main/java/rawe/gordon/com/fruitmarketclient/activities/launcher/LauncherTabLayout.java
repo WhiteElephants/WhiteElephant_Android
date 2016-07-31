@@ -1,9 +1,8 @@
-package rawe.gordon.com.fruitmarketclient.activities.navigation;
+package rawe.gordon.com.fruitmarketclient.activities.launcher;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -25,7 +24,7 @@ public class LauncherTabLayout extends LinearLayout {
     private Tab[] tabsData;
     private ViewPager viewPager;
     private int lastIndex = 0;
-    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE;
+    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE, backgroudColor = 0xFF444444;
 
     public LauncherTabLayout(Context context) {
         super(context);
@@ -44,6 +43,7 @@ public class LauncherTabLayout extends LinearLayout {
 
     private void init() {
         setOrientation(VERTICAL);
+        setBackgroundColor(backgroudColor);
     }
 
     public LauncherTabLayout setupIcons(Tab[] tabsData) {
@@ -88,7 +88,6 @@ public class LauncherTabLayout extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(finalI);
-                        Log.d("positionxxxx", String.valueOf(finalI));
                     }
                 });
             }
@@ -100,7 +99,6 @@ public class LauncherTabLayout extends LinearLayout {
         this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d("axxx", "position -> " + position + "offset -> " + positionOffset + " pixels ->" + positionOffsetPixels);
 
             }
 
@@ -118,9 +116,9 @@ public class LauncherTabLayout extends LinearLayout {
     }
 
     private void switchPage(int toPage) {
-//        viewHolders.get(lastIndex).imageView.setImageResource(tabsData[lastIndex].resId);
+        viewHolders.get(lastIndex).imageView.setImageResource(tabsData[lastIndex].resId);
         viewHolders.get(lastIndex).textView.setTextColor(defaultColor);
-//        viewHolders.get(toPage).imageView.setImageResource(tabsData[toPage].selectedRedId);
+        viewHolders.get(toPage).imageView.setImageResource(tabsData[toPage].selectedRedId);
         viewHolders.get(toPage).textView.setTextColor(selectedColor);
     }
 
@@ -148,9 +146,5 @@ public class LauncherTabLayout extends LinearLayout {
         public int resId;
         public String text;
         public int selectedRedId;
-    }
-
-    private void handleProgress(int last, int now, float progress) {
-
     }
 }

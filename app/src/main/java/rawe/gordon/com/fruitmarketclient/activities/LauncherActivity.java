@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
-import rawe.gordon.com.fruitmarketclient.activities.navigation.LauncherTabLayout;
+import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
 
 /**
  * Created by gordon on 16/7/30.
@@ -30,10 +30,9 @@ public class LauncherActivity extends AppCompatActivity {
         tabLayout.setupIcons(new LauncherTabLayout.Tab[]{
                 new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "首页",R.drawable.ic_credit_card_grey),
                 new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "发现",R.drawable.ic_credit_card_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "创作",R.drawable.ic_credit_card_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "个人",R.drawable.ic_credit_card_grey)
+                new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作",R.drawable.ic_settings_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人",R.drawable.ic_person_gray)
         }).hookUpWithViewPager(fragmentPager);
-        tabLayout.setupIcons(null);
     }
 
     private void findViews() {
