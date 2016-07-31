@@ -11,3 +11,4 @@ for root, dirnames, filenames in os.walk('./java-gen'):
 
 for file in matches:
     os.system("sed -i.bak '/Generated/d' "+file)
+    os.system("rm "+file+".bak")
