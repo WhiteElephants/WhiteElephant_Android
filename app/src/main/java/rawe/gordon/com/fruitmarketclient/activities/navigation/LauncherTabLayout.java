@@ -1,13 +1,11 @@
 package rawe.gordon.com.fruitmarketclient.activities.navigation;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,8 +24,8 @@ public class LauncherTabLayout extends LinearLayout {
     public static final String TAG = LauncherTabLayout.class.getCanonicalName();
     private Tab[] tabsData;
     private ViewPager viewPager;
-    private LayoutInflater inflater = LayoutInflater.from(getContext());
     private int lastIndex = 0;
+    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE;
 
     public LauncherTabLayout(Context context) {
         super(context);
@@ -57,11 +55,10 @@ public class LauncherTabLayout extends LinearLayout {
     private void construct() {
         /***/
         LinearLayout strip = new LinearLayout(getContext());
-        strip.setBackgroundColor(Color.RED);
+        strip.setBackgroundColor(stripColor);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         addView(strip, lp);
         LinearLayout container = new LinearLayout(getContext());
-        container.setBackgroundColor(Color.BLACK);
         container.setOrientation(HORIZONTAL);
         ViewGroup.LayoutParams lp_container = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         addView(container, lp_container);
@@ -72,7 +69,6 @@ public class LauncherTabLayout extends LinearLayout {
                 LinearLayout subContainer = new LinearLayout(getContext());
                 subContainer.setOrientation(VERTICAL);
                 subContainer.setGravity(Gravity.CENTER);
-                subContainer.setBackgroundColor(Color.GREEN);
                 LayoutParams lp_seg = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
                 lp_seg.weight = 1;
                 container.addView(subContainer, lp_seg);
@@ -83,6 +79,7 @@ public class LauncherTabLayout extends LinearLayout {
                 TextView textView = new TextView(getContext());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
                 textView.setText(node.text);
+                textView.setTextColor(defaultColor);
                 ViewGroup.LayoutParams lp_text = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 subContainer.addView(textView, lp_text);
                 viewHolders.add(new ViewHolder(imageView, textView));
@@ -91,7 +88,7 @@ public class LauncherTabLayout extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(finalI);
-                        Log.d("positionxxxx",String.valueOf(finalI));
+                        Log.d("positionxxxx", String.valueOf(finalI));
                     }
                 });
             }
@@ -120,15 +117,11 @@ public class LauncherTabLayout extends LinearLayout {
         });
     }
 
-    private void handleProgress(int last, int now, float progress) {
-
-    }
-
     private void switchPage(int toPage) {
-        viewHolders.get(lastIndex).imageView.setBackgroundColor(Color.TRANSPARENT);
-        viewHolders.get(lastIndex).textView.setTextColor(Color.GRAY);
-        viewHolders.get(toPage).imageView.setBackgroundColor(Color.RED);
-        viewHolders.get(toPage).textView.setTextColor(Color.RED);
+//        viewHolders.get(lastIndex).imageView.setImageResource(tabsData[lastIndex].resId);
+        viewHolders.get(lastIndex).textView.setTextColor(defaultColor);
+//        viewHolders.get(toPage).imageView.setImageResource(tabsData[toPage].selectedRedId);
+        viewHolders.get(toPage).textView.setTextColor(selectedColor);
     }
 
     private List<ViewHolder> viewHolders = new ArrayList<>();
@@ -146,12 +139,18 @@ public class LauncherTabLayout extends LinearLayout {
 
     public static class Tab {
 
-        public Tab(int resId, String text) {
+        public Tab(int resId, String text, int selectedRedId) {
             this.resId = resId;
             this.text = text;
+            this.selectedRedId = selectedRedId;
         }
 
         public int resId;
         public String text;
+        public int selectedRedId;
+    }
+
+    private void handleProgress(int last, int now, float progress) {
+
     }
 }
