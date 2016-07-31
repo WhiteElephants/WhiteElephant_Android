@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorTitleBar</item>
-        <item name="colorPrimaryDark">@color/colorTitleBarDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/mainMiddle</item>
+        <item name="colorPrimaryDark">@color/mainDark</item>
+        <item name="colorAccent">@color/mainMiddle</item>
         <!--<item name="android:textColorSecondary">@android:color/white</item>-->
     </style>
 

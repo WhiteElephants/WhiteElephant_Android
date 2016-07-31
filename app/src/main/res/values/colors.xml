@@ -21,4 +21,10 @@
     <color name="normalTextColor">#FF666666</color>
     <color name="arrowRightLight">#999999</color>
     <color name="okColor">#FF66cc66</color>
+
+
+    <!-- 9+ area -->
+    <color name="mainDark">#FF333333</color>
+    <color name="mainMiddle">#FF888888</color>
+    <color name="mainLighter">#FFDDDDDD</color>
 </resources>

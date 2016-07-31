@@ -8,16 +8,16 @@ import rawe.gordon.com.fruitmarketclient.fragments.LauncherBaseFragment;
 /**
  * Created by gordon on 16/7/31.
  */
-public class LauncherFirstFragment extends LauncherBaseFragment {
+public class LauncherFourthFragment extends LauncherBaseFragment {
 
-    public static LauncherFirstFragment newInstance() {
-        LauncherFirstFragment firstLauncher = new LauncherFirstFragment();
-        return firstLauncher;
+    public static LauncherFourthFragment newInstance() {
+        LauncherFourthFragment fourthLauncher = new LauncherFourthFragment();
+        return fourthLauncher;
     }
 
     @Override
     protected int getContentLayout() {
-        return R.layout.layout_launcher_first_fragment;
+        return R.layout.layout_launcher_fourth_fragment;
     }
 
     @Override

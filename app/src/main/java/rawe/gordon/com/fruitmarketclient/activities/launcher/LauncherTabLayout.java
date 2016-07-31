@@ -24,7 +24,8 @@ public class LauncherTabLayout extends LinearLayout {
     private Tab[] tabsData;
     private ViewPager viewPager;
     private int lastIndex = 0;
-    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE, backgroudColor = 0xFF444444;
+    private int initialIndex = 0;
+    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE, backgroudColor = 0xFF333333;
 
     public LauncherTabLayout(Context context) {
         super(context);
@@ -46,8 +47,9 @@ public class LauncherTabLayout extends LinearLayout {
         setBackgroundColor(backgroudColor);
     }
 
-    public LauncherTabLayout setupIcons(Tab[] tabsData) {
+    public LauncherTabLayout configure(Tab[] tabsData, int initialIndex) {
         this.tabsData = tabsData;
+        this.initialIndex = initialIndex;
         construct();
         return this;
     }
@@ -73,13 +75,13 @@ public class LauncherTabLayout extends LinearLayout {
                 lp_seg.weight = 1;
                 container.addView(subContainer, lp_seg);
                 ImageView imageView = new ImageView(getContext());
-                imageView.setImageResource(node.resId);
+                imageView.setImageResource(i == initialIndex ? node.selectedRedId : node.resId);
                 ViewGroup.LayoutParams lp_image = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(24)), (int) (DimenUtil.dip2pix(24)));
                 subContainer.addView(imageView, lp_image);
                 TextView textView = new TextView(getContext());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
                 textView.setText(node.text);
-                textView.setTextColor(defaultColor);
+                textView.setTextColor(i == initialIndex ? selectedColor : defaultColor);
                 ViewGroup.LayoutParams lp_text = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 subContainer.addView(textView, lp_text);
                 viewHolders.add(new ViewHolder(imageView, textView));
