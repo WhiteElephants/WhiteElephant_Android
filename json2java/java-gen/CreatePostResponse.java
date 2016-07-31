@@ -1,15 +1,15 @@
 
-public class UpdatePost {
+public class CreatePostResponse {
 
     private Boolean status;
     private String message;
-    private Data_ data;
+    private Data data;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public UpdatePost() {
+    public CreatePostResponse() {
     }
 
     /**
@@ -18,7 +18,7 @@ public class UpdatePost {
      * @param message
      * @param status
      */
-    public UpdatePost(Boolean status, String message, Data_ data) {
+    public CreatePostResponse(Boolean status, String message, Data data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -65,7 +65,7 @@ public class UpdatePost {
      * @return
      *     The data
      */
-    public Data_ getData() {
+    public Data getData() {
         return data;
     }
 
@@ -74,7 +74,7 @@ public class UpdatePost {
      * @param data
      *     The data
      */
-    public void setData(Data_ data) {
+    public void setData(Data data) {
         this.data = data;
     }
 

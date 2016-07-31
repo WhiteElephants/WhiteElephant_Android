@@ -2,10 +2,9 @@ package com.gordon.rawe.business.pojo;
 
 public class Node {
 
-    private String imageDescription;
-    private String imageUrl;
     private String text;
-    private String id;
+    private String imageUrl;
+    private String imageDescription;
 
     /**
      * No args constructor for use in serialization
@@ -16,52 +15,14 @@ public class Node {
 
     /**
      * 
-     * @param imageDescription
      * @param imageUrl
+     * @param imageDescription
      * @param text
-     * @param id
      */
-    public Node(String imageDescription, String imageUrl, String text, String id) {
-        this.imageDescription = imageDescription;
-        this.imageUrl = imageUrl;
+    public Node(String text, String imageUrl, String imageDescription) {
         this.text = text;
-        this.id = id;
-    }
-
-    /**
-     * 
-     * @return
-     *     The imageDescription
-     */
-    public String getImageDescription() {
-        return imageDescription;
-    }
-
-    /**
-     * 
-     * @param imageDescription
-     *     The imageDescription
-     */
-    public void setImageDescription(String imageDescription) {
-        this.imageDescription = imageDescription;
-    }
-
-    /**
-     * 
-     * @return
-     *     The imageUrl
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    /**
-     * 
-     * @param imageUrl
-     *     The imageUrl
-     */
-    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        this.imageDescription = imageDescription;
     }
 
     /**
@@ -85,19 +46,37 @@ public class Node {
     /**
      * 
      * @return
-     *     The id
+     *     The imageUrl
      */
-    public String getId() {
-        return id;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     /**
      * 
-     * @param id
-     *     The _id
+     * @param imageUrl
+     *     The imageUrl
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /**
+     * 
+     * @return
+     *     The imageDescription
+     */
+    public String getImageDescription() {
+        return imageDescription;
+    }
+
+    /**
+     * 
+     * @param imageDescription
+     *     The imageDescription
+     */
+    public void setImageDescription(String imageDescription) {
+        this.imageDescription = imageDescription;
     }
 
 }

@@ -1,16 +1,15 @@
-package com.gordon.rawe.business.pojo;
 
-public class CreatePost {
+public class UpdatePostResponse {
 
     private Boolean status;
     private String message;
-    private Data data;
+    private Data_ data;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public CreatePost() {
+    public UpdatePostResponse() {
     }
 
     /**
@@ -19,7 +18,7 @@ public class CreatePost {
      * @param message
      * @param status
      */
-    public CreatePost(Boolean status, String message, Data data) {
+    public UpdatePostResponse(Boolean status, String message, Data_ data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -66,7 +65,7 @@ public class CreatePost {
      * @return
      *     The data
      */
-    public Data getData() {
+    public Data_ getData() {
         return data;
     }
 
@@ -75,7 +74,7 @@ public class CreatePost {
      * @param data
      *     The data
      */
-    public void setData(Data data) {
+    public void setData(Data_ data) {
         this.data = data;
     }
 

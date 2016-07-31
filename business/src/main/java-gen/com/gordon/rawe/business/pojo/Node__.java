@@ -1,5 +1,6 @@
+package com.gordon.rawe.business.pojo;
 
-public class Node {
+public class Node__ {
 
     private String text;
     private String imageUrl;
@@ -9,7 +10,7 @@ public class Node {
      * No args constructor for use in serialization
      * 
      */
-    public Node() {
+    public Node__() {
     }
 
     /**
@@ -18,7 +19,7 @@ public class Node {
      * @param imageDescription
      * @param text
      */
-    public Node(String text, String imageUrl, String imageDescription) {
+    public Node__(String text, String imageUrl, String imageDescription) {
         this.text = text;
         this.imageUrl = imageUrl;
         this.imageDescription = imageDescription;

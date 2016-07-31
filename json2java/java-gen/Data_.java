@@ -8,7 +8,7 @@ public class Data_ {
     private Integer readCount;
     private String authorName;
     private Integer v;
-    private List<Node_> nodes = new ArrayList<Node_>();
+    private List<Node___> nodes = new ArrayList<Node___>();
     private String time;
 
     /**
@@ -28,7 +28,7 @@ public class Data_ {
      * @param title
      * @param readCount
      */
-    public Data_(String id, String title, Integer readCount, String authorName, Integer v, List<Node_> nodes, String time) {
+    public Data_(String id, String title, Integer readCount, String authorName, Integer v, List<Node___> nodes, String time) {
         this.id = id;
         this.title = title;
         this.readCount = readCount;
@@ -133,7 +133,7 @@ public class Data_ {
      * @return
      *     The nodes
      */
-    public List<Node_> getNodes() {
+    public List<Node___> getNodes() {
         return nodes;
     }
 
@@ -142,7 +142,7 @@ public class Data_ {
      * @param nodes
      *     The nodes
      */
-    public void setNodes(List<Node_> nodes) {
+    public void setNodes(List<Node___> nodes) {
         this.nodes = nodes;
     }
 
