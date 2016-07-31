@@ -36,7 +36,7 @@ public class EditNameFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void prepareData() {
-        toolbar.setTitle("Edit Phone");
+        toolbar.setTitle("Edit Name");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

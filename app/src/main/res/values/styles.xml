@@ -92,4 +92,14 @@
         <item name="android:windowExitAnimation">@anim/abc_shrink_fade_out_from_bottom</item>
     </style>
 
+
+    <!-- below area are the 9+ related styles, and above are unnecessary codes but removing them can cause error, we remove them later if we have time -->
+
+    <style name="LauncherTabDefaultTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/textDarkGray</item>
+    </style>
+
+
 </resources>

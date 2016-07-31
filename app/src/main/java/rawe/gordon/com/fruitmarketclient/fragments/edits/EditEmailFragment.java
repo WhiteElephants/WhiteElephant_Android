@@ -37,7 +37,7 @@ public class EditEmailFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void prepareData() {
-        toolbar.setTitle("Edit Phone");
+        toolbar.setTitle("Edit Email");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
