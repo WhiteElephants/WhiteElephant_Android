@@ -18,6 +18,7 @@
     </style>
 
     <style name="styleActionBar">
+        <item name="android:layout_centerInParent">true</item>
         <item name="android:textSize">16dp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:includeFontPadding">false</item>
