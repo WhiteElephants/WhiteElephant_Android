@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/containerDarkerGray"
+    android:background="@color/mainMiddle"
     android:clickable="true">
 
     <LinearLayout
@@ -12,7 +12,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="36dp"
+            android:background="@color/mainDark">
 
             <TextView
                 android:id="@+id/title"
@@ -20,20 +21,35 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="title"
+                android:textStyle="bold"
                 android:textColor="@color/textLightGray"
                 android:textSize="16sp" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/right_logo"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentRight="true" />
+            <RelativeLayout
+                android:id="@+id/right_area"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/left_logo"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentLeft="true" />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/right_logo"
+                    android:layout_centerInParent="true"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/left_area"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentLeft="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/left_logo"
+                    android:layout_width="24dp"
+                    android:layout_centerInParent="true"
+                    android:layout_height="24dp" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout

@@ -56,17 +56,6 @@ public class LauncherFourthFragment extends LauncherBaseFragment implements View
     @Override
     protected void prepareData() {
         setupListeners();
-        toolbar.setNavigationIcon(null);
-    }
-
-    @Override
-    protected int getRightDrawable() {
-        return LauncherBaseFragment.NO_DRAWABLE;
-    }
-
-    @Override
-    protected void onRightClicked() {
-
     }
 
     @Override
@@ -134,5 +123,10 @@ public class LauncherFourthFragment extends LauncherBaseFragment implements View
 //                }
 //            }).show();
 //        }
+    }
+
+    @Override
+    protected String getTitle() {
+        return "个人中心";
     }
 }

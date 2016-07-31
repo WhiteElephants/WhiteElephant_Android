@@ -31,16 +31,6 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
     }
 
     @Override
-    protected int getRightDrawable() {
-        return NO_DRAWABLE;
-    }
-
-    @Override
-    protected void onRightClicked() {
-
-    }
-
-    @Override
     public void fetchNetWorkData() {
 
     }

@@ -21,6 +21,12 @@ public abstract class LauncherBaseFragment extends Fragment {
     protected boolean isVisibleToUser = false;
     protected boolean isDataInitiated = false;
 
+    public static final int NO_DRAWABLE = -1;
+
+    private AppCompatImageView leftIcon, rightIcon;
+    private View leftArea, rightArea;
+    private TextView title;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -48,22 +54,16 @@ public abstract class LauncherBaseFragment extends Fragment {
         return false;
     }
 
-
-    public static final int NO_DRAWABLE = -1;
-
-    private View rootView;
-    private RelativeLayout fragmentContainer;
-    private AppCompatImageView leftIcon, rightIcon;
-    private TextView title;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.layout_launcher_base_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.layout_launcher_base_fragment, container, false);
         leftIcon = (AppCompatImageView) rootView.findViewById(R.id.left_logo);
         rightIcon = (AppCompatImageView) rootView.findViewById(R.id.right_logo);
         title = (TextView) rootView.findViewById(R.id.title);
-        fragmentContainer = (RelativeLayout) rootView.findViewById(R.id.fragment_container);
+        leftArea = rootView.findViewById(R.id.left_area);
+        rightArea = rootView.findViewById(R.id.right_area);
+        RelativeLayout fragmentContainer = (RelativeLayout) rootView.findViewById(R.id.fragment_container);
         fragmentContainer.addView(inflater.inflate(getContentLayout(), container, false));
         workFlow();
         bindViews(rootView);
@@ -72,10 +72,29 @@ public abstract class LauncherBaseFragment extends Fragment {
     }
 
     private void workFlow() {
-        if (getRightDrawable() != NO_DRAWABLE)
-            rightIcon.setImageDrawable(DrawableUtil.decodeFromVector(getRightDrawable()));
-        if (getLeftDrawable() != NO_DRAWABLE)
-            leftIcon.setImageDrawable(DrawableUtil.decodeFromVector(getLeftDrawable()));
+        if (getRightDrawable() != NO_DRAWABLE) {
+            rightIcon.setImageResource(getRightDrawable());
+            rightArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightClicked();
+                }
+            });
+        } else {
+            rightArea.setVisibility(View.GONE);
+        }
+        if (getLeftDrawable() != NO_DRAWABLE) {
+            leftIcon.setImageResource(getLeftDrawable());
+            leftArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onLeftClicked();
+                }
+            });
+        } else {
+            leftArea.setVisibility(View.GONE);
+        }
+
         title.setText(getTitle());
     }
 
@@ -91,11 +110,6 @@ public abstract class LauncherBaseFragment extends Fragment {
         title.setText(titleText);
     }
 
-    protected abstract int getContentLayout();
-
-    protected abstract void bindViews(View rootView);
-
-    protected abstract void prepareData();
 
     protected int getRightDrawable() {
         return NO_DRAWABLE;
@@ -110,8 +124,20 @@ public abstract class LauncherBaseFragment extends Fragment {
     }
 
     protected void onRightClicked() {
-
     }
+
+    protected void onLeftClicked() {
+    }
+
+    protected void onTitleClicked() {
+    }
+
+
+    protected abstract int getContentLayout();
+
+    protected abstract void bindViews(View rootView);
+
+    protected abstract void prepareData();
 
     public abstract void fetchNetWorkData();
 }
