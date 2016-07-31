@@ -65,4 +65,5 @@
     <string name="input_you_phone_here">Input you phone here</string>
     <string name="input_your_email_here">Input your email here</string>
     <string name="input_your_name_here">Input your name here</string>
+    <string name="launcher_activity">launcher_activity</string>
 </resources>
