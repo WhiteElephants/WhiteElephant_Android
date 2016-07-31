@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import fnmatch
+os.system("rm ./src/.DS_Store")
 os.system("jsonschema2pojo -s ./src -t ./java-gen -T JSON -a NONE -E -S -c")
 
 matches = []
