@@ -1,6 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.activities.launcher;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -122,13 +124,15 @@ public class LauncherTabLayout extends LinearLayout {
             LayoutParams lp_seg = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
             lp_seg.weight = 1;
             parent.addView(subContainer, lp_seg);
+            RelativeLayout outRing = new RelativeLayout(parent.getContext());
+            ViewGroup.LayoutParams lp_ring = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(45)), (int) (DimenUtil.dip2pix(45)));
+            outRing.setBackgroundResource(R.drawable.round_bg);
+            subContainer.addView(outRing, lp_ring);
             ImageView imageView = new ImageView(parent.getContext());
-//            imageView.setImageResource(logoResId);
-            int padding = (int) (DimenUtil.dip2pix(6));
-//            imageView.setPadding(padding, padding, padding, padding);
-            imageView.setBackgroundResource(R.drawable.laucher_round_bg);
-            ViewGroup.LayoutParams lp_image = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(48)), (int) (DimenUtil.dip2pix(48)));
-            subContainer.addView(imageView, lp_image);
+            imageView.setImageResource(logoResId);
+            RelativeLayout.LayoutParams lp_image = new RelativeLayout.LayoutParams((int) (DimenUtil.dip2pix(24)), (int) (DimenUtil.dip2pix(24)));
+            lp_image.addRule(RelativeLayout.CENTER_IN_PARENT);
+            outRing.addView(imageView, lp_image);
             subContainer.setOnClickListener(listener);
             return new LViewHolder(imageView, info);
         }
@@ -153,11 +157,13 @@ public class LauncherTabLayout extends LinearLayout {
         @Override
         public void renderOnState() {
             textView.setTextColor(selectedColor);
+            imageView.setImageResource(info.selectedRedId);
         }
 
         @Override
         public void renderOffState() {
             textView.setTextColor(defaultColor);
+            imageView.setImageResource(info.resId);
         }
     }
 
