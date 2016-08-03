@@ -2,6 +2,7 @@ package rawe.gordon.com.fruitmarketclient.activities.launcher;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.utils.DimenUtil;
+import rawe.gordon.com.fruitmarketclient.R;
 
 /**
  * Created by gordon on 16/7/31.
@@ -25,7 +27,7 @@ public class LauncherTabLayout extends LinearLayout {
     private ViewPager viewPager;
     private int lastIndex = 0;
     private int initialIndex = 0;
-    private final int defaultColor = 0x99888888, selectedColor = 0x99cccccc, stripColor = 0x99EEEEEE, backgroudColor = 0xFF333333;
+    private static final int defaultColor = 0x99888888, selectedColor = 0x99FFFFFF, stripColor = 0x99EEEEEE, backgroudColor = 0xFF333333;
 
     public LauncherTabLayout(Context context) {
         super(context);
@@ -64,35 +66,123 @@ public class LauncherTabLayout extends LinearLayout {
         container.setOrientation(HORIZONTAL);
         ViewGroup.LayoutParams lp_container = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         addView(container, lp_container);
+        int pos = 0;
         if (tabsData != null && tabsData.length > 0) {
-            int i;
-            for (i = 0; i < tabsData.length; i++) {
-                Tab node = tabsData[i];
-                LinearLayout subContainer = new LinearLayout(getContext());
-                subContainer.setOrientation(VERTICAL);
-                subContainer.setGravity(Gravity.CENTER);
-                LayoutParams lp_seg = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-                lp_seg.weight = 1;
-                container.addView(subContainer, lp_seg);
-                ImageView imageView = new ImageView(getContext());
-                imageView.setImageResource(i == initialIndex ? node.selectedRedId : node.resId);
-                ViewGroup.LayoutParams lp_image = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(24)), (int) (DimenUtil.dip2pix(24)));
-                subContainer.addView(imageView, lp_image);
-                TextView textView = new TextView(getContext());
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-                textView.setText(node.text);
-                textView.setTextColor(i == initialIndex ? selectedColor : defaultColor);
-                ViewGroup.LayoutParams lp_text = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                subContainer.addView(textView, lp_text);
-                viewHolders.add(new ViewHolder(imageView, textView));
-                final int finalI = i;
-                subContainer.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewPager.setCurrentItem(finalI);
-                    }
-                });
+            for (int counter = 0; counter < tabsData.length; counter++) {
+                Tab node = tabsData[counter];
+                ViewHolder holder;
+                if (!TextUtils.isEmpty(node.text)) {
+                    final int finalPos = pos;
+                    viewHolders.add(holder = TabInjector.injectLTNode(node.text, node.resId, container, node, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewPager.setCurrentItem(finalPos);
+                        }
+                    }));
+                    if (initialIndex == counter) holder.renderOnState();
+                    pos++;
+                } else {
+                    TabInjector.injectLNode(node.resId, container, node, new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                }
             }
+        }
+    }
+
+    public static class TabInjector {
+        public static LTViewHolder injectLTNode(String title, int logoResId, ViewGroup parent, Tab info, OnClickListener listener) {
+            LinearLayout subContainer = new LinearLayout(parent.getContext());
+            subContainer.setOrientation(VERTICAL);
+            subContainer.setGravity(Gravity.CENTER);
+            LayoutParams lp_seg = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            lp_seg.weight = 1;
+            parent.addView(subContainer, lp_seg);
+            ImageView imageView = new ImageView(parent.getContext());
+            imageView.setImageResource(logoResId);
+            ViewGroup.LayoutParams lp_image = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(24)), (int) (DimenUtil.dip2pix(24)));
+            subContainer.addView(imageView, lp_image);
+            TextView textView = new TextView(parent.getContext());
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            textView.setText(title);
+            textView.setTextColor(defaultColor);
+            ViewGroup.LayoutParams lp_text = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            subContainer.addView(textView, lp_text);
+            subContainer.setOnClickListener(listener);
+            return new LTViewHolder(imageView, textView, info);
+        }
+
+        public static LViewHolder injectLNode(int logoResId, ViewGroup parent, Tab info, OnClickListener listener) {
+            LinearLayout subContainer = new LinearLayout(parent.getContext());
+            subContainer.setOrientation(VERTICAL);
+            subContainer.setGravity(Gravity.CENTER);
+            LayoutParams lp_seg = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            lp_seg.weight = 1;
+            parent.addView(subContainer, lp_seg);
+            ImageView imageView = new ImageView(parent.getContext());
+//            imageView.setImageResource(logoResId);
+            int padding = (int) (DimenUtil.dip2pix(6));
+//            imageView.setPadding(padding, padding, padding, padding);
+            imageView.setBackgroundResource(R.drawable.laucher_round_bg);
+            ViewGroup.LayoutParams lp_image = new ViewGroup.LayoutParams((int) (DimenUtil.dip2pix(48)), (int) (DimenUtil.dip2pix(48)));
+            subContainer.addView(imageView, lp_image);
+            subContainer.setOnClickListener(listener);
+            return new LViewHolder(imageView, info);
+        }
+    }
+
+    private static class LTViewHolder implements ViewHolder {
+        public ImageView imageView;
+        public TextView textView;
+        public Tab info;
+
+        public LTViewHolder(ImageView imageView, TextView textView, Tab info) {
+            this.imageView = imageView;
+            this.textView = textView;
+            this.info = info;
+        }
+
+        @Override
+        public void setColor(int color) {
+
+        }
+
+        @Override
+        public void renderOnState() {
+            textView.setTextColor(selectedColor);
+        }
+
+        @Override
+        public void renderOffState() {
+            textView.setTextColor(defaultColor);
+        }
+    }
+
+    private static class LViewHolder implements ViewHolder {
+        public ImageView imageView;
+        public Tab info;
+
+        public LViewHolder(ImageView imageView, Tab info) {
+            this.imageView = imageView;
+            this.info = info;
+        }
+
+        @Override
+        public void setColor(int color) {
+
+        }
+
+        @Override
+        public void renderOnState() {
+
+        }
+
+        @Override
+        public void renderOffState() {
+
         }
     }
 
@@ -118,23 +208,18 @@ public class LauncherTabLayout extends LinearLayout {
     }
 
     private void switchPage(int toPage) {
-        viewHolders.get(lastIndex).imageView.setImageResource(tabsData[lastIndex].resId);
-        viewHolders.get(lastIndex).textView.setTextColor(defaultColor);
-        viewHolders.get(toPage).imageView.setImageResource(tabsData[toPage].selectedRedId);
-        viewHolders.get(toPage).textView.setTextColor(selectedColor);
+        viewHolders.get(lastIndex).renderOffState();
+        viewHolders.get(toPage).renderOnState();
     }
 
     private List<ViewHolder> viewHolders = new ArrayList<>();
 
-    public static class ViewHolder {
+    public interface ViewHolder {
+        void setColor(int color);
 
-        public ViewHolder(ImageView imageView, TextView textView) {
-            this.imageView = imageView;
-            this.textView = textView;
-        }
+        void renderOnState();
 
-        public ImageView imageView;
-        public TextView textView;
+        void renderOffState();
     }
 
     public static class Tab {

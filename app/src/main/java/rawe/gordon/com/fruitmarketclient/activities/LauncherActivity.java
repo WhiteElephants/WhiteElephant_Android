@@ -28,11 +28,12 @@ public class LauncherActivity extends AppCompatActivity {
     private void hooks() {
         fragmentPager.setAdapter(new LauncherFragmentAdapter(getSupportFragmentManager()));
         tabLayout.configure(new LauncherTabLayout.Tab[]{
-                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "首页",R.drawable.ic_credit_card_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "发现",R.drawable.ic_credit_card_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作",R.drawable.ic_settings_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人",R.drawable.ic_person_gray)
-        },0).hookUpWithViewPager(fragmentPager);
+                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "首页", R.drawable.ic_credit_card_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "发现", R.drawable.ic_credit_card_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_add_light, null, R.drawable.ic_add_light),
+                new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作", R.drawable.ic_settings_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人", R.drawable.ic_person_gray)
+        }, 0).hookUpWithViewPager(fragmentPager);
     }
 
     private void findViews() {

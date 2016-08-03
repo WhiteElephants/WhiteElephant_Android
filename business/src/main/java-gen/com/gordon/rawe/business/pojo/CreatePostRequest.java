@@ -12,13 +12,11 @@ public class CreatePostRequest {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public CreatePostRequest() {
     }
 
     /**
-     * 
      * @param nodes
      * @param authorName
      * @param title
@@ -32,72 +30,56 @@ public class CreatePostRequest {
     }
 
     /**
-     * 
-     * @return
-     *     The title
+     * @return The title
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * 
-     * @param title
-     *     The title
+     * @param title The title
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * 
-     * @return
-     *     The readCount
+     * @return The readCount
      */
     public Integer getReadCount() {
         return readCount;
     }
 
     /**
-     * 
-     * @param readCount
-     *     The readCount
+     * @param readCount The readCount
      */
     public void setReadCount(Integer readCount) {
         this.readCount = readCount;
     }
 
     /**
-     * 
-     * @return
-     *     The authorName
+     * @return The authorName
      */
     public String getAuthorName() {
         return authorName;
     }
 
     /**
-     * 
-     * @param authorName
-     *     The authorName
+     * @param authorName The authorName
      */
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
 
     /**
-     * 
-     * @return
-     *     The nodes
+     * @return The nodes
      */
     public List<Node> getNodes() {
         return nodes;
     }
 
     /**
-     * 
-     * @param nodes
-     *     The nodes
+     * @param nodes The nodes
      */
     public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
