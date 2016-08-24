@@ -53,6 +53,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         bgImage = (RatioImageView) itemView.findViewById(R.id.bg_image);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
         editText.addTextChangedListener(watcher);
+        editText.addTextChangedListener(this);
         bindLinks();
     }
 
@@ -180,18 +181,20 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
     }
 
     public void showArrow() {
+        if (showArrow) return;
         showArrow = true;
-        animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(arrowListener);
-        animator.start();
+        addSubArea.setVisibility(View.VISIBLE);
+//        animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
+//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        animator.addUpdateListener(arrowListener);
+//        animator.start();
     }
 
     public void hideArrow() {
         if (!showArrow) return;
         showArrow = false;
         addSubArea.setVisibility(View.GONE);
-//        animator = ValueAnimator.ofFloat(1F, 0F).setDuration(100);
+//        animator = ValueAnimator.ofFloat(1F, 0F).setDuration(500);
 //        animator.setInterpolator(new AccelerateDecelerateInterpolator());
 //        animator.addUpdateListener(arrowListener);
 //        animator.start();
@@ -206,8 +209,6 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         editText.setText(model.getContent());
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
-        showArrow = TextUtils.isEmpty(model.getContent());
-        editText.addTextChangedListener(this);
     }
 
     private void setExpanded(boolean expanded) {
