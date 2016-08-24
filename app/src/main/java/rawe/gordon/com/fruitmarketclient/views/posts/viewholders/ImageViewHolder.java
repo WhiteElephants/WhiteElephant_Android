@@ -3,6 +3,7 @@ package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 import android.animation.ValueAnimator;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -141,7 +142,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         textAreaExpanded = true;
         model.setExpanded(true);
         animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
-        animator.setInterpolator(new OvershootInterpolator());
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(textListener);
         animator.start();
         editText.requestFocus();
@@ -165,6 +166,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
     public void bindValue(ImageNode model) {
         this.model = model;
         editText.setText(model.getContent());
+        if (!TextUtils.isEmpty(model.getContent())) textTopDistance += popDistance;
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
     }
