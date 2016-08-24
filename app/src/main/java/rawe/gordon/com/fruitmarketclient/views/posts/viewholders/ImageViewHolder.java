@@ -95,6 +95,9 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
                 threeArea.setTranslationX(-fac * unitExpandDistance);
                 twoArea.setTranslationX(-fac * unitExpandDistance * 2);
                 oneArea.setTranslationX(-fac * unitExpandDistance * 3);
+                oneArea.setAlpha(fac);
+                twoArea.setAlpha(fac);
+                threeArea.setAlpha(fac);
                 add.setRotation(maxRotation * fac);
                 if (menuExpanded && fac == 1F) menuAnimating = false;
                 if (!menuExpanded && fac == 0F) menuAnimating = false;
