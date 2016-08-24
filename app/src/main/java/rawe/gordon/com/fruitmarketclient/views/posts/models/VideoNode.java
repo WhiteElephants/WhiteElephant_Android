@@ -6,6 +6,7 @@ package rawe.gordon.com.fruitmarketclient.views.posts.models;
 public class VideoNode implements Node {
 
     private String content;
+    private boolean expanded = false;
 
     @Override
     public int getType() {
@@ -15,5 +16,17 @@ public class VideoNode implements Node {
     @Override
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }

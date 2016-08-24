@@ -12,6 +12,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.VideoNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.FooterViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.HeaderViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.ImageViewHolder;
@@ -79,6 +80,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 imageViewHolder.setStateChangeListener(this);
                 break;
             case NodeType.VIDEO:
+                VideoNode videoNode = (VideoNode) node;
+                VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
+                videoViewHolder.watcher.setModel(videoNode);
+                videoViewHolder.bindValue(videoNode);
+                videoViewHolder.setStateChangeListener(this);
                 break;
             case NodeType.FOOTER:
                 break;
@@ -99,7 +105,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onRequestAddTextNode(Node node) {
+        int position = calcIndex(node);
+        if (position == INDEX_NOT_FOUND) return;
+        addOneTextNode(position);
+    }
 
+    @Override
+    public void onRequestAddVideoNode(Node node) {
+        int position = calcIndex(node);
+        if (position == INDEX_NOT_FOUND) return;
+        addOneVideoNode(position);
     }
 
     private int calcIndex(Node node) {
@@ -111,7 +126,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void addOneTextNode(int position) {
-
+        nodes.add(position + 1, new TextNode());
+        notifyItemInserted(position + 1);
     }
 
     @Override
@@ -122,6 +138,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void addOneVideoNode(int position) {
-
+        nodes.add(position + 1, new VideoNode());
+        notifyItemInserted(position + 1);
     }
 }

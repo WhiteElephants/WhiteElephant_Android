@@ -22,7 +22,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     private AppCompatImageView add, addSubImage;
     private View addArea, imageArea, textArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140), popDistance = DimenUtil.dip2pix(5);
     private int maxRotation = 45;
     private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating;
     ValueAnimator.AnimatorUpdateListener expandListener, textListener;
@@ -45,6 +45,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         subInput = itemView.findViewById(R.id.sub_input);
         editText = (EditText) itemView.findViewById(R.id.input);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
+        editText.addTextChangedListener(watcher);
         bindLinks();
     }
 
@@ -153,10 +154,12 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         this.model = model;
         editText.setText(model.getContent());
         setExpanded(model.isExpanded());
+        textAreaExpanded = model.isExpanded();
     }
 
     private void setExpanded(boolean expanded) {
         textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
         textArea.requestLayout();
+        addSubImage.setRotation(expanded ? 45 : 0);
     }
 }
