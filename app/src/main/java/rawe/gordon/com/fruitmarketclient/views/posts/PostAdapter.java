@@ -26,7 +26,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
  */
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements StateChangeListener, PostOperations {
 
-    private List<Node> nodes;
+    public List<Node> nodes;
     private LayoutInflater inflater;
     private Context context;
     public static final int INDEX_NOT_FOUND = -1;
