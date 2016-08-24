@@ -63,20 +63,20 @@
 
 
     <RelativeLayout
-        android:layout_width="150dp"
+        android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_alignBottom="@+id/bg_image"
         android:layout_alignRight="@+id/bg_image">
 
         <RelativeLayout
-            android:id="@+id/add_text_container"
+            android:id="@+id/c_one"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true">
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/add_text_icon"
+                android:id="@+id/icon_one"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"
@@ -84,14 +84,29 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/add_image_container"
+            android:id="@+id/c_two"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true">
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/add_image_icon"
+                android:id="@+id/icon_two"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_add_black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/c_three"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/icon_three"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"

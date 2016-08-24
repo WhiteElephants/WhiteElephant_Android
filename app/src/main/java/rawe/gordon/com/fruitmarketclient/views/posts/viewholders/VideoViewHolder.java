@@ -12,7 +12,6 @@ import android.widget.EditText;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
-import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.VideoNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
 
@@ -40,9 +39,9 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
         add = (AppCompatImageView) itemView.findViewById(R.id.add_icon);
         addSubImage = (AppCompatImageView) itemView.findViewById(R.id.add_sub_text_icon);
         addArea = itemView.findViewById(R.id.add_container);
-        imageArea = itemView.findViewById(R.id.add_image_container);
+        imageArea = itemView.findViewById(R.id.c_three);
         addSubArea = itemView.findViewById(R.id.add_sub_text_container);
-        textArea = itemView.findViewById(R.id.add_text_container);
+        textArea = itemView.findViewById(R.id.c_two);
         subInput = itemView.findViewById(R.id.sub_input);
         editText = (EditText) itemView.findViewById(R.id.input);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();

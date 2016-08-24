@@ -58,6 +58,7 @@
         <activity
             android:name=".activities.PostComposeActivity"
             android:label="@string/sc"
+            android:screenOrientation="portrait"
             android:theme="@style/noAnimationTheme" />
     </application>
 
