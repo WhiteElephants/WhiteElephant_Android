@@ -5,13 +5,18 @@ package rawe.gordon.com.fruitmarketclient.views.posts.models;
  */
 public class TextNode implements Node {
 
-    private String content = "this is the default text";
+    private String content;
 
     public String getContent() {
         return content;
     }
 
+    public TextNode(String content) {
+        this.content = content;
+    }
 
+    public TextNode() {
+    }
 
     @Override
     public int getType() {

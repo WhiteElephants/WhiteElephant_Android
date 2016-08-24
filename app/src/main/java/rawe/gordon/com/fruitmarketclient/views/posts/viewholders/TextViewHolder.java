@@ -11,7 +11,6 @@ import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
-import rawe.gordon.com.fruitmarketclient.views.posts.subviews.RatioImageView;
 import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
 
 /**

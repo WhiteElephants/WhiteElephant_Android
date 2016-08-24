@@ -3,7 +3,6 @@ package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 import android.animation.ValueAnimator;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -24,7 +23,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
 
     private AppCompatImageView add, addSubImage;
     private View addArea, threeArea, twoArea, oneArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140), popDistance = DimenUtil.dip2pix(5);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140);
     private int maxRotation = 45;
     private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating;
     ValueAnimator.AnimatorUpdateListener expandListener, textListener;
@@ -175,7 +174,6 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
     public void bindValue(VideoNode model) {
         this.model = model;
         editText.setText(model.getContent());
-        if (!TextUtils.isEmpty(model.getContent())) textTopDistance += popDistance;
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
     }

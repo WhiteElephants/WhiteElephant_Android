@@ -3,7 +3,9 @@ package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 import android.animation.ValueAnimator;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -20,14 +22,14 @@ import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
 /**
  * Created by gordon on 16/8/23.
  */
-public class ImageViewHolder extends RecyclerView.ViewHolder {
+public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatcher {
 
     private AppCompatImageView add, addSubImage;
     private View addArea, threeArea, twoArea, oneArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140), popDistance = DimenUtil.dip2pix(5);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140);
     private int maxRotation = 45;
-    private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating;
-    ValueAnimator.AnimatorUpdateListener expandListener, textListener;
+    private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating, showArrow = true;
+    ValueAnimator.AnimatorUpdateListener expandListener, textListener, arrowListener;
     ValueAnimator animator;
     private ViewGroup.MarginLayoutParams textAreaMargin;
     private StateChangeListener stateChangeListener;
@@ -95,7 +97,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         bgImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(stateChangeListener!=null) stateChangeListener.onImageClicked(model);
+                if (stateChangeListener != null) stateChangeListener.onImageClicked(model);
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {
@@ -122,6 +124,15 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
                 if (!textAreaExpanded && fac == 0F) textAreaAnimating = false;
+            }
+        };
+        arrowListener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fac = (float) animation.getAnimatedValue();
+                addSubArea.setAlpha(fac);
+                if (fac == 0F) addSubArea.setVisibility(View.GONE);
+                else addSubArea.setVisibility(View.VISIBLE);
             }
         };
     }
@@ -168,6 +179,24 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         textAreaAnimating = true;
     }
 
+    public void showArrow() {
+        showArrow = true;
+        animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(arrowListener);
+        animator.start();
+    }
+
+    public void hideArrow() {
+        if (!showArrow) return;
+        showArrow = false;
+        addSubArea.setVisibility(View.GONE);
+//        animator = ValueAnimator.ofFloat(1F, 0F).setDuration(100);
+//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        animator.addUpdateListener(arrowListener);
+//        animator.start();
+    }
+
     public void setStateChangeListener(StateChangeListener listener) {
         this.stateChangeListener = listener;
     }
@@ -175,14 +204,32 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
     public void bindValue(ImageNode model) {
         this.model = model;
         editText.setText(model.getContent());
-        if (!TextUtils.isEmpty(model.getContent())) textTopDistance += popDistance;
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
+        showArrow = TextUtils.isEmpty(model.getContent());
+        editText.addTextChangedListener(this);
     }
 
     private void setExpanded(boolean expanded) {
         textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
         addSubArea.requestLayout();
         addSubImage.setRotation(expanded ? 180 : 0);
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s.toString())) showArrow();
+        else hideArrow();
     }
 }

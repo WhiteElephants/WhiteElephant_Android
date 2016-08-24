@@ -25,6 +25,7 @@
             android:background="@android:color/transparent"
             android:gravity="top"
             android:minLines="5"
+            android:maxLines="5"
             android:textCursorDrawable="@drawable/cursor"
             android:textSize="12dp" />
     </RelativeLayout>
