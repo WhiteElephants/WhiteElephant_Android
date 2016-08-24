@@ -9,7 +9,7 @@ import android.widget.ImageView;
  */
 public class RatioImageView extends ImageView {
 
-    private float ratio_w_h = 1 / 2.5F;
+    private float ratio_w_h = 1 / 2F;
 
     public RatioImageView(Context context) {
         super(context);
