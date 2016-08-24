@@ -74,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             case NodeType.IMAGE:
                 ImageNode imageNode = (ImageNode) node;
                 ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
+                imageViewHolder.watcher.setModel(imageNode);
                 imageViewHolder.bindValue(imageNode);
                 imageViewHolder.setStateChangeListener(this);
                 break;

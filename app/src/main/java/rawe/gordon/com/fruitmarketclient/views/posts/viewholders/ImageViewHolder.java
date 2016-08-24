@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
@@ -21,7 +22,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     private AppCompatImageView add, addSubImage;
     private View addArea, imageArea, textArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(150);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140);
     private int maxRotation = 45;
     private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating;
     ValueAnimator.AnimatorUpdateListener expandListener, textListener;
@@ -29,9 +30,10 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
     private ViewGroup.MarginLayoutParams textAreaMargin;
     private StateChangeListener stateChangeListener;
     ImageNode model;
+    private EditText editText;
     public EditTextWatcher watcher;
 
-    public ImageViewHolder(View itemView,EditTextWatcher watcher) {
+    public ImageViewHolder(View itemView, EditTextWatcher watcher) {
         super(itemView);
         this.watcher = watcher;
         add = (AppCompatImageView) itemView.findViewById(R.id.add_icon);
@@ -41,6 +43,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         addSubArea = itemView.findViewById(R.id.add_sub_text_container);
         textArea = itemView.findViewById(R.id.add_text_container);
         subInput = itemView.findViewById(R.id.sub_input);
+        editText = (EditText) itemView.findViewById(R.id.input);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
         bindLinks();
     }
@@ -66,12 +69,14 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (stateChangeListener != null) stateChangeListener.onRequestAddImageNode(model);
+                resumeMenu();
             }
         });
         textArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (stateChangeListener != null) stateChangeListener.onRequestAddTextNode(model);
+                resumeMenu();
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {
@@ -98,6 +103,10 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         };
     }
 
+    public void resumeMenu() {
+        if (menuExpanded) shrinkMenu();
+    }
+
     public void expandMenu() {
         menuExpanded = true;
         animator = ValueAnimator.ofFloat(0F, 1F).setDuration(300);
@@ -117,15 +126,18 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     public void expandTextArea() {
         textAreaExpanded = true;
+        model.setExpanded(true);
         animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
         animator.setInterpolator(new OvershootInterpolator());
         animator.addUpdateListener(textListener);
         animator.start();
+        editText.requestFocus();
         textAreaAnimating = true;
     }
 
     public void shrinkTextArea() {
         textAreaExpanded = false;
+        model.setExpanded(false);
         animator = ValueAnimator.ofFloat(1F, 0F).setDuration(500);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(textListener);
@@ -139,5 +151,12 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
 
     public void bindValue(ImageNode model) {
         this.model = model;
+        editText.setText(model.getContent());
+        setExpanded(model.isExpanded());
+    }
+
+    private void setExpanded(boolean expanded) {
+        textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
+        textArea.requestLayout();
     }
 }
