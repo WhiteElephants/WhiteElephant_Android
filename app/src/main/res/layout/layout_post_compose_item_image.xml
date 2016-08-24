@@ -41,9 +41,11 @@
 
 
     <TextView
+        android:layout_marginTop="50dp"
+        android:layout_alignTop="@+id/bg_image"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="hello this is a image node" />
 
     <RelativeLayout

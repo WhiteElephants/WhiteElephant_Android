@@ -14,6 +14,7 @@ import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.subviews.RatioImageView;
 import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
 
 /**
@@ -33,6 +34,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
     ImageNode model;
     private EditText editText;
     public EditTextWatcher watcher;
+    private RatioImageView bgImage;
 
     public ImageViewHolder(View itemView, EditTextWatcher watcher) {
         super(itemView);
@@ -46,6 +48,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
         oneArea = itemView.findViewById(R.id.c_one);
         subInput = itemView.findViewById(R.id.sub_input);
         editText = (EditText) itemView.findViewById(R.id.input);
+        bgImage = (RatioImageView) itemView.findViewById(R.id.bg_image);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
         editText.addTextChangedListener(watcher);
         bindLinks();
@@ -87,6 +90,12 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 if (stateChangeListener != null) stateChangeListener.onRequestAddVideoNode(model);
                 resumeMenu();
+            }
+        });
+        bgImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(stateChangeListener!=null) stateChangeListener.onImageClicked(model);
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {

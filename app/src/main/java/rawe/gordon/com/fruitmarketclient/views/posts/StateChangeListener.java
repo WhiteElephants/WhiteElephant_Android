@@ -11,4 +11,8 @@ public interface StateChangeListener {
     void onRequestAddTextNode(Node node);
 
     void onRequestAddVideoNode(Node node);
+
+    void onImageClicked(Node node);
+
+    void onVideoClicked(Node node);
 }

@@ -41,9 +41,11 @@
 
 
     <TextView
+        android:layout_marginTop="50dp"
+        android:layout_alignTop="@+id/bg_image"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="hello this is a video node" />
 
     <RelativeLayout
@@ -58,29 +60,46 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerInParent="true"
-            app:srcCompat="@drawable/ic_add_black" />
+            app:srcCompat="@drawable/ic_arrow_downward_black" />
     </RelativeLayout>
 
 
     <RelativeLayout
-        android:layout_width="150dp"
+        android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_alignBottom="@+id/bg_image"
         android:layout_alignRight="@+id/bg_image">
+
+        <RelativeLayout
+            android:id="@+id/c_one"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:alpha="0">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/icon_one"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_play_black" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/c_two"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:alpha="0">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/icon_two"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_add_black" />
+                app:srcCompat="@drawable/ic_photo_black" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,14 +107,15 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:alpha="0">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/icon_three"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_add_black" />
+                app:srcCompat="@drawable/ic_text_black" />
         </RelativeLayout>
 
         <RelativeLayout

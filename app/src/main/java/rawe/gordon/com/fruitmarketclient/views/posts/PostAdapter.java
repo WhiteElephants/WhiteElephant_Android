@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
@@ -71,6 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 TextViewHolder textViewHolder = (TextViewHolder) holder;
                 textViewHolder.watcher.setModel(textNode);
                 textViewHolder.bindValue(textNode);
+                textViewHolder.setStateChangeListener(this);
                 break;
             case NodeType.IMAGE:
                 ImageNode imageNode = (ImageNode) node;
@@ -115,6 +117,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         int position = calcIndex(node);
         if (position == INDEX_NOT_FOUND) return;
         addOneVideoNode(position);
+    }
+
+    @Override
+    public void onImageClicked(Node node) {
+        ToastUtil.say("image clicked");
+    }
+
+    @Override
+    public void onVideoClicked(Node node) {
+        ToastUtil.say("video clicked");
     }
 
     private int calcIndex(Node node) {
