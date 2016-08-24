@@ -107,7 +107,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fac = (float) valueAnimator.getAnimatedValue();
-                addSubImage.setRotation(maxRotation * fac);
+                addSubImage.setRotation(180 * fac);
                 textAreaMargin.topMargin = (int) (textTopDistance * fac);
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
@@ -172,6 +172,6 @@ public class ImageViewHolder extends RecyclerView.ViewHolder {
     private void setExpanded(boolean expanded) {
         textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
         addSubArea.requestLayout();
-        addSubImage.setRotation(expanded ? 45 : 0);
+        addSubImage.setRotation(expanded ? 180 : 0);
     }
 }
