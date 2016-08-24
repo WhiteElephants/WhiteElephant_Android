@@ -3,12 +3,15 @@ package rawe.gordon.com.fruitmarketclient.fragments.launcher;
 import android.view.View;
 
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.activities.PostComposeActivity;
 import rawe.gordon.com.fruitmarketclient.fragments.LauncherBaseFragment;
 
 /**
  * Created by gordon on 16/7/31.
  */
 public class LauncherThirdFragment extends LauncherBaseFragment {
+
+    private View compose;
 
     public static LauncherThirdFragment newInstance() {
         LauncherThirdFragment thirdLauncher = new LauncherThirdFragment();
@@ -22,12 +25,17 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
     @Override
     protected void bindViews(View rootView) {
-
+        compose = rootView.findViewById(R.id.compose);
     }
 
     @Override
     protected void prepareData() {
-
+        compose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostComposeActivity.gotoPostComposeActivity(getActivity());
+            }
+        });
     }
 
     @Override
