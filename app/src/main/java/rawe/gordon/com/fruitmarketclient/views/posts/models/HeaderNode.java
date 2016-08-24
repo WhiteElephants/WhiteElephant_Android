@@ -10,4 +10,9 @@ public class HeaderNode implements Node {
     public int getType() {
         return NodeType.HEADER;
     }
+
+    @Override
+    public void setContent(String content) {
+
+    }
 }

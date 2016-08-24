@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/sub_input"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/bg_image"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_post_item_sub_text" />
 
     <rawe.gordon.com.fruitmarketclient.views.posts.subviews.RatioImageView
         android:id="@+id/bg_image"
@@ -21,6 +30,21 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="hello this is a image node" />
+
+    <RelativeLayout
+        android:id="@+id/add_sub_text_container"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@+id/bg_image"
+        android:layout_alignLeft="@+id/bg_image">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/add_sub_text_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_add_black" />
+    </RelativeLayout>
 
 
     <RelativeLayout

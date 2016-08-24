@@ -5,4 +5,6 @@ package rawe.gordon.com.fruitmarketclient.views.posts.models;
  */
 public interface Node {
     int getType();
+
+    void setContent(String content);
 }
