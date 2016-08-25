@@ -9,6 +9,7 @@ import java.util.List;
 
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
@@ -47,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case NodeType.HEADER:
-                return new HeaderViewHolder(inflater.inflate(R.layout.layout_post_compose_item_header, parent, false));
+                return new HeaderViewHolder(inflater.inflate(R.layout.layout_post_compose_item_header, parent, false), new EditTextWatcher());
             case NodeType.TEXT:
                 return new TextViewHolder(inflater.inflate(R.layout.layout_post_compose_item_text, parent, false), new EditTextWatcher());
             case NodeType.IMAGE:
@@ -66,6 +67,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         Node node = nodes.get(position);
         switch (node.getType()) {
             case NodeType.HEADER:
+                HeaderNode headerNode = (HeaderNode) node;
+                HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+                headerViewHolder.watcher.setModel(headerNode);
+                headerViewHolder.bindValue(headerNode);
+                headerViewHolder.setStateChangeListener(this);
                 break;
             case NodeType.TEXT:
                 TextNode textNode = (TextNode) node;

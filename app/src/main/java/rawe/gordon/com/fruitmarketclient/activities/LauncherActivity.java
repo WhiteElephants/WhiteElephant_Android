@@ -30,7 +30,7 @@ public class LauncherActivity extends AppCompatActivity {
         tabLayout.configure(new LauncherTabLayout.Tab[]{
                 new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "首页", R.drawable.ic_credit_card_grey),
                 new LauncherTabLayout.Tab(R.drawable.ic_safari_orange, "发现", R.drawable.ic_safari_gray),
-                new LauncherTabLayout.Tab(R.drawable.ic_camera_gray, "", R.drawable.ic_camera_gray),
+                new LauncherTabLayout.Tab(R.drawable.ic_add_white, "", R.drawable.ic_add_white),
                 new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作", R.drawable.ic_settings_grey),
                 new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人", R.drawable.ic_person_gray)
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
