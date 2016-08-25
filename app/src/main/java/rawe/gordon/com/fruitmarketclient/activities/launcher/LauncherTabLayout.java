@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public class LauncherTabLayout extends LinearLayout {
         return this;
     }
 
+    public LauncherTabLayout setListener(SwitchListener switchListener) {
+        this.listener = switchListener;
+        return this;
+    }
+
     private void construct() {
         /***/
         LinearLayout strip = new LinearLayout(getContext());
@@ -87,7 +93,7 @@ public class LauncherTabLayout extends LinearLayout {
                     TabInjector.injectLNode(node.resId, container, node, new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            if(listener!=null) listener.onCenter();
                         }
                     });
                 }
@@ -214,6 +220,7 @@ public class LauncherTabLayout extends LinearLayout {
     }
 
     private void switchPage(int toPage) {
+        if (listener != null) listener.onTabs(toPage);
         viewHolders.get(lastIndex).renderOffState();
         viewHolders.get(toPage).renderOnState();
     }
@@ -239,5 +246,13 @@ public class LauncherTabLayout extends LinearLayout {
         public int resId;
         public String text;
         public int selectedRedId;
+    }
+
+    private SwitchListener listener;
+
+    public interface SwitchListener {
+        void onCenter();
+
+        void onTabs(int position);
     }
 }

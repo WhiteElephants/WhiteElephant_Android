@@ -33,7 +33,17 @@ public class LauncherActivity extends AppCompatActivity {
                 new LauncherTabLayout.Tab(R.drawable.ic_camera_gray, "", R.drawable.ic_camera_gray),
                 new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作", R.drawable.ic_settings_grey),
                 new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人", R.drawable.ic_person_gray)
-        }, 0).hookUpWithViewPager(fragmentPager);
+        }, 0).setListener(new LauncherTabLayout.SwitchListener() {
+            @Override
+            public void onCenter() {
+                PostComposeActivity.gotoPostComposeActivity(LauncherActivity.this);
+            }
+
+            @Override
+            public void onTabs(int position) {
+
+            }
+        }).hookUpWithViewPager(fragmentPager);
     }
 
     private void findViews() {
