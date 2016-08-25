@@ -99,7 +99,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
         bgImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stateChangeListener != null) stateChangeListener.onImageClicked(model);
+                if (stateChangeListener != null) stateChangeListener.onVideoClicked(model);
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {
