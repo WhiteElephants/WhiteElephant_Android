@@ -57,7 +57,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             case NodeType.FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.layout_post_compose_item_footer, parent, false));
             default:
-                return new TextViewHolder(inflater.inflate(R.layout.layout_post_compose_item_image, parent, false), new EditTextWatcher());
+                return new TextViewHolder(inflater.inflate(R.layout.layout_post_compose_item_text, parent, false), new EditTextWatcher());
         }
     }
 

@@ -8,7 +8,7 @@ public class FooterNode implements Node {
 
     @Override
     public int getType() {
-        return NodeType.HEADER;
+        return NodeType.FOOTER;
     }
 
     @Override
