@@ -1,6 +1,5 @@
 package rawe.gordon.com.fruitmarketclient.activities;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,9 +22,9 @@ import rawe.gordon.com.business.utils.LoginManager;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.business.utils.ViewSizeRegulator;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.views.generals.dialogs.filter.FilterDialog;
-import rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout;
-import rawe.gordon.com.fruitmarketclient.views.generals.slides.SlideView;
+import rawe.gordon.com.fruitmarketclient.generals.dialogs.filter.FilterDialog;
+import rawe.gordon.com.business.generals.pulls.PullToRefreshLayout;
+import rawe.gordon.com.business.generals.slides.SlideView;
 import rawe.gordon.com.fruitmarketclient.views.homepage.populars.PopularGrids;
 import retrofit2.Call;
 import retrofit2.Callback;

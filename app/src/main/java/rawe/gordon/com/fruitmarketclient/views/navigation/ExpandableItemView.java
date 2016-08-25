@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.views.ViewFactory;
 import rawe.gordon.com.fruitmarketclient.views.homepage.ViewConfigurator;
 
 /**
@@ -40,7 +40,7 @@ public class ExpandableItemView extends LinearLayout {
     public void initialize(String title, List<String> itemTexts, final ViewConfigurator.LeftMenuListener leftMenuListener) {
         (titleView = (TextView) rootView.findViewById(R.id.title)).setText(title);
         for (final String item : itemTexts) {
-            TextView textView = (TextView) ViewFactory.createView(LayoutInflater.from(context), R.layout.layout_expabdable_item_view_textview, this, false);
+            TextView textView = (TextView) BaseActivity.ViewFactory.createView(LayoutInflater.from(context), R.layout.layout_expabdable_item_view_textview, this, false);
             textView.setText(item);
             textView.setOnClickListener(new OnClickListener() {
                 @Override

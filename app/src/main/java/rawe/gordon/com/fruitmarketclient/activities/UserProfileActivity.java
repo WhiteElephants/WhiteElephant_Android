@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gordon.rawe.business.models.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.landscape.ProvinceUtil;
 import rawe.gordon.com.business.network.RestClient;
@@ -19,14 +20,14 @@ import rawe.gordon.com.business.utils.LoginManager;
 import rawe.gordon.com.business.utils.NullTransformer;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.fragments.BaseFragment;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditDistrictFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditEmailFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditGenderFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditNameFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditPhoneFragment;
-import rawe.gordon.com.fruitmarketclient.views.generals.pops.LocationEntity;
-import rawe.gordon.com.fruitmarketclient.views.generals.pops.PopChooser;
+import rawe.gordon.com.fruitmarketclient.generals.pops.LocationEntity;
+import rawe.gordon.com.fruitmarketclient.generals.pops.PopChooser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +39,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     private ImageView logo;
     private TextView nickName, userId, deliveryAddress, gender, districtText, phoneText, emailText;
     private View logout, genderArea, districtArea, phoneArea, emailArea, nameArea, deliverArea;
-    private BaseFragment fragment;
+    private EditBaseFragment fragment;
 
     @Override
     protected int getContentLayout() {

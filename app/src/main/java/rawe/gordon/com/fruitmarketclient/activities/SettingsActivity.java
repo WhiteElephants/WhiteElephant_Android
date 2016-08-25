@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.business.application.SystemConfig;
-import rawe.gordon.com.fruitmarketclient.views.generals.dialogs.aboutus.AboutUsDialog;
+import rawe.gordon.com.fruitmarketclient.generals.dialogs.aboutus.AboutUsDialog;
 
 /**
  * Created by gordon on 16/5/12.

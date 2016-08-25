@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.fragments.LauncherBaseFragment;
-import rawe.gordon.com.fruitmarketclient.views.generals.pops.LocationEntity;
+import rawe.gordon.com.business.fragments.LauncherBaseFragment;
+import rawe.gordon.com.fruitmarketclient.generals.pops.LocationEntity;
 
 /**
  * Created by gordon on 16/7/31.

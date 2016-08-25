@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.fruitmarketclient.R;
 
 /**

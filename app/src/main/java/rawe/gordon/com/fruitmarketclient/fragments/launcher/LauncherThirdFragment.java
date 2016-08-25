@@ -4,7 +4,7 @@ import android.view.View;
 
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.PostComposeActivity;
-import rawe.gordon.com.fruitmarketclient.fragments.LauncherBaseFragment;
+import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 
 /**
  * Created by gordon on 16/7/31.

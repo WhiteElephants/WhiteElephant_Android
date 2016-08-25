@@ -3,6 +3,8 @@ package rawe.gordon.com.fruitmarketclient.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import rawe.gordon.com.business.activities.BaseActivity;
+
 /**
  * Created by gordon on 16/7/31.
  */

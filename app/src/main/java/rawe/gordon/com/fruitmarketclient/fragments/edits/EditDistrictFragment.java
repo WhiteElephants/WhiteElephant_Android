@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.activities.BaseActivity;
-import rawe.gordon.com.fruitmarketclient.fragments.BaseFragment;
+import rawe.gordon.com.business.activities.BaseActivity;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
 
 /**
  * Created by gordon on 5/25/16.
  */
-public class EditDistrictFragment extends BaseFragment implements View.OnClickListener {
+public class EditDistrictFragment extends EditBaseFragment implements View.OnClickListener {
     public static final String EDIT_DISTRICT_FRAGMENT = "EDIT_DISTRICT_FRAGMENT";
     public static final int EDIT_DISTRICT_CODE = 0x9988;
     private Toolbar toolbar;

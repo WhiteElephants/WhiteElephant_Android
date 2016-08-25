@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <rawe.gordon.com.fruitmarketclient.views.generals.slides.SlideView
+            <rawe.gordon.com.business.generals.slides.SlideView
                 android:id="@+id/slides"
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />

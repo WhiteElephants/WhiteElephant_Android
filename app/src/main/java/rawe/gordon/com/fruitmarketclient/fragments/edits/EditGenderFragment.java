@@ -4,13 +4,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.activities.BaseActivity;
-import rawe.gordon.com.fruitmarketclient.fragments.BaseFragment;
+import rawe.gordon.com.business.activities.BaseActivity;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 
 /**
  * Created by gordon on 5/24/16.
  */
-public class EditGenderFragment extends BaseFragment implements View.OnClickListener {
+public class EditGenderFragment extends EditBaseFragment implements View.OnClickListener {
     private Toolbar toolbar;
     private View maleArea, femaleArea, maleLogo, femaleLogo;
     private String gender;

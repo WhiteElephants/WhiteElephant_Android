@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.network.RestClient;
 import rawe.gordon.com.business.network.responses.UserResponse;

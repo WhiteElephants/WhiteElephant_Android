@@ -12,7 +12,7 @@ import rawe.gordon.com.business.network.responses.pojo.CommodityModel;
 import rawe.gordon.com.business.utils.ViewSizeRegulator;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.CommodityDetailActivity;
-import rawe.gordon.com.fruitmarketclient.views.generals.grids.AbstractRecyclerGrid;
+import rawe.gordon.com.business.generals.grids.AbstractRecyclerGrid;
 
 /**
  * Created by gordon on 5/13/16.

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.business.network.responses.pojo.SlideModel;
-import rawe.gordon.com.fruitmarketclient.views.generals.grids.AbstractRecyclerGrid;
+import rawe.gordon.com.business.generals.grids.AbstractRecyclerGrid;
 
 /**
  * Created by gordon on 16/5/12.

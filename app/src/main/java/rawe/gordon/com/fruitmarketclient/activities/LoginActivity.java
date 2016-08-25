@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.utils.NullTransformer;
 import rawe.gordon.com.business.utils.ToastUtil;

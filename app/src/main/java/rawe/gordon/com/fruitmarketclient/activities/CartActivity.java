@@ -14,7 +14,7 @@ import com.gordon.rawe.business.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import rawe.gordon.com.business.utils.CacheBean;
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.utils.LoginManager;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.orders.OrderView;

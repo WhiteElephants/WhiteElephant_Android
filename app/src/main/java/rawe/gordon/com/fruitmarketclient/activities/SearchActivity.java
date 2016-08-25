@@ -9,10 +9,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Random;
-
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.views.generals.DetectableHorizontalScrollView;
+import rawe.gordon.com.business.generals.DetectableHorizontalScrollView;
 
 /**
  * Created by gordon on 16/5/12.

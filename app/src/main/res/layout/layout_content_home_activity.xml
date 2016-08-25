@@ -5,14 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="@dimen/actionbar_height">
 
-    <rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout
+    <rawe.gordon.com.business.generals.pulls.PullToRefreshLayout
         android:id="@+id/fresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/layout_refresh_head" />
 
-        <rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullableScrollView
+        <rawe.gordon.com.business.generals.pulls.PullableScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <rawe.gordon.com.fruitmarketclient.views.generals.slides.SlideView
+                <rawe.gordon.com.business.generals.slides.SlideView
                     android:id="@+id/slides"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
@@ -101,9 +101,9 @@
                     android:layout_marginTop="15dp" />
             </LinearLayout>
 
-        </rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullableScrollView>
+        </rawe.gordon.com.business.generals.pulls.PullableScrollView>
 
         <include layout="@layout/layout_load_more" />
-    </rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout>
+    </rawe.gordon.com.business.generals.pulls.PullToRefreshLayout>
 
 </RelativeLayout>

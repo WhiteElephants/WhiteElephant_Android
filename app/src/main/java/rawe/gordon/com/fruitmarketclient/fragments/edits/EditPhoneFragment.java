@@ -8,14 +8,14 @@ import android.widget.EditText;
 
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.activities.BaseActivity;
-import rawe.gordon.com.fruitmarketclient.fragments.BaseFragment;
+import rawe.gordon.com.business.activities.BaseActivity;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
 
 /**
  * Created by gordon on 5/25/16.
  */
-public class EditPhoneFragment extends BaseFragment implements View.OnClickListener, TextWatcher {
+public class EditPhoneFragment extends EditBaseFragment implements View.OnClickListener, TextWatcher {
     public static final String EDIT_PHONE_FRAGMENT = "EDIT_PHONE_FRAGMENT";
     private Toolbar toolbar;
     private View cancel, inputArea;
