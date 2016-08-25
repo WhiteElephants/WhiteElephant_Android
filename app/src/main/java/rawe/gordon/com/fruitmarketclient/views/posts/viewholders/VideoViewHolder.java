@@ -37,6 +37,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
     private EditText editText;
     public EditTextWatcher watcher;
     private RatioImageView bgImage;
+    private static final int toAngle = -180;
 
     public VideoViewHolder(View itemView, EditTextWatcher watcher) {
         super(itemView);
@@ -120,7 +121,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fac = (float) valueAnimator.getAnimatedValue();
-                addSubImage.setRotation(180 * fac);
+                addSubImage.setRotation(toAngle * fac);
                 textAreaMargin.topMargin = (int) (textTopDistance * fac);
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
@@ -214,7 +215,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
     private void setExpanded(boolean expanded) {
         textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
         addSubArea.requestLayout();
-        addSubImage.setRotation(expanded ? 180 : 0);
+        addSubImage.setRotation(expanded ? toAngle : 0);
     }
 
 

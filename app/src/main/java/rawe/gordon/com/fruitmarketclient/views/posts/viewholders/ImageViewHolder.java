@@ -9,6 +9,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 
@@ -37,6 +39,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
     private EditText editText;
     public EditTextWatcher watcher;
     private RatioImageView bgImage;
+    private static final int toAngle = -180;
 
     public ImageViewHolder(View itemView, EditTextWatcher watcher) {
         super(itemView);
@@ -120,7 +123,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fac = (float) valueAnimator.getAnimatedValue();
-                addSubImage.setRotation(180 * fac);
+                addSubImage.setRotation(toAngle * fac);
                 textAreaMargin.topMargin = (int) (textTopDistance * fac);
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
@@ -163,7 +166,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         textAreaExpanded = true;
         model.setExpanded(true);
         animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setInterpolator(new AccelerateInterpolator());
         animator.addUpdateListener(textListener);
         animator.start();
         editText.requestFocus();
@@ -174,7 +177,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         textAreaExpanded = false;
         model.setExpanded(false);
         animator = ValueAnimator.ofFloat(1F, 0F).setDuration(500);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(textListener);
         animator.start();
         textAreaAnimating = true;
@@ -214,7 +217,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
     private void setExpanded(boolean expanded) {
         textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
         addSubArea.requestLayout();
-        addSubImage.setRotation(expanded ? 180 : 0);
+        addSubImage.setRotation(expanded ? toAngle : 0);
     }
 
 
