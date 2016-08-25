@@ -1,5 +1,6 @@
 package rawe.gordon.com.business.fragments;
 
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,12 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import rawe.gordon.com.business.R;
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.utils.DrawableUtil;
 
 /**
  * Created by gordon on 16/7/31.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements ValueAnimator.AnimatorUpdateListener {
 
     public static final int NO_DRAWABLE = -1;
     public static final String TEXT_NOT_DEFINED = "TEXT_NOT_DEFINED";
@@ -25,6 +27,9 @@ public abstract class BaseFragment extends Fragment {
     private TextView leftText, rightText;
     private View leftIconArea, rightIconArea, leftTextArea, rightTextArea;
     private TextView title;
+    private View titleArea;
+    private RelativeLayout fragmentContainer;
+    private boolean closing = false;
 
 
     @Nullable
@@ -40,7 +45,8 @@ public abstract class BaseFragment extends Fragment {
         rightText = (TextView) rootView.findViewById(R.id.right_text);
         leftTextArea = rootView.findViewById(R.id.left_text_area);
         rightTextArea = rootView.findViewById(R.id.right_text_area);
-        RelativeLayout fragmentContainer = (RelativeLayout) rootView.findViewById(R.id.fragment_container);
+        titleArea = rootView.findViewById(R.id.title_area);
+        fragmentContainer = (RelativeLayout) rootView.findViewById(R.id.fragment_container);
         fragmentContainer.addView(inflater.inflate(getContentLayout(), container, false));
         workFlow();
         bindViews(rootView);
@@ -93,7 +99,11 @@ public abstract class BaseFragment extends Fragment {
                 }
             });
         }
+        if (!enableTitle()) {
+            titleArea.setVisibility(View.GONE);
+        }
         title.setText(getTitle());
+        if (performShutEffect()) performUpDownShutAnimation();
     }
 
     public void changeRightIcon(int resId) {
@@ -125,6 +135,14 @@ public abstract class BaseFragment extends Fragment {
         return TEXT_NOT_DEFINED;
     }
 
+    protected boolean enableTitle() {
+        return true;
+    }
+
+    protected boolean performShutEffect() {
+        return false;
+    }
+
     protected String getTitle() {
         return "Default";
     }
@@ -145,10 +163,46 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
     protected abstract int getContentLayout();
 
     protected abstract void bindViews(View rootView);
 
     protected abstract void prepareData();
+
+    protected void performUpDownShutAnimation() {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1F, 0F);
+        valueAnimator.addUpdateListener(this);
+        valueAnimator.setDuration(500);
+        valueAnimator.start();
+    }
+
+    protected void performCloseAnimation() {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0F, 1F);
+        valueAnimator.addUpdateListener(this);
+        valueAnimator.setDuration(500);
+        valueAnimator.start();
+    }
+
+    protected void closeWithAnimation() {
+        closing = true;
+        performCloseAnimation();
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+        float fac = (float) animation.getAnimatedValue();
+        titleArea.setTranslationY(-100 * fac);
+        fragmentContainer.setTranslationY(2000 * fac);
+        if (fac == 1F && closing) {
+            if (((BaseActivity) getActivity()).fragments.size() <= 1)
+                getActivity().finish();
+            else{
+                ((BaseActivity)getActivity()).removeFragment(this);
+            }
+        }
+    }
+
+    public void handleBackPress(){
+        closeWithAnimation();
+    }
 }

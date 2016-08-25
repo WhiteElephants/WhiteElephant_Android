@@ -32,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private RelativeLayout contentContainer;
     private View titleArea;
     private View contentView;
-    private List<Fragment> fragments = new ArrayList<>();
+    public List<Fragment> fragments = new ArrayList<>();
     private DetectableScrollView scrollView;
     public static final int NO_DRAWABLE = -1;
 
@@ -47,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         contentContainer.addView(contentView = LayoutInflater.from(getApplicationContext()).inflate(getContentLayout(), contentContainer, false));
         bindViews(contentView);
         contentView.setTranslationY(SharedParameter.getInstance().getScreenHeight());
-
+        workFLow();
         performInAnimation();
         prepareData();
         setTheme(R.style.noAnimationTheme);
@@ -57,6 +57,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(getMenuLayout(), menu);
         return true;
+    }
+
+    private void workFLow() {
+        titleArea.setVisibility(enableTitle() ? View.VISIBLE : View.GONE);
     }
 
     protected void performInAnimation() {
@@ -97,11 +101,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    protected void addFragment(Fragment fragment) {
+    public void addFragment(Fragment fragment) {
         if (findViewById(R.id.fragment_container) != null) {
             getFragmentTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
             playLeftAnimation();
             fragments.add(fragment);
+        }
+    }
+
+    public void addFragmentWithoutAnimation(Fragment fragment) {
+        if (findViewById(R.id.fragment_container) != null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
+            playLeftAnimation();
+            fragments.add(fragment);
+        }
+    }
+
+    public void removeFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+            fragments.remove(fragment);
         }
     }
 

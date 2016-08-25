@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import rawe.gordon.com.business.R;
+import rawe.gordon.com.business.fragments.BaseFragment;
 
 /**
  * Created by gordon on 8/25/16.
@@ -40,7 +41,7 @@ public class ContainerActivity extends BaseActivity {
 
     @Override
     protected void prepareData() {
-        addFragment(fragment);
+        addFragmentWithoutAnimation(fragment);
     }
 
     @Override
@@ -70,4 +71,14 @@ public class ContainerActivity extends BaseActivity {
         from.startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (fragments.size() == 0) {
+            super.onBackPressed();
+        } else {
+            if (fragments.get(fragments.size() - 1) instanceof BaseFragment) {
+                ((BaseFragment) fragments.get(fragments.size() - 1)).handleBackPress();
+            }
+        }
+    }
 }

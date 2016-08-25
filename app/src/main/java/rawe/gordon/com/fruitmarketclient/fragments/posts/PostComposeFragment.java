@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.Collections;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.activities.ContainerActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
@@ -85,7 +86,7 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void onLeftIconClicked() {
-        getActivity().finish();
+        closeWithAnimation();
     }
 
     @Override
@@ -95,11 +96,21 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void onRightTextClicked() {
-        super.onRightTextClicked();
+        ((BaseActivity)getActivity()).addFragmentWithoutAnimation(new PostComposeFragment());
     }
 
     public static void startWithContainer(Activity from, Bundle bundle) {
         if (from == null || from.isFinishing()) return;
         ContainerActivity.startFragmentInside(from, PostComposeFragment.class, bundle);
+    }
+
+    @Override
+    protected String getTitle() {
+        return "写文章";
+    }
+
+    @Override
+    protected boolean performShutEffect() {
+        return true;
     }
 }
