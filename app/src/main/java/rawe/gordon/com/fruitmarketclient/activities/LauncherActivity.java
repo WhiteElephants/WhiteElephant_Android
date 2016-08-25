@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.Arrays;
 
-import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.permission.PermissionManager;
-import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
 import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
@@ -19,7 +17,7 @@ import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
 /**
  * Created by gordon on 16/7/30.
  */
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends AppCompatActivity {
 
     private ViewPager fragmentPager;
     private LauncherTabLayout tabLayout;
@@ -31,61 +29,19 @@ public class LauncherActivity extends BaseActivity {
         permissionManager.checkAndRequestPermissions(this, new PermissionManager.PermissionCallback() {
             @Override
             public void onAllGranted() {
-                ToastUtil.say("都授权了，可以愉快的玩耍");
+
             }
 
             @Override
             public void onNotAllGranted() {
-                ToastUtil.say("不授权怎么玩");
+
             }
         }, Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA));
-    }
-
-    @Override
-    protected int getContentLayout() {
-        return R.layout.layout_activity_launcher;
-    }
-
-    @Override
-    protected void bindViews(View rootView) {
-        fragmentPager = (ViewPager) rootView.findViewById(R.id.fragment_pager);
-        tabLayout = (LauncherTabLayout) rootView.findViewById(R.id.tabs);
-    }
-
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "首页";
-    }
-
-    @Override
-    protected void prepareData() {
+        setContentView(R.layout.layout_activity_launcher);
+        fragmentPager = (ViewPager) findViewById(R.id.fragment_pager);
+        tabLayout = (LauncherTabLayout) findViewById(R.id.tabs);
         hooks();
-    }
-
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-
-    }
-
-    @Override
-    protected boolean enableTitle() {
-        return false;
     }
 
     private void hooks() {
@@ -99,7 +55,7 @@ public class LauncherActivity extends BaseActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                PostComposeActivity.gotoPostComposeActivity(LauncherActivity.this);
+
             }
 
             @Override

@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.R;
+import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 import rawe.gordon.com.business.generals.DetectableScrollView;
 import rawe.gordon.com.business.utils.AnimatorUtil;
 import rawe.gordon.com.business.application.SharedParameter;
@@ -31,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RelativeLayout contentContainer;
     private View contentView;
-    private List<EditBaseFragment> fragments = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
     private DetectableScrollView scrollView;
 
     @Override
@@ -104,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    protected void addFragment(EditBaseFragment fragment) {
+    protected void addFragment(Fragment fragment) {
         if (findViewById(R.id.fragment_container) != null) {
             getFragmentTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
             playLeftAnimation();
@@ -121,7 +123,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void addFragmentWithData(EditBaseFragment fragment, Bundle bundle) {
+    public void removeFragment(LauncherBaseFragment fragment) {
+        if (fragment != null) {
+            getFragmentTransaction().remove(fragment).commitAllowingStateLoss();
+            resumePositionAnimation();
+            fragments.remove(fragment);
+        }
+    }
+
+    protected void addFragmentWithData(Fragment fragment, Bundle bundle) {
         if (findViewById(R.id.fragment_container) != null) {
             fragment.setArguments(bundle);
             playLeftAnimation();
@@ -152,7 +162,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         finishWithAnimation();
     }
 
-    protected List<EditBaseFragment> getFragments() {
+    protected List<Fragment> getFragments() {
         return fragments;
     }
 

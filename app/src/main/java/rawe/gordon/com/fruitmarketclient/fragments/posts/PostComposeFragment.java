@@ -7,9 +7,9 @@ import android.view.View;
 
 import java.util.Collections;
 
+import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 
@@ -31,7 +31,6 @@ public class PostComposeFragment extends BaseFragment {
     @Override
     protected void bindViews(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
     }
 
     @Override
@@ -74,5 +73,9 @@ public class PostComposeFragment extends BaseFragment {
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public static void startWithContainer() {
+        PostComposeFragment postComposeFragment = new PostComposeFragment();
     }
 }
