@@ -22,9 +22,11 @@ public abstract class LauncherBaseFragment extends Fragment {
     protected boolean isDataInitiated = false;
 
     public static final int NO_DRAWABLE = -1;
+    public static final String TEXT_NOT_DEFINED = "TEXT_NOT_DEFINED";
 
     private AppCompatImageView leftIcon, rightIcon;
-    private View leftArea, rightArea;
+    private TextView leftText, rightText;
+    private View leftIconArea, rightIconArea, leftTextArea, rightTextArea;
     private TextView title;
 
     @Override
@@ -58,11 +60,16 @@ public abstract class LauncherBaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_launcher_base_fragment, container, false);
+        title = (TextView) rootView.findViewById(R.id.title);
         leftIcon = (AppCompatImageView) rootView.findViewById(R.id.left_logo);
         rightIcon = (AppCompatImageView) rootView.findViewById(R.id.right_logo);
         title = (TextView) rootView.findViewById(R.id.title);
-        leftArea = rootView.findViewById(R.id.left_area);
-        rightArea = rootView.findViewById(R.id.right_area);
+        leftIconArea = rootView.findViewById(R.id.left_area);
+        rightIconArea = rootView.findViewById(R.id.right_area);
+        leftText = (TextView) rootView.findViewById(R.id.left_text);
+        rightText = (TextView) rootView.findViewById(R.id.right_text);
+        leftTextArea = rootView.findViewById(R.id.left_text_area);
+        rightTextArea = rootView.findViewById(R.id.right_text_area);
         RelativeLayout fragmentContainer = (RelativeLayout) rootView.findViewById(R.id.fragment_container);
         fragmentContainer.addView(inflater.inflate(getContentLayout(), container, false));
         workFlow();
@@ -74,27 +81,48 @@ public abstract class LauncherBaseFragment extends Fragment {
     private void workFlow() {
         if (getRightDrawable() != NO_DRAWABLE) {
             rightIcon.setImageResource(getRightDrawable());
-            rightArea.setOnClickListener(new View.OnClickListener() {
+            rightIconArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRightClicked();
+                    onRightIconClicked();
                 }
             });
         } else {
-            rightArea.setVisibility(View.GONE);
+            rightIconArea.setVisibility(View.GONE);
         }
         if (getLeftDrawable() != NO_DRAWABLE) {
             leftIcon.setImageResource(getLeftDrawable());
-            leftArea.setOnClickListener(new View.OnClickListener() {
+            leftIconArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onLeftClicked();
+                    onLeftIconClicked();
                 }
             });
         } else {
-            leftArea.setVisibility(View.GONE);
+            leftIconArea.setVisibility(View.GONE);
         }
-
+        if (getLeftText().equals(TEXT_NOT_DEFINED)) {
+            leftTextArea.setVisibility(View.GONE);
+        } else {
+            leftText.setText(getLeftText());
+            leftTextArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onLeftTextClicked();
+                }
+            });
+        }
+        if (getRightText().equals(TEXT_NOT_DEFINED)) {
+            rightTextArea.setVisibility(View.GONE);
+        } else {
+            rightText.setText(getRightText());
+            rightTextArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightTextClicked();
+                }
+            });
+        }
         title.setText(getTitle());
     }
 
@@ -119,19 +147,33 @@ public abstract class LauncherBaseFragment extends Fragment {
         return NO_DRAWABLE;
     }
 
+    protected String getLeftText() {
+        return TEXT_NOT_DEFINED;
+    }
+
+    protected String getRightText() {
+        return TEXT_NOT_DEFINED;
+    }
+
     protected String getTitle() {
         return "Default";
     }
 
-    protected void onRightClicked() {
+    protected void onRightIconClicked() {
     }
 
-    protected void onLeftClicked() {
+    protected void onLeftIconClicked() {
+    }
+
+    protected void onRightTextClicked() {
+    }
+
+    protected void onLeftTextClicked() {
     }
 
     protected void onTitleClicked() {
-    }
 
+    }
 
     protected abstract int getContentLayout();
 

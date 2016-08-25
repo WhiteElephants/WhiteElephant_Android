@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/containerDarkerGray"
+    android:background="@color/mainMiddle"
     android:clickable="true">
 
     <LinearLayout
@@ -11,32 +10,79 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height"
-            android:background="?attr/colorPrimary"
-            android:minHeight="@dimen/actionbar_height"
-            android:paddingRight="2dp"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Choose Gender"
-            app:titleTextAppearance="@style/styleActionBar">
+            android:layout_height="36dp"
+            android:background="@color/mainDark">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="title"
+                android:textColor="@color/textLightGray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
-                android:id="@+id/ok_area"
-                android:layout_width="48dp"
-                android:layout_height="40dp"
-                android:layout_gravity="right">
+                android:id="@+id/right_area"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true">
 
                 <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/right_logo"
                     android:layout_width="24dp"
-                    android:id="@+id/ok_image"
                     android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    app:srcCompat="@drawable/ic_correct_grey" />
+                    android:layout_centerInParent="true" />
             </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
+
+            <RelativeLayout
+                android:id="@+id/right_text_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/right_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="确定"
+                    android:textColor="@color/textLightGray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/left_area"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentLeft="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/left_logo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/left_text_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/left_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="确定"
+                    android:textColor="@color/textLightGray" />
+            </RelativeLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/fragment_container"

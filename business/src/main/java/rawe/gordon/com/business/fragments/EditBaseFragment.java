@@ -27,7 +27,7 @@ public abstract class EditBaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.layout_base_fragment, container, false);
+        rootView = inflater.inflate(R.layout.layout_edit_base_fragment, container, false);
         okArea = rootView.findViewById(R.id.ok_area);
         okImage = (AppCompatImageView) rootView.findViewById(R.id.ok_image);
         if (getOkDrawable() != NO_DRAWABLE) {

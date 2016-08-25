@@ -13,6 +13,7 @@ import rawe.gordon.com.business.permission.PermissionManager;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
 import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
+import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 
 /**
  * Created by gordon on 16/7/30.
@@ -55,7 +56,7 @@ public class LauncherActivity extends AppCompatActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-
+                PostComposeFragment.startWithContainer(LauncherActivity.this,null);
             }
 
             @Override

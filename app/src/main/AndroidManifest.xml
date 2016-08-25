@@ -15,6 +15,7 @@
             android:theme="@style/noAnimationTheme" />
         <activity
             android:name=".activities.LauncherActivity"
+            android:screenOrientation="portrait"
             android:label="@string/launcher_activity"
             android:theme="@style/noAnimationTheme">
             <intent-filter>
@@ -66,6 +67,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/noAnimationTheme" />/>
 
+
+        <activity
+            android:name="rawe.gordon.com.business.activities.ContainerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/noAnimationTheme" />/>
         <activity
             android:name="com.iknow.imageselect.activities.SingleSelectImageActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"

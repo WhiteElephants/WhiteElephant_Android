@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,44 +18,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.R;
+import rawe.gordon.com.business.application.SharedParameter;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 import rawe.gordon.com.business.generals.DetectableScrollView;
 import rawe.gordon.com.business.utils.AnimatorUtil;
-import rawe.gordon.com.business.application.SharedParameter;
-import rawe.gordon.com.business.fragments.EditBaseFragment;
 
 /**
  * Created by gordon on 16/5/8.
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private RelativeLayout contentContainer;
+    private View titleArea;
     private View contentView;
     private List<Fragment> fragments = new ArrayList<>();
     private DetectableScrollView scrollView;
+    public static final int NO_DRAWABLE = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onGetExtras(getIntent() == null ? null : getIntent().getExtras() == null ? null : getIntent().getExtras());
         setContentView(R.layout.layout_base_activity);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         contentContainer = (RelativeLayout) findViewById(R.id.content);
+        titleArea = findViewById(R.id.title_area);
         scrollView = (DetectableScrollView) findViewById(R.id.scroll_view);
         contentContainer.addView(contentView = LayoutInflater.from(getApplicationContext()).inflate(getContentLayout(), contentContainer, false));
         bindViews(contentView);
         contentView.setTranslationY(SharedParameter.getInstance().getScreenHeight());
-        toolbar.setTitle(getNavTitle());
-        toolbar.setNavigationIcon(getIcon());
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackAction();
-            }
-        });
-        if(!enableTitle())toolbar.setVisibility(View.GONE);
+
         performInAnimation();
         prepareData();
         setTheme(R.style.noAnimationTheme);
@@ -69,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void performInAnimation() {
-        Animator toolbarAnimator = AnimatorUtil.getToolbarDropDownAnimator(toolbar);
+        Animator toolbarAnimator = AnimatorUtil.getToolbarDropDownAnimator(titleArea);
         Animator contentAlpha = AnimatorUtil.getAlphaInAnimator(contentContainer);
         Animator contentTranslate = AnimatorUtil.getDropDownAnimator(contentView);
         AnimatorSet set = new AnimatorSet();
@@ -176,14 +167,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void prepareData();
 
-    protected abstract int getIcon();
-
     protected abstract void onBackAction();
 
     protected abstract void onGetExtras(Bundle bundle);
 
     protected boolean enableTitle() {
         return true;
+    }
+
+    protected int getIcon() {
+        return NO_DRAWABLE;
     }
 
     /**

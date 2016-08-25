@@ -21,9 +21,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="title"
-                android:textStyle="bold"
                 android:textColor="@color/textLightGray"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/right_area"
@@ -33,9 +33,25 @@
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/right_logo"
-                    android:layout_centerInParent="true"
                     android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/right_text_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/right_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="确定"
+                    android:textColor="@color/textLightGray" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -47,8 +63,24 @@
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/left_logo"
                     android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/left_text_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/left_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_height="24dp" />
+                    android:text="确定"
+                    android:textColor="@color/textLightGray" />
             </RelativeLayout>
         </RelativeLayout>
 

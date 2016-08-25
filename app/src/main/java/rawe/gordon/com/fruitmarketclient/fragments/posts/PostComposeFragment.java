@@ -1,5 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.fragments.posts;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -7,6 +9,7 @@ import android.view.View;
 
 import java.util.Collections;
 
+import rawe.gordon.com.business.activities.ContainerActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
@@ -75,7 +78,28 @@ public class PostComposeFragment extends BaseFragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    public static void startWithContainer() {
-        PostComposeFragment postComposeFragment = new PostComposeFragment();
+    @Override
+    protected int getLeftDrawable() {
+        return R.drawable.ic_arrow_back;
+    }
+
+    @Override
+    protected void onLeftIconClicked() {
+        getActivity().finish();
+    }
+
+    @Override
+    protected String getRightText() {
+        return "确定";
+    }
+
+    @Override
+    protected void onRightTextClicked() {
+        super.onRightTextClicked();
+    }
+
+    public static void startWithContainer(Activity from, Bundle bundle) {
+        if (from == null || from.isFinishing()) return;
+        ContainerActivity.startFragmentInside(from, PostComposeFragment.class, bundle);
     }
 }
