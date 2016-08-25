@@ -34,4 +34,9 @@ public class LauncherFirstFragment extends LauncherBaseFragment {
     public void fetchNetWorkData() {
 
     }
+
+    @Override
+    protected String getTitle() {
+        return "推荐";
+    }
 }

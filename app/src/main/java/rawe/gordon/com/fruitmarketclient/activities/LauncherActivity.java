@@ -48,10 +48,10 @@ public class LauncherActivity extends AppCompatActivity {
     private void hooks() {
         fragmentPager.setAdapter(new LauncherFragmentAdapter(getSupportFragmentManager()));
         tabLayout.configure(new LauncherTabLayout.Tab[]{
-                new LauncherTabLayout.Tab(R.drawable.ic_credit_card_orange, "首页", R.drawable.ic_credit_card_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_home_orange, "推荐", R.drawable.ic_home_grey),
                 new LauncherTabLayout.Tab(R.drawable.ic_safari_orange, "发现", R.drawable.ic_safari_gray),
                 new LauncherTabLayout.Tab(R.drawable.ic_add_white, "", R.drawable.ic_add_white),
-                new LauncherTabLayout.Tab(R.drawable.ic_settings_orange, "创作", R.drawable.ic_settings_grey),
+                new LauncherTabLayout.Tab(R.drawable.ic_draft_orange, "草稿", R.drawable.ic_draft_gray),
                 new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人", R.drawable.ic_person_gray)
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override

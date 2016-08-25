@@ -42,4 +42,9 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
     public void fetchNetWorkData() {
 
     }
+
+    @Override
+    protected String getTitle() {
+        return "草稿";
+    }
 }

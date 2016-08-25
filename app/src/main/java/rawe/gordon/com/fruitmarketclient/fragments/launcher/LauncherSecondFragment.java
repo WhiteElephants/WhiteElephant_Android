@@ -34,4 +34,9 @@ public class LauncherSecondFragment extends LauncherBaseFragment {
     public void fetchNetWorkData() {
 
     }
+
+    @Override
+    protected String getTitle() {
+        return "发现";
+    }
 }
