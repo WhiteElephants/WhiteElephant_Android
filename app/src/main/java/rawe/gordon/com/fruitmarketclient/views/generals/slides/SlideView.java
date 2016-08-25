@@ -1,23 +1,23 @@
 package rawe.gordon.com.fruitmarketclient.views.generals.slides;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.business.network.responses.pojo.SlideModel;
+import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.ViewFactory;
 
 /**
@@ -43,9 +43,10 @@ public class SlideView extends LinearLayout {
         if (sourceData == null || sourceData.size() == 0) setVisibility(GONE);
         else setVisibility(VISIBLE);
         for (SlideModel slide : sourceData) {
-            SimpleDraweeView draweeView;
-            views.add(draweeView = (SimpleDraweeView) ViewFactory.createView(LayoutInflater.from(context), R.layout.layout_slides_sub_view, rootView, false));
-            if (slide.getImageUrl() != null) draweeView.setImageURI(Uri.parse(slide.getImageUrl()));
+            ImageView draweeView;
+            views.add(draweeView = (ImageView) ViewFactory.createView(LayoutInflater.from(context), R.layout.layout_slides_sub_view, rootView, false));
+            if (slide.getImageUrl() != null)
+                ImageLoader.getInstance().displayImage(slide.getImageUrl(), draweeView);
         }
         length = sourceData.size();
         viewPager.setAdapter(new SlideViewAdapter());

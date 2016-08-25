@@ -12,6 +12,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(":business")
-    compile project(":selectimage")
+    compile project(':imageselect')
     compile project(":pull")
 }

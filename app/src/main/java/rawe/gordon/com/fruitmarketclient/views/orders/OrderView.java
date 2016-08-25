@@ -5,10 +5,10 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.gordon.rawe.business.models.CartOrder;
 
 import rawe.gordon.com.fruitmarketclient.R;
@@ -20,7 +20,7 @@ import rawe.gordon.com.business.application.ContextHolder;
 public class OrderView extends LinearLayout implements View.OnClickListener {
     private View rootView, plus, minus;
     private TextView nameText, priceText, sizeText, colorText, countText;
-    private SimpleDraweeView logo;
+    private ImageView logo;
 
     private int count = 1;
     private String name, size, color, logoUrl;
@@ -36,7 +36,7 @@ public class OrderView extends LinearLayout implements View.OnClickListener {
         sizeText = (TextView) rootView.findViewById(R.id.size);
         colorText = (TextView) rootView.findViewById(R.id.color);
         countText = (TextView) rootView.findViewById(R.id.count);
-        logo = (SimpleDraweeView) rootView.findViewById(R.id.logo);
+        logo = (ImageView) rootView.findViewById(R.id.logo);
     }
 
     public void initialize(CartOrder model, PriceListener listener) {

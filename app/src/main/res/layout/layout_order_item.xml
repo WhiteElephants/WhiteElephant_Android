@@ -33,7 +33,7 @@
                 app:cardBackgroundColor="@color/iconOrange"
                 app:cardCornerRadius="30dp">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/logo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"

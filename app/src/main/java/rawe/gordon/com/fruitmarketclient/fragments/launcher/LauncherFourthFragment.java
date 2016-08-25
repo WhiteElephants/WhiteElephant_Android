@@ -4,9 +4,8 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.LauncherBaseFragment;
@@ -16,7 +15,7 @@ import rawe.gordon.com.fruitmarketclient.views.generals.pops.LocationEntity;
  * Created by gordon on 16/7/31.
  */
 public class LauncherFourthFragment extends LauncherBaseFragment implements View.OnClickListener {
-    private SimpleDraweeView logo;
+    private ImageView logo;
     private TextView nickName, userId, deliveryAddress, gender, districtText, phoneText, emailText;
     private View logout, genderArea, districtArea, phoneArea, emailArea, nameArea, deliverArea;
     private LocationEntity locationEntity = new LocationEntity();
@@ -34,7 +33,7 @@ public class LauncherFourthFragment extends LauncherBaseFragment implements View
 
     @Override
     protected void bindViews(View rootView) {
-        logo = (SimpleDraweeView) rootView.findViewById(R.id.logo);
+        logo = (ImageView) rootView.findViewById(R.id.logo);
         nickName = (TextView) rootView.findViewById(R.id.nickname);
         nameArea = rootView.findViewById(R.id.name_area);
         userId = (TextView) rootView.findViewById(R.id.user_id);

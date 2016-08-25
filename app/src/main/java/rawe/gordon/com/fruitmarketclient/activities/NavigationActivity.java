@@ -11,18 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import rawe.gordon.com.business.utils.CacheBean;
-import rawe.gordon.com.business.utils.LoginManager;
-import rawe.gordon.com.business.utils.ToastUtil;
-import rawe.gordon.com.business.utils.ViewSizeRegulator;
-import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.business.application.SharedParameter;
 import rawe.gordon.com.business.network.RestClient;
 import rawe.gordon.com.business.network.responses.PopularResponse;
 import rawe.gordon.com.business.network.responses.SlideResponse;
+import rawe.gordon.com.business.utils.LoginManager;
+import rawe.gordon.com.business.utils.ToastUtil;
+import rawe.gordon.com.business.utils.ViewSizeRegulator;
+import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.generals.dialogs.filter.FilterDialog;
 import rawe.gordon.com.fruitmarketclient.views.generals.pulls.PullToRefreshLayout;
 import rawe.gordon.com.fruitmarketclient.views.generals.slides.SlideView;
@@ -41,7 +41,7 @@ public class NavigationActivity extends AppCompatActivity
     private SlideView slideView;
     private PopularGrids populars;
     private PullToRefreshLayout refreshView;
-    private SimpleDraweeView logo;
+    private ImageView logo;
     private View searchArea;
 
     @Override
@@ -63,7 +63,7 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         searchArea.setOnClickListener(this);
         populars = (PopularGrids) findViewById(R.id.populars);
-        logo = (SimpleDraweeView) navigationView.getHeaderView(0).findViewById(R.id.logo);
+        logo = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.logo);
         initialize();
     }
 
@@ -72,7 +72,7 @@ public class NavigationActivity extends AppCompatActivity
         ViewSizeRegulator.regulateScreenRatio(slideView, 16 / 9F);
         getFirstBatchOfPopulars();
         refreshView.setOnRefreshListener(this);
-        logo.setImageURI(Uri.parse("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg"));
+        ImageLoader.getInstance().displayImage("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg", logo);
     }
 
     private void getFirstBatchOfPopulars() {

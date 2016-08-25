@@ -41,7 +41,7 @@
                 android:layout_marginTop="10dp"
                 app:cardCornerRadius="5dp">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/logo"
                     android:layout_width="@dimen/setting_segment"
                     android:layout_height="@dimen/setting_segment" />

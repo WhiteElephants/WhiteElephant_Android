@@ -1,27 +1,26 @@
 package rawe.gordon.com.fruitmarketclient.views.generals.dialogs.filter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rawe.gordon.com.business.utils.CacheBean;
-import rawe.gordon.com.business.utils.ToastUtil;
-import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.business.network.RestClient;
 import rawe.gordon.com.business.network.responses.CategoriesResponse;
 import rawe.gordon.com.business.network.responses.pojo.CategoryModel;
 import rawe.gordon.com.business.network.responses.pojo.CategorySubModel;
+import rawe.gordon.com.business.utils.ToastUtil;
+import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.generals.dialogs.base.AbstractDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -153,7 +152,7 @@ public class CategorySelectDialog extends AbstractDialog {
                 view = inflater.inflate(R.layout.layout_category_item, viewGroup, false);
             }
             ((TextView) view.findViewById(R.id.text1)).setText(getItem(i).getTile());
-            ((SimpleDraweeView) view.findViewById(R.id.drawee)).setImageURI(Uri.parse(getItem(i).getLogo()));
+            ImageLoader.getInstance().displayImage(getItem(i).getLogo(), (ImageView) view.findViewById(R.id.drawee));
             final View mask = view.findViewById(R.id.select_mask);
             mask.setVisibility(selectedCategories.contains(getItem(i).getTile()) ? View.VISIBLE : View.GONE);
             view.setOnClickListener(new View.OnClickListener() {

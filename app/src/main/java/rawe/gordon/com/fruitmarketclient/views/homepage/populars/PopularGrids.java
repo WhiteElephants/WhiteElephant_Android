@@ -2,17 +2,16 @@ package rawe.gordon.com.fruitmarketclient.views.homepage.populars;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import rawe.gordon.com.business.utils.CacheBean;
+import rawe.gordon.com.business.network.responses.pojo.CommodityModel;
 import rawe.gordon.com.business.utils.ViewSizeRegulator;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.CommodityDetailActivity;
-import rawe.gordon.com.business.network.responses.pojo.CommodityModel;
 import rawe.gordon.com.fruitmarketclient.views.generals.grids.AbstractRecyclerGrid;
 
 /**
@@ -35,9 +34,8 @@ public class PopularGrids extends AbstractRecyclerGrid<CommodityModel> {
 
     @Override
     protected void bindViews(View view, final CommodityModel model, final Activity activity) {
-        SimpleDraweeView draweeView = (SimpleDraweeView) view.findViewById(R.id.image);
-        Uri uri = Uri.parse(model.getThumbnail());
-        draweeView.setImageURI(uri);
+        ImageView draweeView = (ImageView) view.findViewById(R.id.image);
+        ImageLoader.getInstance().displayImage(model.getThumbnail(), draweeView);
         try {
             ViewSizeRegulator.regulateViewRatio(view, 4 / 3F);
         } catch (Exception e) {
@@ -46,7 +44,7 @@ public class PopularGrids extends AbstractRecyclerGrid<CommodityModel> {
         draweeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommodityDetailActivity.gotoCommodityDetailActivity(activity,model.getId());
+                CommodityDetailActivity.gotoCommodityDetailActivity(activity, model.getId());
             }
         });
     }

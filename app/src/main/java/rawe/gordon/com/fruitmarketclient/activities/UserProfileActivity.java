@@ -2,18 +2,21 @@ package rawe.gordon.com.fruitmarketclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.gordon.rawe.business.models.User;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import rawe.gordon.com.business.db.DBManager;
+import rawe.gordon.com.business.landscape.ProvinceUtil;
+import rawe.gordon.com.business.network.RestClient;
+import rawe.gordon.com.business.network.responses.UserResponse;
+import rawe.gordon.com.business.network.responses.pojo.UserModel;
 import rawe.gordon.com.business.utils.LoginManager;
 import rawe.gordon.com.business.utils.NullTransformer;
-import rawe.gordon.com.business.landscape.ProvinceUtil;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.BaseFragment;
@@ -22,9 +25,6 @@ import rawe.gordon.com.fruitmarketclient.fragments.edits.EditEmailFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditGenderFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditNameFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.edits.EditPhoneFragment;
-import rawe.gordon.com.business.network.RestClient;
-import rawe.gordon.com.business.network.responses.UserResponse;
-import rawe.gordon.com.business.network.responses.pojo.UserModel;
 import rawe.gordon.com.fruitmarketclient.views.generals.pops.LocationEntity;
 import rawe.gordon.com.fruitmarketclient.views.generals.pops.PopChooser;
 import retrofit2.Call;
@@ -35,7 +35,7 @@ import retrofit2.Response;
  * Created by gordon on 16/5/12.
  */
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener {
-    private SimpleDraweeView logo;
+    private ImageView logo;
     private TextView nickName, userId, deliveryAddress, gender, districtText, phoneText, emailText;
     private View logout, genderArea, districtArea, phoneArea, emailArea, nameArea, deliverArea;
     private BaseFragment fragment;
@@ -47,7 +47,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void bindViews(View rootView) {
-        logo = (SimpleDraweeView) rootView.findViewById(R.id.logo);
+        logo = (ImageView) rootView.findViewById(R.id.logo);
         nickName = (TextView) rootView.findViewById(R.id.nickname);
         nameArea = rootView.findViewById(R.id.name_area);
         userId = (TextView) rootView.findViewById(R.id.user_id);
@@ -88,7 +88,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             sync(user.getUuid());
         }
         setupListeners();
-        logo.setImageURI(Uri.parse("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg"));
+        ImageLoader.getInstance().displayImage("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg", logo);
     }
 
     @Override
