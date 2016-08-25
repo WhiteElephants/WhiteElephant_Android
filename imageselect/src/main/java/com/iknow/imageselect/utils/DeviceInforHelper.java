@@ -3,7 +3,7 @@ package com.iknow.imageselect.utils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-import com.iknow.imageselect.ImageSelectContextHolder;
+import rawe.gordon.com.business.application.ContextHolder;
 
 /**
  * Author: Jason.Chou
@@ -14,18 +14,10 @@ import com.iknow.imageselect.ImageSelectContextHolder;
 public class DeviceInforHelper {
 
     public static int getPixelFromDip(float f) {
-        return getPixelFromDip(ImageSelectContextHolder.getInstance().getContext().getResources().getDisplayMetrics(), f);
+        return getPixelFromDip(ContextHolder.getInstance().getContext().getResources().getDisplayMetrics(), f);
     }
 
     public static int getPixelFromDip(DisplayMetrics dm, float dip) {
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, dm) + 0.5f);
-    }
-
-    public static int getScreenWidth() {
-        return ImageSelectContextHolder.getInstance().getContext().getResources().getDisplayMetrics().widthPixels;
-    }
-
-    public static int getScreenHeight() {
-        return ImageSelectContextHolder.getInstance().getContext().getResources().getDisplayMetrics().heightPixels;
     }
 }

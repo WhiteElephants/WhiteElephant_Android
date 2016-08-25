@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iknow.imageselect.ImageSelectContextHolder;
 import com.iknow.imageselect.R;
 import com.iknow.imageselect.adapter.AlbumListAdapter;
 import com.iknow.imageselect.model.AlbumInfo;
@@ -32,6 +31,8 @@ import com.iknow.imageselect.widget.TitleView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import rawe.gordon.com.business.application.ContextHolder;
 
 /**
  * Author: J.Chou
@@ -87,9 +88,9 @@ public abstract class AbsImageSelectActivity extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         this.mContext = this;
         setContentView(R.layout.abs_image_select_layout);
-        allMedias = MediaFileUtil.getAllImageFiles(ImageSelectContextHolder.getInstance().getContext());
+        allMedias = MediaFileUtil.getAllImageFiles(ContextHolder.getInstance().getContext());
         imageAndVideoAlbums = (ArrayList<MediaInfo>) allMedias.clone();
-        videoAlbumInfo.medias = MediaFileUtil.getAllVideoFiles(ImageSelectContextHolder.getInstance().getContext());
+        videoAlbumInfo.medias = MediaFileUtil.getAllVideoFiles(ContextHolder.getInstance().getContext());
         imageChoosePresenter = new ImageChoosePresenterCompl(this);
         initTitleView(gsTitleView = (TitleView) this.findViewById(R.id.titlebar));
         initBottomView(this.findViewById(R.id.bottomView));
@@ -109,7 +110,7 @@ public abstract class AbsImageSelectActivity extends AppCompatActivity implement
 
                 final File f = new File(mTakeCameraImagePath);
                 if (f == null || !f.exists()) {
-                    Toast.makeText(ImageSelectContextHolder.getInstance().getContext(), "照相失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ContextHolder.getInstance().getContext(), "照相失败", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -141,7 +142,7 @@ public abstract class AbsImageSelectActivity extends AppCompatActivity implement
                         allAlbumInfo.name = PIC_AND_VIDEO;
                         albumLinkedList.add(allAlbumInfo);
                     } else {
-                        allAlbumInfo.medias = MediaFileUtil.getAllImageFiles(ImageSelectContextHolder.getInstance().getContext());
+                        allAlbumInfo.medias = MediaFileUtil.getAllImageFiles(ContextHolder.getInstance().getContext());
                         allAlbumInfo.name = PIC_AND_VIDEO;
                         albumLinkedList.add(allAlbumInfo);
                     }
@@ -150,7 +151,7 @@ public abstract class AbsImageSelectActivity extends AppCompatActivity implement
                         videoAlbumInfo.name = ALL_VIDEO;
                         albumLinkedList.add(videoAlbumInfo);
                     } else {
-                        videoAlbumInfo.medias = MediaFileUtil.getAllVideoFiles(ImageSelectContextHolder.getInstance().getContext());
+                        videoAlbumInfo.medias = MediaFileUtil.getAllVideoFiles(ContextHolder.getInstance().getContext());
                         videoAlbumInfo.name = ALL_VIDEO;
                         albumLinkedList.add(videoAlbumInfo);
                     }

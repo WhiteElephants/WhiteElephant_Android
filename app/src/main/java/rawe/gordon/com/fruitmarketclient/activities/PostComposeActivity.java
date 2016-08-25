@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.Toast;
+
+import com.iknow.imageselect.IntentionType;
+import com.iknow.imageselect.activities.MultiSelectImageActivity;
 
 import java.util.Collections;
 
@@ -29,6 +31,7 @@ public class PostComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        choosePictures();
         setContentView(R.layout.layout_post_compose);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -56,7 +59,7 @@ public class PostComposeActivity extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.START || viewHolder.getAdapterPosition() == 0
                         || viewHolder.getAdapterPosition() == adapter.nodes.size() - 1) return;
-                if(adapter.nodes.size()==3){
+                if (adapter.nodes.size() == 3) {
                     ToastUtil.say("至少留点内容吧，都删了还怎么玩");
                 }
                 adapter.nodes.remove(viewHolder.getAdapterPosition());
@@ -75,5 +78,15 @@ public class PostComposeActivity extends AppCompatActivity {
         start.startActivity(new Intent(start, PostComposeActivity.class));
     }
 
+    private void choosePictures() {
+        Intent intent = new Intent(this, MultiSelectImageActivity.class);
+        startActivityForResult(intent, IntentionType.INTENTION_CHOOSE_PICTURES);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IntentionType.INTENTION_CHOOSE_PICTURES && resultCode == RESULT_OK) {
+
+        }
+    }
 }

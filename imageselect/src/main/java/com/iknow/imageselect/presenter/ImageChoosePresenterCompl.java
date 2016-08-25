@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.widget.Toast;
 
-import com.iknow.imageselect.ImageSelectContextHolder;
 import com.iknow.imageselect.activities.AbsImageSelectActivity;
 import com.iknow.imageselect.activities.BrowseDetailActivity;
 import com.iknow.imageselect.model.MediaInfo;
@@ -17,6 +16,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
+import rawe.gordon.com.business.application.ContextHolder;
 
 /**
  * Author: J.Chou
@@ -55,7 +56,7 @@ public class ImageChoosePresenterCompl implements IImageChoosePresenter {
 
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            if (intent.resolveActivity(ImageSelectContextHolder.getInstance().getContext().getPackageManager()) != null) {
+            if (intent.resolveActivity(ContextHolder.getInstance().getContext().getPackageManager()) != null) {
                 context.startActivityForResult(intent, AbsImageSelectActivity.PHOTO_REQUEST_CAMERA);
             }
         } catch (Throwable e) {
