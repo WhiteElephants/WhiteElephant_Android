@@ -20,6 +20,10 @@ import rawe.gordon.com.business.utils.ToastUtil;
  * Created by gordon on 16/8/26.
  */
 public class MultiSelectFragments extends BaseFragment {
+    public static final int INTENTION_TO_POST = 0;
+    public static final int INTENTION_TO_CHOOSE = 1;
+    private int intention = INTENTION_TO_POST;
+
     private RecyclerView recyclerView;
     private List<ImageMediaEntry> imageMediaEntries;
     private boolean allowEmpty = true;
@@ -64,7 +68,12 @@ public class MultiSelectFragments extends BaseFragment {
             ToastUtil.say("至少选选一张图片才行");
             return;
         }
-        closeWithAnimation();
+        closeWithAnimation(new Callback() {
+            @Override
+            public void onAnimationFinish() {
+
+            }
+        });
         if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
     }
 
@@ -75,11 +84,26 @@ public class MultiSelectFragments extends BaseFragment {
 
     @Override
     protected void onLeftIconClicked() {
-        closeWithAnimation();
+        closeWithAnimation(new Callback() {
+            @Override
+            public void onAnimationFinish() {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
+            }
+        });
     }
 
     public MultiSelectFragments setListener(ResultListener listener) {
         this.listener = listener;
+        return this;
+    }
+
+    public MultiSelectFragments setIntention(int intention) {
+        this.intention = intention;
+        return this;
+    }
+
+    public MultiSelectFragments setAllowEmpty(boolean allowEmpty) {
+        this.allowEmpty = allowEmpty;
         return this;
     }
 

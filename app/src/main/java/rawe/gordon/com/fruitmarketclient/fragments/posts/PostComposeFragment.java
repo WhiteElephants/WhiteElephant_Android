@@ -92,7 +92,12 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        closeWithAnimation();
+        closeWithAnimation(new Callback() {
+            @Override
+            public void onAnimationFinish() {
+
+            }
+        });
     }
 
     @Override
@@ -117,7 +122,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected boolean performShutEffect() {
-        return false;
+        return true;
     }
 
     @Override
@@ -130,7 +135,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
                     public void run() {
                         adapter.addMultipleImageNodes(selected, triggerPosition);
                     }
-                },500);
+                }, 500);
             }
         }));
     }

@@ -77,7 +77,12 @@ public class ContainerActivity extends BaseActivity {
             super.onBackPressed();
         } else {
             if (fragments.get(fragments.size() - 1) instanceof BaseFragment) {
-                ((BaseFragment) fragments.get(fragments.size() - 1)).handleBackPress();
+                ((BaseFragment) fragments.get(fragments.size() - 1)).handleBackPress(new BaseFragment.Callback() {
+                    @Override
+                    public void onAnimationFinish() {
+
+                    }
+                });
             }
         }
     }

@@ -1,6 +1,5 @@
 package rawe.gordon.com.business.fragments;
 
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,17 +7,18 @@ import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import rawe.gordon.com.business.R;
-import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.utils.DrawableUtil;
 
 /**
  * Created by gordon on 16/7/31.
  */
-public abstract class BaseFragment extends Fragment implements ValueAnimator.AnimatorUpdateListener {
+public abstract class BaseFragment extends Fragment {
 
     public static final int NO_DRAWABLE = -1;
     public static final String TEXT_NOT_DEFINED = "TEXT_NOT_DEFINED";
@@ -171,39 +171,57 @@ public abstract class BaseFragment extends Fragment implements ValueAnimator.Ani
     protected abstract void prepareData();
 
     protected void performUpDownShutAnimation() {
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1F, 0F);
-        valueAnimator.addUpdateListener(this);
-        valueAnimator.setDuration(500);
-        valueAnimator.start();
+        Animation titleAnim = new TranslateAnimation(0, 0, -100, 0);
+        titleAnim.setDuration(500);
+        Animation conAnim = new TranslateAnimation(0, 0, 2000, 0);
+        conAnim.setDuration(500);
+        conAnim.setFillAfter(true);
+        titleAnim.setFillAfter(true);
+        titleArea.startAnimation(titleAnim);
+        fragmentContainer.startAnimation(conAnim);
     }
 
-    protected void performCloseAnimation() {
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0F, 1F);
-        valueAnimator.addUpdateListener(this);
-        valueAnimator.setDuration(500);
-        valueAnimator.start();
-    }
+    protected void performCloseAnimation(final Callback callback) {
+        Animation titleAnim = new TranslateAnimation(0, 0, 0, -100);
+        titleAnim.setDuration(500);
+        Animation conAnim = new TranslateAnimation(0, 0, 0, 2000);
+        conAnim.setDuration(500);
+        titleArea.startAnimation(titleAnim);
+        fragmentContainer.startAnimation(conAnim);
+        conAnim.setFillAfter(true);
+        titleAnim.setFillAfter(true);
+        conAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
-    protected void closeWithAnimation() {
-        closing = true;
-        performCloseAnimation();
-    }
-
-    @Override
-    public void onAnimationUpdate(ValueAnimator animation) {
-        float fac = (float) animation.getAnimatedValue();
-        titleArea.setTranslationY(-100 * fac);
-        fragmentContainer.setTranslationY(2000 * fac);
-        if (fac == 1F && closing) {
-            if (((BaseActivity) getActivity()).fragments.size() <= 1)
-                getActivity().finish();
-            else {
-                ((BaseActivity) getActivity()).removeFragment(this);
             }
-        }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (callback != null) callback.onAnimationFinish();
+//                if (((BaseActivity) getActivity()).fragments.size() <= 1)
+//                    getActivity().finish();
+//                else {
+//                    ((BaseActivity) getActivity()).removeFragment(BaseFragment.this);
+//                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
-    public void handleBackPress() {
-        closeWithAnimation();
+    public void closeWithAnimation(Callback callback) {
+        performCloseAnimation(callback);
+    }
+
+    public interface Callback {
+        void onAnimationFinish();
+    }
+
+    public void handleBackPress(Callback callback) {
+        closeWithAnimation(callback);
     }
 }

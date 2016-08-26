@@ -7,13 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.iknow.imageselect.fragments.MultiSelectFragments;
+
 import java.util.Arrays;
 
 import rawe.gordon.com.business.permission.PermissionManager;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
 import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
-import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 
 /**
  * Created by gordon on 16/7/30.
@@ -23,6 +24,7 @@ public class LauncherActivity extends AppCompatActivity {
     private ViewPager fragmentPager;
     private LauncherTabLayout tabLayout;
     private PermissionManager permissionManager = new PermissionManager();
+    private MultiSelectFragments multiSelectFragments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class LauncherActivity extends AppCompatActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                PostComposeFragment.startWithContainer(LauncherActivity.this,null);
+                getSupportFragmentManager().beginTransaction().add(R.id.container, multiSelectFragments = new MultiSelectFragments(), MultiSelectFragments.class.getCanonicalName()).commitAllowingStateLoss();
             }
 
             @Override
@@ -70,5 +72,13 @@ public class LauncherActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionManager.handlePermission(requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (multiSelectFragments != null) {
+            getSupportFragmentManager().beginTransaction().remove(multiSelectFragments).commitAllowingStateLoss();
+            multiSelectFragments = null;
+        }
     }
 }
