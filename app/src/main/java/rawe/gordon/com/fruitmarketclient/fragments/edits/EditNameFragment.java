@@ -45,7 +45,7 @@ public class EditNameFragment extends EditBaseFragment implements View.OnClickLi
                     return;
                 }
                 if (listener != null) listener.onSelected(getName());
-                ((BaseActivity) getActivity()).removeFragment(EditNameFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditNameFragment.this);
             }
         });
         setName((String) CacheBean.getParam(EDIT_NAME_FRAGMENT, EDIT_NAME_FRAGMENT));

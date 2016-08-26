@@ -12,17 +12,20 @@ import com.iknow.imageselect.fragments.provider.SourceProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
+import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 
 /**
  * Created by gordon on 16/8/26.
  */
-public class MultiSelectFragments extends BaseFragment {
+public class MultiSelectFragment extends BaseFragment {
     public static final int INTENTION_TO_POST = 0;
     public static final int INTENTION_TO_CHOOSE = 1;
     private int intention = INTENTION_TO_POST;
+    public static final String KEY_INTENTION_TO_POST = "KEY_INTENTION_TO_POST";
 
     private RecyclerView recyclerView;
     private List<ImageMediaEntry> imageMediaEntries;
@@ -71,12 +74,20 @@ public class MultiSelectFragments extends BaseFragment {
             @Override
             public void onAnimationFinish() {
                 if (intention == INTENTION_TO_POST) {
-                    getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
+                    PostComposeFragment.startWithContainer(getActivity(), null);
+                    CacheBean.putParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST, filterSelected(imageMediaEntries));
                 } else {
                     if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
-                    getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
                 }
-
+                closeWithAnimation(new Callback() {
+                    @Override
+                    public void onAnimationFinish() {
+                        if (getActivity() instanceof BaseActivity)
+                            ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
+                        else
+                            getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragment.this).commitAllowingStateLoss();
+                    }
+                });
             }
         });
 
@@ -92,22 +103,22 @@ public class MultiSelectFragments extends BaseFragment {
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
+                ((BaseActivity)getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
             }
         });
     }
 
-    public MultiSelectFragments setListener(ResultListener listener) {
+    public MultiSelectFragment setListener(ResultListener listener) {
         this.listener = listener;
         return this;
     }
 
-    public MultiSelectFragments setIntention(int intention) {
+    public MultiSelectFragment setIntention(int intention) {
         this.intention = intention;
         return this;
     }
 
-    public MultiSelectFragments setAllowEmpty(boolean allowEmpty) {
+    public MultiSelectFragment setAllowEmpty(boolean allowEmpty) {
         this.allowEmpty = allowEmpty;
         return this;
     }

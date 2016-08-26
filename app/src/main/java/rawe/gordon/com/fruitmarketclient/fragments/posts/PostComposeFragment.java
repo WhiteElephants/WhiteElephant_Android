@@ -16,9 +16,10 @@ import java.util.List;
 import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.activities.ContainerActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
+import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragments;
+import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 
@@ -31,6 +32,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     private LinearLayoutManager linearLayoutManager;
     private ItemTouchHelper itemTouchHelper;
     private PostAdapter adapter;
+    private List<ImageMediaEntry> data;
 
     @Override
     protected int getContentLayout() {
@@ -44,9 +46,15 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void prepareData() {
-        choosePictures(0);
+        if (CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST) != null) {
+            try {
+                data = (List<ImageMediaEntry>) CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(), this));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null?Mock.getInitialData():Mock.composeData(data), this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -92,17 +100,12 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        closeWithAnimation(new Callback() {
-            @Override
-            public void onAnimationFinish() {
-
-            }
-        });
+        ((BaseActivity)getActivity()).removeFragment(PostComposeFragment.this);
     }
 
     @Override
     protected String getRightText() {
-        return "确定";
+        return "发布";
     }
 
     @Override
@@ -127,7 +130,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void choosePictures(final int triggerPosition) {
-        ((BaseActivity) getActivity()).addFragment(new MultiSelectFragments().setListener(new MultiSelectFragments.ResultListener() {
+        ((BaseActivity) getActivity()).addFragmentWithoutEffect(new MultiSelectFragment().setIntention(MultiSelectFragment.INTENTION_TO_CHOOSE).setListener(new MultiSelectFragment.ResultListener() {
             @Override
             public void onResult(final List<ImageMediaEntry> selected) {
                 new Handler().postDelayed(new Runnable() {

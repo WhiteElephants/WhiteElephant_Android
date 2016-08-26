@@ -69,7 +69,7 @@ public class EditDistrictFragment extends EditBaseFragment implements View.OnCli
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).removeFragment(EditDistrictFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditDistrictFragment.this);
             }
         });
         setDistrict((String) CacheBean.getParam(EDIT_DISTRICT_FRAGMENT, EDIT_DISTRICT_FRAGMENT));
@@ -103,7 +103,7 @@ public class EditDistrictFragment extends EditBaseFragment implements View.OnCli
     @Override
     protected void onOkClicked() {
         if (listener != null) listener.onSelected(getDistrict());
-        ((BaseActivity) getActivity()).removeFragment(EditDistrictFragment.this);
+//        ((BaseActivity) getActivity()).removeFragment(EditDistrictFragment.this);
     }
 
     public String getDistrict() {

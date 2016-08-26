@@ -32,7 +32,7 @@ public class EditGenderFragment extends EditBaseFragment implements View.OnClick
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).removeFragment(EditGenderFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditGenderFragment.this);
             }
         });
     }

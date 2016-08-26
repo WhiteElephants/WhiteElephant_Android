@@ -33,7 +33,7 @@ public class EditLogoFragment extends EditBaseFragment implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 if (listener != null) listener.onSelected(getLogoUrl());
-                ((BaseActivity) getActivity()).removeFragment(EditLogoFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditLogoFragment.this);
             }
         });
         setLogoUrl((String) CacheBean.getParam(EDIT_LOGO_FRAGMENT, EDIT_LOGO_FRAGMENT));

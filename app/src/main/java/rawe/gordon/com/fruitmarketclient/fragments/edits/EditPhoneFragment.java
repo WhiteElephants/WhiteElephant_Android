@@ -45,7 +45,7 @@ public class EditPhoneFragment extends EditBaseFragment implements View.OnClickL
                     return;
                 }
                 if (listener != null) listener.onSelected(getPhone());
-                ((BaseActivity) getActivity()).removeFragment(EditPhoneFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditPhoneFragment.this);
             }
         });
         setPhone((String) CacheBean.getParam(EDIT_PHONE_FRAGMENT, EDIT_PHONE_FRAGMENT));

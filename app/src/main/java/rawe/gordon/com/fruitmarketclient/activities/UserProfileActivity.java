@@ -156,11 +156,11 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        if (getFragments().size() > 0) {
-            removeFragment(fragment);
-        } else {
-            super.onBackPressed();
-        }
+//        if (getFragments().size() > 0) {
+//            removeFragment(fragment);
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     private LocationEntity locationEntity = new LocationEntity();

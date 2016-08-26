@@ -40,7 +40,7 @@ public class ContainerActivity extends BaseActivity {
 
     @Override
     protected void prepareData() {
-        addFragment(fragment);
+        addFragmentWithoutEffect(fragment);
     }
 
     public static void startFragmentInside(Activity from, Class<?> fragmentClass, Bundle bundle) {
@@ -48,21 +48,5 @@ public class ContainerActivity extends BaseActivity {
         intent.putExtra(KEY_BUNDLE, bundle);
         intent.putExtra(KEY_FRAGMENT, fragmentClass.getCanonicalName());
         from.startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (fragments.size() == 0) {
-            super.onBackPressed();
-        } else {
-            if (fragments.get(fragments.size() - 1) instanceof BaseFragment) {
-                ((BaseFragment) fragments.get(fragments.size() - 1)).handleBackPress(new BaseFragment.Callback() {
-                    @Override
-                    public void onAnimationFinish() {
-
-                    }
-                });
-            }
-        }
     }
 }

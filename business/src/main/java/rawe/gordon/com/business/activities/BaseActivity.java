@@ -2,10 +2,11 @@ package rawe.gordon.com.business.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,28 +19,59 @@ import rawe.gordon.com.business.fragments.BaseFragment;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    public List<Fragment> fragments = new ArrayList<>();
+    public List<BaseFragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onGetExtras(getIntent() == null ? null : getIntent().getExtras() == null ? null : getIntent().getExtras());
         setContentView(R.layout.layout_base_activity);
+        bindViews(LayoutInflater.from(this).inflate(getContentLayout(), (RelativeLayout) findViewById(R.id.default_content)));
         prepareData();
     }
 
-    public void addFragment(BaseFragment fragment) {
-        if (findViewById(R.id.fragment_container) != null) {
-            getFragmentTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
+    public void addFragmentWithoutEffect(BaseFragment fragment) {
+        if (findViewById(R.id.fragment_area) != null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_area, fragment).commitAllowingStateLoss();
             fragments.add(fragment);
+        }
+        checkState();
+    }
+
+    private void checkState() {
+        if (fragments.size() == 0) {
+            findViewById(R.id.fragment_area).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.fragment_area).setVisibility(View.VISIBLE);
         }
     }
 
-    public void removeFragment(Fragment fragment) {
-        if (fragment != null && fragments.size() > 1) {
-            getFragmentTransaction().remove(fragment).commitAllowingStateLoss();
-            fragments.remove(fragment);
+    public void addFragment(BaseFragment fragment) {
+        if (findViewById(R.id.fragment_area) != null) {
+            getFragmentTransaction().add(R.id.fragment_area, fragment).commitAllowingStateLoss();
+            fragments.add(fragment);
         }
+        checkState();
+    }
+
+    public void removeFragmentWithoutEffect(BaseFragment fragment) {
+        if (fragment != null) {
+            if (fragments.size() >= 1) {
+                fragments.remove(fragment);
+                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+            }
+        }
+        checkState();
+    }
+
+    public void removeFragment(BaseFragment fragment) {
+        if (fragment != null) {
+            if (fragments.size() >= 1) {
+                fragments.remove(fragment);
+                getFragmentTransaction().remove(fragment).commitAllowingStateLoss();
+            }
+        }
+        checkState();
     }
 
     private FragmentTransaction getFragmentTransaction() {
@@ -48,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 R.anim.slide_out_right_fragment, R.anim.slide_in_right_fragment, R.anim.slide_out_right_fragment);
     }
 
-    protected List<Fragment> getFragments() {
+    protected List<BaseFragment> getFragments() {
         return fragments;
     }
 
@@ -58,7 +90,28 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void prepareData();
 
-    protected void onGetExtras(Bundle bundle){
+    protected void onGetExtras(Bundle bundle) {
         //do nothing
+    }
+
+    protected int amountWhenClose() {
+        return 1;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (amountWhenClose() == fragments.size()) {
+            finish();
+            return;
+        }
+        if (fragments.size() >= 1) {
+            fragments.get(fragments.size() - 1).handleBackPress(new BaseFragment.Callback() {
+                @Override
+                public void onAnimationFinish() {
+                    removeFragmentWithoutEffect(fragments.get(fragments.size() - 1));
+                    if (fragments.size() - 1 >= 0) fragments.remove(fragments.size() - 1);
+                }
+            });
+        }
     }
 }

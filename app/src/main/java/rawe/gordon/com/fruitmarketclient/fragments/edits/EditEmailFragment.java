@@ -46,7 +46,7 @@ public class EditEmailFragment extends EditBaseFragment implements View.OnClickL
                     return;
                 }
                 if (listener != null) listener.onSelected(getEmail());
-                ((BaseActivity) getActivity()).removeFragment(EditEmailFragment.this);
+//                ((BaseActivity) getActivity()).removeFragment(EditEmailFragment.this);
             }
         });
         setEmail((String) CacheBean.getParam(EDIT_EMAIL_FRAGMENT, EDIT_EMAIL_FRAGMENT));
