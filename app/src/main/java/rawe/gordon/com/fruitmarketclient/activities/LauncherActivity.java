@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.iknow.imageselect.fragments.MultiSelectFragments;
+import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragments;
 
 import java.util.Arrays;
 
@@ -58,7 +58,8 @@ public class LauncherActivity extends AppCompatActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, multiSelectFragments = new MultiSelectFragments(), MultiSelectFragments.class.getCanonicalName()).commitAllowingStateLoss();
+                getSupportFragmentManager().beginTransaction().add(R.id.container, multiSelectFragments = new MultiSelectFragments().setIntention(MultiSelectFragments.INTENTION_TO_POST)
+                        , MultiSelectFragments.class.getCanonicalName()).commitAllowingStateLoss();
             }
 
             @Override

@@ -1,4 +1,4 @@
-package com.iknow.imageselect.fragments;
+package rawe.gordon.com.fruitmarketclient.fragments;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
+import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 
 /**
  * Created by gordon on 16/8/26.
@@ -71,10 +72,17 @@ public class MultiSelectFragments extends BaseFragment {
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
+                if (intention == INTENTION_TO_POST) {
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
+                    PostComposeFragment.startWithContainer(getActivity(),);
+                } else {
+                    if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
+                }
 
             }
         });
-        if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
+
     }
 
     @Override

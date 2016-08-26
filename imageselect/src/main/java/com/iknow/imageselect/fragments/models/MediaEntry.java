@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 
+import java.io.Serializable;
+
 /**
  * Created by gordon on 16/8/26.
  */
-public abstract class MediaEntry {
+public abstract class MediaEntry implements Serializable{
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_VIDEO = 1;
 

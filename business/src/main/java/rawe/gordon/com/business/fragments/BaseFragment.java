@@ -30,7 +30,12 @@ public abstract class BaseFragment extends Fragment {
     private View titleArea;
     private RelativeLayout fragmentContainer;
     private boolean closing = false;
+    protected Bundle data;
 
+
+    public void setBundle(Bundle bundle) {
+        this.data = bundle;
+    }
 
     @Nullable
     @Override

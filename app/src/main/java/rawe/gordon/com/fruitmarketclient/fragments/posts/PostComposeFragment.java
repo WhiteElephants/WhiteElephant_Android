@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.iknow.imageselect.fragments.MultiSelectFragments;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
 import java.util.Collections;
@@ -19,8 +18,10 @@ import rawe.gordon.com.business.activities.ContainerActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragments;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 
 /**
  * Created by gordon on 8/25/16.
@@ -46,7 +47,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     protected void prepareData() {
         choosePictures(0);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(), this));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null?Mock.getInitialData(): (List<Node>) data, this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {

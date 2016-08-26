@@ -62,6 +62,7 @@ public class ContainerActivity extends BaseActivity {
             e.printStackTrace();
         }
         data = bundle.getBundle(KEY_BUNDLE);
+        if (fragment instanceof BaseFragment) ((BaseFragment) fragment).setBundle(data);
     }
 
     public static void startFragmentInside(Activity from, Class<?> fragmentClass, Bundle bundle) {
