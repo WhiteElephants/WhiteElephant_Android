@@ -96,7 +96,7 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void onRightTextClicked() {
-        ((BaseActivity)getActivity()).addFragmentWithoutAnimation(new PostComposeFragment());
+        performUpDownShutAnimation();
     }
 
     public static void startWithContainer(Activity from, Bundle bundle) {
