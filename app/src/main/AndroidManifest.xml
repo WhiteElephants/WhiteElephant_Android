@@ -57,11 +57,6 @@
             android:label="@string/sc"
             android:theme="@style/noAnimationTheme" />
         <activity
-            android:name=".activities.PostComposeActivity"
-            android:label="@string/sc"
-            android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme"/>
-        <activity
             android:name="com.iknow.imageselect.activities.MultiSelectImageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

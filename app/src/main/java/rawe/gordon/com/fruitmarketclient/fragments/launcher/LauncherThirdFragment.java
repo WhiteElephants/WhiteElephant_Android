@@ -3,7 +3,6 @@ package rawe.gordon.com.fruitmarketclient.fragments.launcher;
 import android.view.View;
 
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.activities.PostComposeActivity;
 import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 
 /**
@@ -33,7 +32,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
         compose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostComposeActivity.gotoPostComposeActivity(getActivity());
+
             }
         });
     }

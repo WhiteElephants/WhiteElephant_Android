@@ -8,7 +8,6 @@ import com.iknow.imageselect.R;
 import com.iknow.imageselect.fragments.adapters.MultiSelectAdapter;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 import com.iknow.imageselect.fragments.provider.SourceProvider;
-import com.iknow.imageselect.widget.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,6 @@ public class MultiSelectFragments extends BaseFragment {
     protected void prepareData() {
         imageMediaEntries = SourceProvider.getAllImages();
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(5));
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(new MultiSelectAdapter(getActivity(), imageMediaEntries));
     }
@@ -74,7 +72,6 @@ public class MultiSelectFragments extends BaseFragment {
             public void onAnimationFinish() {
                 if (intention == INTENTION_TO_POST) {
                     getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();
-                    PostComposeFragment.startWithContainer(getActivity(),);
                 } else {
                     if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
                     getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragments.this).commitAllowingStateLoss();

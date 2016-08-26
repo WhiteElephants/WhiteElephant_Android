@@ -21,7 +21,6 @@ import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragments;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
-import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 
 /**
  * Created by gordon on 8/25/16.
@@ -47,7 +46,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     protected void prepareData() {
         choosePictures(0);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null?Mock.getInitialData(): (List<Node>) data, this));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(), this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {

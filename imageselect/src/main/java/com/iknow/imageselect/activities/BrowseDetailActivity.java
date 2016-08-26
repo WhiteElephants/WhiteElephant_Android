@@ -17,15 +17,15 @@ import android.widget.TextView;
 import com.iknow.imageselect.R;
 import com.iknow.imageselect.display.DisplayOptions;
 import com.iknow.imageselect.model.MediaInfo;
-import com.iknow.imageselect.utils.CacheBean;
 import com.iknow.imageselect.utils.DrawableUtil;
-import com.iknow.imageselect.utils.ImageFilePathUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import rawe.gordon.com.business.utils.CacheBean;
 
 /**
  * Created by gordon on 5/9/16.
@@ -224,7 +224,7 @@ public class BrowseDetailActivity extends AppCompatActivity implements View.OnCl
             }
             videoIcon.setVisibility(mediaInfo.mediaType == 3 ? View.VISIBLE : View.GONE);
             videoSizeTv.setVisibility(mediaInfo.mediaType == 3 ? View.VISIBLE : View.GONE);
-            ImageLoader.getInstance().displayImage(ImageFilePathUtil.getImgUrl(medias.get(position).getMedia().fileName), (ImageView) itemView.findViewById(R.id.photo_view),
+            ImageLoader.getInstance().displayImage(medias.get(position).getMedia().fileName, (ImageView) itemView.findViewById(R.id.photo_view),
                     DisplayOptions.getCacheNoneFadeOptions());
             return itemView;
         }
