@@ -103,7 +103,8 @@ public abstract class BaseFragment extends Fragment implements ValueAnimator.Ani
             titleArea.setVisibility(View.GONE);
         }
         title.setText(getTitle());
-        if (performShutEffect()) performUpDownShutAnimation();
+        if (performShutEffect())
+            performUpDownShutAnimation();
     }
 
     public void changeRightIcon(int resId) {
@@ -196,13 +197,13 @@ public abstract class BaseFragment extends Fragment implements ValueAnimator.Ani
         if (fac == 1F && closing) {
             if (((BaseActivity) getActivity()).fragments.size() <= 1)
                 getActivity().finish();
-            else{
-                ((BaseActivity)getActivity()).removeFragment(this);
+            else {
+                ((BaseActivity) getActivity()).removeFragment(this);
             }
         }
     }
 
-    public void handleBackPress(){
+    public void handleBackPress() {
         closeWithAnimation();
     }
 }

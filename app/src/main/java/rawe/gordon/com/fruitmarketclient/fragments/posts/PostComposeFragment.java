@@ -2,6 +2,7 @@ package rawe.gordon.com.fruitmarketclient.fragments.posts;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -24,7 +25,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 /**
  * Created by gordon on 8/25/16.
  */
-public class PostComposeFragment extends BaseFragment {
+public class PostComposeFragment extends BaseFragment implements PostAdapter.Operation {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -45,7 +46,7 @@ public class PostComposeFragment extends BaseFragment {
     protected void prepareData() {
         choosePictures(0);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(),this));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(), this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -116,15 +117,23 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected boolean performShutEffect() {
-        return true;
+        return false;
     }
 
+    @Override
     public void choosePictures(final int triggerPosition) {
         ((BaseActivity) getActivity()).addFragmentWithoutAnimation(new MultiSelectFragments().setListener(new MultiSelectFragments.ResultListener() {
             @Override
-            public void onResult(List<ImageMediaEntry> selected) {
-                adapter.addMultipleImageNodes(selected, triggerPosition);
+            public void onResult(final List<ImageMediaEntry> selected) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.addMultipleImageNodes(selected, triggerPosition);
+                    }
+                },500);
             }
         }));
     }
+
+
 }

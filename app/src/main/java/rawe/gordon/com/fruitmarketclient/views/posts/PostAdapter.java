@@ -12,7 +12,6 @@ import java.util.List;
 
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
@@ -35,11 +34,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private LayoutInflater inflater;
     private Context context;
     public static final int INDEX_NOT_FOUND = -1;
-    private PostComposeFragment postComposeFragment;
+    private Operation outSideOperation;
 
-    public PostAdapter(Context context, List<Node> src, PostComposeFragment postComposeFragment) {
+    public PostAdapter(Context context, List<Node> src, Operation outSideOperation) {
         this.nodes = src;
-        this.postComposeFragment = postComposeFragment;
+        this.outSideOperation = outSideOperation;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
 
@@ -114,7 +113,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void onRequestAddImageNode(Node node) {
         int position = calcIndex(node);
         if (position == INDEX_NOT_FOUND) return;
-        postComposeFragment.choosePictures(position);
+        outSideOperation.choosePictures(position);
     }
 
     @Override
@@ -174,5 +173,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
         nodes.addAll(position + 1, newValues);
         notifyItemRangeChanged(position + 1, newValues.size());
+    }
+
+    public interface Operation {
+        void choosePictures(int position);
     }
 }

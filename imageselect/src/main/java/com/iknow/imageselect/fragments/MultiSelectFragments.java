@@ -64,8 +64,8 @@ public class MultiSelectFragments extends BaseFragment {
             ToastUtil.say("至少选选一张图片才行");
             return;
         }
-        if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
         closeWithAnimation();
+        if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
     }
 
     @Override
