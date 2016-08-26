@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.iknow.imageselect.fragments.MultiSelectFragments;
+
 import java.util.Collections;
 
 import rawe.gordon.com.business.activities.BaseActivity;
@@ -96,7 +98,7 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void onRightTextClicked() {
-        performUpDownShutAnimation();
+        ((BaseActivity)getActivity()).addFragmentWithoutAnimation(new MultiSelectFragments());
     }
 
     public static void startWithContainer(Activity from, Bundle bundle) {
