@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.R;
-import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.network.responses.pojo.SlideModel;
 
 /**
@@ -44,7 +43,7 @@ public class SlideView extends LinearLayout {
         else setVisibility(VISIBLE);
         for (SlideModel slide : sourceData) {
             ImageView draweeView;
-            views.add(draweeView = (ImageView) BaseActivity.ViewFactory.createView(LayoutInflater.from(context), R.layout.layout_slides_sub_view, rootView, false));
+            views.add(draweeView = (ImageView) LayoutInflater.from(context).inflate(R.layout.layout_slides_sub_view, rootView, false));
             if (slide.getImageUrl() != null)
                 ImageLoader.getInstance().displayImage(slide.getImageUrl(), draweeView);
         }

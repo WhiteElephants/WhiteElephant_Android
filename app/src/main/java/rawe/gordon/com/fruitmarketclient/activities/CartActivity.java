@@ -43,16 +43,16 @@ public class CartActivity extends BaseActivity implements View.OnClickListener {
         noDataMask = rootView.findViewById(R.id.no_data_mask);
         proceed.setOnClickListener(this);
     }
-
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Cart Orders";
-    }
+//
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Cart Orders";
+//    }
 
     @Override
     protected void prepareData() {
@@ -76,21 +76,21 @@ public class CartActivity extends BaseActivity implements View.OnClickListener {
             refreshTotalPrice();
         }
     }
-
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-
-    }
+//
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

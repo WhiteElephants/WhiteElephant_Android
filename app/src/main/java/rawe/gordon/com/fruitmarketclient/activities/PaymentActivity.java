@@ -21,36 +21,36 @@ public class PaymentActivity extends BaseActivity {
     protected void bindViews(View rootView) {
 
     }
-
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Payment";
-    }
+//
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Payment";
+//    }
 
     @Override
     protected void prepareData() {
 
     }
 
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-
-    }
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//
+//    }
 
     public static void gotoPaymentActivity(Activity start) {
         Intent intent = new Intent(start, PaymentActivity.class);

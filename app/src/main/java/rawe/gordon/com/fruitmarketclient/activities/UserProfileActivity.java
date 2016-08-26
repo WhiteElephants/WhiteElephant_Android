@@ -65,15 +65,15 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         logout = rootView.findViewById(R.id.logout);
     }
 
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "User Profile";
-    }
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "User Profile";
+//    }
 
     @Override
     protected void prepareData() {
@@ -92,20 +92,20 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         ImageLoader.getInstance().displayImage("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg", logo);
     }
 
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-
-    }
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//
+//    }
 
     public void sync(String uuid) {
         RestClient.getInstance().getUserInfo(uuid, new Callback<UserResponse>() {
@@ -167,53 +167,53 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.logout) {
-            LoginManager.getInstance().logOut();
-            finishWithAnimation();
-        } else if (v.getId() == R.id.gender_area) {
-            addFragment(fragment = EditGenderFragment.newInstance(gender.getText().toString().toLowerCase(), new EditGenderFragment.ResultListener() {
-                @Override
-                public void onSelected(String genderString) {
-                    gender.setText(genderString);
-                }
-            }));
-        } else if (v.getId() == R.id.district_area) {
-            addFragment(fragment = EditDistrictFragment.newInstance(districtText.getText().toString(), new EditDistrictFragment.ResultListener() {
-                @Override
-                public void onSelected(String district) {
-                    districtText.setText(district);
-                }
-            }));
-        } else if (v.getId() == R.id.phone_area) {
-            addFragment(fragment = EditPhoneFragment.newInstance(phoneText.getText().toString(), new EditPhoneFragment.ResultListener() {
-                @Override
-                public void onSelected(String phone) {
-                    phoneText.setText(phone);
-                }
-            }));
-        } else if (v.getId() == R.id.email_area) {
-            addFragment(fragment = EditEmailFragment.newInstance(emailText.getText().toString(), new EditEmailFragment.ResultListener() {
-                @Override
-                public void onSelected(String email) {
-                    emailText.setText(email);
-                }
-            }));
-        } else if (v.getId() == R.id.name_area) {
-            addFragment(fragment = EditNameFragment.newInstance(nickName.getText().toString(), new EditNameFragment.ResultListener() {
-                @Override
-                public void onSelected(String name) {
-                    nickName.setText(name);
-                }
-            }));
-        } else if (v.getId() == R.id.deliver_area) {
-//            ProvinceUtil.getProvinces(getApplicationContext());
-            new PopChooser(UserProfileActivity.this, PopChooser.PopMenuLevel.LEVEL1,
-                    locationEntity, ProvinceUtil.getProvinces(getApplicationContext())).setListener(new PopChooser.PopChooserListener() {
-                @Override
-                public void finish(LocationEntity locationEntity) {
-                    ToastUtil.say(locationEntity.toString());
-                }
-            }).show();
-        }
+//        if (v.getId() == R.id.logout) {
+//            LoginManager.getInstance().logOut();
+//            finishWithAnimation();
+//        } else if (v.getId() == R.id.gender_area) {
+//            addFragment(fragment = EditGenderFragment.newInstance(gender.getText().toString().toLowerCase(), new EditGenderFragment.ResultListener() {
+//                @Override
+//                public void onSelected(String genderString) {
+//                    gender.setText(genderString);
+//                }
+//            }));
+//        } else if (v.getId() == R.id.district_area) {
+//            addFragment(fragment = EditDistrictFragment.newInstance(districtText.getText().toString(), new EditDistrictFragment.ResultListener() {
+//                @Override
+//                public void onSelected(String district) {
+//                    districtText.setText(district);
+//                }
+//            }));
+//        } else if (v.getId() == R.id.phone_area) {
+//            addFragment(fragment = EditPhoneFragment.newInstance(phoneText.getText().toString(), new EditPhoneFragment.ResultListener() {
+//                @Override
+//                public void onSelected(String phone) {
+//                    phoneText.setText(phone);
+//                }
+//            }));
+//        } else if (v.getId() == R.id.email_area) {
+//            addFragment(fragment = EditEmailFragment.newInstance(emailText.getText().toString(), new EditEmailFragment.ResultListener() {
+//                @Override
+//                public void onSelected(String email) {
+//                    emailText.setText(email);
+//                }
+//            }));
+//        } else if (v.getId() == R.id.name_area) {
+//            addFragment(fragment = EditNameFragment.newInstance(nickName.getText().toString(), new EditNameFragment.ResultListener() {
+//                @Override
+//                public void onSelected(String name) {
+//                    nickName.setText(name);
+//                }
+//            }));
+//        } else if (v.getId() == R.id.deliver_area) {
+////            ProvinceUtil.getProvinces(getApplicationContext());
+//            new PopChooser(UserProfileActivity.this, PopChooser.PopMenuLevel.LEVEL1,
+//                    locationEntity, ProvinceUtil.getProvinces(getApplicationContext())).setListener(new PopChooser.PopChooserListener() {
+//                @Override
+//                public void finish(LocationEntity locationEntity) {
+//                    ToastUtil.say(locationEntity.toString());
+//                }
+//            }).show();
+//        }
     }
 }

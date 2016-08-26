@@ -3,7 +3,6 @@ package rawe.gordon.com.business.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import rawe.gordon.com.business.R;
@@ -16,7 +15,7 @@ public class ContainerActivity extends BaseActivity {
     public static final String KEY_FRAGMENT = "KEY_FRAGMENT";
     public static final String KEY_BUNDLE = "KEY_BUNDLE";
 
-    private Fragment fragment;
+    private BaseFragment fragment;
     private Bundle data;
 
     @Override
@@ -30,39 +29,18 @@ public class ContainerActivity extends BaseActivity {
     }
 
     @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "写文章";
-    }
-
-    @Override
-    protected void prepareData() {
-        addFragmentWithoutAnimation(fragment);
-    }
-
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-
-    }
-
-    @Override
     protected void onGetExtras(Bundle bundle) {
         try {
-            fragment = (Fragment) Class.forName(bundle.getString(KEY_FRAGMENT)).newInstance();
+            fragment = (BaseFragment) Class.forName(bundle.getString(KEY_FRAGMENT)).newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
         data = bundle.getBundle(KEY_BUNDLE);
-        if (fragment instanceof BaseFragment) ((BaseFragment) fragment).setBundle(data);
+    }
+
+    @Override
+    protected void prepareData() {
+        addFragment(fragment);
     }
 
     public static void startFragmentInside(Activity from, Class<?> fragmentClass, Bundle bundle) {

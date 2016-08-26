@@ -61,16 +61,16 @@ public class CommodityDetailActivity extends BaseActivity {
         price = (TextView) rootView.findViewById(R.id.price);
         description = (TextView) rootView.findViewById(R.id.description);
     }
-
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.to_cart;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Commodity Detail";
-    }
+//
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.to_cart;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Commodity Detail";
+//    }
 
     @Override
     protected void prepareData() {
@@ -102,21 +102,21 @@ public class CommodityDetailActivity extends BaseActivity {
             }
         });
     }
-
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-        if (bundle != null) uuid = bundle.getString(UUID);
-    }
+//
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//        if (bundle != null) uuid = bundle.getString(UUID);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

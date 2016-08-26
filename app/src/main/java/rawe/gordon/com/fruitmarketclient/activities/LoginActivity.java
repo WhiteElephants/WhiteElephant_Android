@@ -44,15 +44,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerButton = rootView.findViewById(R.id.register);
     }
 
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Login";
-    }
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Login";
+//    }
 
     @Override
     protected void prepareData() {
@@ -60,21 +60,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerButton.setOnClickListener(this);
     }
 
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
 
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-        listener = (LoginListener) CacheBean.getParam(LOGIN_LISTENER, LOGIN_LISTENER);
-        CacheBean.clean(LOGIN_LISTENER);
-    }
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//        listener = (LoginListener) CacheBean.getParam(LOGIN_LISTENER, LOGIN_LISTENER);
+//        CacheBean.clean(LOGIN_LISTENER);
+//    }
 
     public static void gotoLoginActivity(Activity start, LoginListener listener) {
         Intent intent = new Intent(start, LoginActivity.class);
@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             });
         } else if (v.getId() == R.id.register) {
             RegisterActivity.gotoRegisterActivity(this);
-            finishWithAnimation();
+//            finishWithAnimation();
         }
     }
 

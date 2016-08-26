@@ -47,15 +47,15 @@ public class SearchActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Search";
-    }
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Search";
+//    }
 
     @Override
     protected void prepareData() {
@@ -109,20 +109,20 @@ public class SearchActivity extends BaseActivity {
         right.setAlpha(alpha);
         right.setVisibility(alpha > 0f ? View.VISIBLE : View.GONE);
     }
-
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-    }
+//
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//    }
 
     private void showLoadingView() {
         mask.setVisibility(View.VISIBLE);

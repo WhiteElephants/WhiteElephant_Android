@@ -32,16 +32,16 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         recommendation = (Switch) rootView.findViewById(R.id.recommendation);
         aboutUs = findViewById(R.id.about_us);
     }
-
-    @Override
-    protected int getMenuLayout() {
-        return R.menu.empty;
-    }
-
-    @Override
-    protected String getNavTitle() {
-        return "Settings";
-    }
+//
+//    @Override
+//    protected int getMenuLayout() {
+//        return R.menu.empty;
+//    }
+//
+//    @Override
+//    protected String getNavTitle() {
+//        return "Settings";
+//    }
 
     @Override
     protected void prepareData() {
@@ -52,20 +52,20 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         aboutUs.setOnClickListener(this);
     }
 
-    @Override
-    protected int getIcon() {
-        return R.drawable.ic_arrow_back;
-    }
-
-    @Override
-    protected void onBackAction() {
-        finishWithAnimation();
-    }
-
-    @Override
-    protected void onGetExtras(Bundle bundle) {
-
-    }
+//    @Override
+//    protected int getIcon() {
+//        return R.drawable.ic_arrow_back;
+//    }
+//
+//    @Override
+//    protected void onBackAction() {
+//        finishWithAnimation();
+//    }
+//
+//    @Override
+//    protected void onGetExtras(Bundle bundle) {
+//
+//    }
 
     public static void gotoSettingsActivity(Activity start) {
         Intent intent = new Intent(start, SettingsActivity.class);

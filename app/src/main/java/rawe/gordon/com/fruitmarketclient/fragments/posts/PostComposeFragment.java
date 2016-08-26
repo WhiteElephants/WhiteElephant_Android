@@ -127,7 +127,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void choosePictures(final int triggerPosition) {
-        ((BaseActivity) getActivity()).addFragmentWithoutAnimation(new MultiSelectFragments().setListener(new MultiSelectFragments.ResultListener() {
+        ((BaseActivity) getActivity()).addFragment(new MultiSelectFragments().setListener(new MultiSelectFragments.ResultListener() {
             @Override
             public void onResult(final List<ImageMediaEntry> selected) {
                 new Handler().postDelayed(new Runnable() {
