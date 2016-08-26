@@ -15,6 +15,11 @@ public class DisplayOptions {
                 .bitmapConfig(Bitmap.Config.ARGB_8888).displayer(new FadeBitmapDisplayer(500)).showImageOnLoading(getDefaultDrawable()).build();
     }
 
+    public static DisplayImageOptions getCacheFadeLowerQualityOptions() {
+        return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.ARGB_4444).displayer(new FadeBitmapDisplayer(500)).showImageOnLoading(getDefaultDrawable()).build();
+    }
+
     public static DisplayImageOptions getCacheNoneFadeOptions() {
         return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888).build();

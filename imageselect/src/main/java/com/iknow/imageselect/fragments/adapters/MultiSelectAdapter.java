@@ -1,12 +1,11 @@
 package com.iknow.imageselect.fragments.adapters;
 
 import android.content.Context;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.iknow.imageselect.R;
 import com.iknow.imageselect.display.DisplayOptions;
@@ -20,7 +19,7 @@ import rawe.gordon.com.business.imageloader.SquareImageView;
 /**
  * Created by gordon on 16/8/26.
  */
-public class MultiSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.ImageSelectHolder> {
 
     List<ImageMediaEntry> data;
     private LayoutInflater inflater;
@@ -31,14 +30,22 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ImageSelectHolder(inflater.inflate(R.layout.image_select_item, parent, false));
+    public MultiSelectAdapter.ImageSelectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ImageSelectHolder(inflater.inflate(R.layout.layout_select_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ImageLoader.getInstance().displayImage(data.get(position).getProtocaledPath(), ((ImageSelectHolder) holder).imageView, DisplayOptions.getCacheFadeOptions());
-//        ((ImageSelectHolder) holder).imageView.setImageBitmap(ThumbnailUtils.createVideoThumbnail(data.get(position).getStoragePath(), MediaStore.Images.Thumbnails.MICRO_KIND));
+    public void onBindViewHolder(final MultiSelectAdapter.ImageSelectHolder holder, int position) {
+        final ImageMediaEntry entry = data.get(position);
+        ImageLoader.getInstance().displayImage(entry.getProtocolPath(), holder.imageView, DisplayOptions.getCacheFadeLowerQualityOptions());
+        holder.setChosen(entry.isSelected());
+        holder.indicatorArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                entry.setSelected(!entry.isSelected());
+                holder.setChosen(entry.isSelected());
+            }
+        });
     }
 
     @Override
@@ -49,10 +56,18 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class ImageSelectHolder extends RecyclerView.ViewHolder {
 
         public SquareImageView imageView;
+        private ImageView indicator;
+        private View indicatorArea;
 
         public ImageSelectHolder(View itemView) {
             super(itemView);
             imageView = (SquareImageView) itemView.findViewById(R.id.img_view);
+            indicator = (ImageView) itemView.findViewById(R.id.select_indicator);
+            indicatorArea = itemView.findViewById(R.id.select_indicator_area);
+        }
+
+        public void setChosen(boolean selected) {
+            indicator.setImageResource(selected ? R.drawable.ic_chosen : R.drawable.ic_choosable);
         }
     }
 }

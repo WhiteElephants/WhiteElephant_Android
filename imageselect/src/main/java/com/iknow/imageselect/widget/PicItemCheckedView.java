@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import com.iknow.imageselect.R;
 import com.iknow.imageselect.utils.DeviceInforHelper;
 
+import rawe.gordon.com.business.imageloader.SquareImageView;
+
 public class PicItemCheckedView extends RelativeLayout implements Checkable {
 
     private Context mContext;

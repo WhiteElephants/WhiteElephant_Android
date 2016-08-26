@@ -35,8 +35,8 @@ public abstract class MediaEntry {
         return storagePath;
     }
 
-    public String getProtocaledPath() {
-        return "file://" + storagePath;
+    public String getProtocolPath() {
+        return "file:///" + storagePath;
     }
 
     public void setStoragePath(String storagePath) {
@@ -77,5 +77,15 @@ public abstract class MediaEntry {
 
     public void setLon(String lon) {
         this.lon = lon;
+    }
+
+    private boolean selected = false;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

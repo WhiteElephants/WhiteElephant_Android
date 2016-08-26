@@ -4,10 +4,11 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.iknow.imageselect.widget.SquareImageView;
 import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.display.BitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
+
+import rawe.gordon.com.business.imageloader.SquareImageView;
 
 /**
  * Created by gordon on 8/2/16.

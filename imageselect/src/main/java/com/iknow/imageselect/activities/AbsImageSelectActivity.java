@@ -25,7 +25,6 @@ import com.iknow.imageselect.presenter.ImageChoosePresenterCompl;
 import com.iknow.imageselect.utils.MediaFileUtil;
 import com.iknow.imageselect.widget.PicItemCheckedView;
 import com.iknow.imageselect.widget.SpacesItemDecoration;
-import com.iknow.imageselect.widget.SquareImageView;
 import com.iknow.imageselect.widget.TitleView;
 
 import java.io.File;
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import rawe.gordon.com.business.application.ContextHolder;
+import rawe.gordon.com.business.imageloader.SquareImageView;
 
 /**
  * Author: J.Chou

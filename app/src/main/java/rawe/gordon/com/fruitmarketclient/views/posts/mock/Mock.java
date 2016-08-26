@@ -17,13 +17,6 @@ public class Mock {
     public static List<Node> getInitialData() {
         List<Node> ret = new ArrayList<>();
         ret.add(new HeaderNode());
-        for (int i = 0; i < 4; i++) {
-
-            ret.add(new ImageNode());
-            ret.add(new TextNode());
-            ret.add(new VideoNode());
-
-        }
         ret.add(new FooterNode());
         return ret;
     }

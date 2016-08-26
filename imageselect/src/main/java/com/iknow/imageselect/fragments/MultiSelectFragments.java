@@ -10,9 +10,11 @@ import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 import com.iknow.imageselect.fragments.provider.SourceProvider;
 import com.iknow.imageselect.widget.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.fragments.BaseFragment;
+import rawe.gordon.com.business.utils.ToastUtil;
 
 /**
  * Created by gordon on 16/8/26.
@@ -20,6 +22,7 @@ import rawe.gordon.com.business.fragments.BaseFragment;
 public class MultiSelectFragments extends BaseFragment {
     private RecyclerView recyclerView;
     private List<ImageMediaEntry> imageMediaEntries;
+    private boolean allowEmpty = true;
 
     @Override
     protected int getContentLayout() {
@@ -48,5 +51,49 @@ public class MultiSelectFragments extends BaseFragment {
     @Override
     protected String getTitle() {
         return "选择图片";
+    }
+
+    @Override
+    protected String getRightText() {
+        return "确定";
+    }
+
+    @Override
+    protected void onRightTextClicked() {
+        if (!allowEmpty && filterSelected(imageMediaEntries).size() == 0) {
+            ToastUtil.say("至少选选一张图片才行");
+            return;
+        }
+        if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
+        closeWithAnimation();
+    }
+
+    @Override
+    protected int getLeftDrawable() {
+        return R.drawable.ic_arrow_back;
+    }
+
+    @Override
+    protected void onLeftIconClicked() {
+        closeWithAnimation();
+    }
+
+    public MultiSelectFragments setListener(ResultListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    private ResultListener listener;
+
+    public interface ResultListener {
+        void onResult(List<ImageMediaEntry> selected);
+    }
+
+    public List<ImageMediaEntry> filterSelected(List<ImageMediaEntry> src) {
+        List<ImageMediaEntry> retValues = new ArrayList<>();
+        for (ImageMediaEntry entry : src) {
+            if (entry.isSelected()) retValues.add(entry);
+        }
+        return retValues;
     }
 }

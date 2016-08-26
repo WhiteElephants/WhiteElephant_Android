@@ -35,7 +35,7 @@ public class PostComposeActivity extends AppCompatActivity {
         setContentView(R.layout.layout_post_compose);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(this, Mock.getInitialData()));
+        recyclerView.setAdapter(adapter = new PostAdapter(this, Mock.getInitialData(),null));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {

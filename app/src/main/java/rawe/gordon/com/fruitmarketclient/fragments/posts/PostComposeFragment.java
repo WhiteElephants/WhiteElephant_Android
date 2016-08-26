@@ -8,8 +8,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.iknow.imageselect.fragments.MultiSelectFragments;
+import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
 import java.util.Collections;
+import java.util.List;
 
 import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.activities.ContainerActivity;
@@ -41,8 +43,9 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void prepareData() {
+        choosePictures(0);
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData()));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.getInitialData(),this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -98,7 +101,7 @@ public class PostComposeFragment extends BaseFragment {
 
     @Override
     protected void onRightTextClicked() {
-        ((BaseActivity)getActivity()).addFragmentWithoutAnimation(new MultiSelectFragments());
+
     }
 
     public static void startWithContainer(Activity from, Bundle bundle) {
@@ -114,5 +117,14 @@ public class PostComposeFragment extends BaseFragment {
     @Override
     protected boolean performShutEffect() {
         return true;
+    }
+
+    public void choosePictures(final int triggerPosition) {
+        ((BaseActivity) getActivity()).addFragmentWithoutAnimation(new MultiSelectFragments().setListener(new MultiSelectFragments.ResultListener() {
+            @Override
+            public void onResult(List<ImageMediaEntry> selected) {
+                adapter.addMultipleImageNodes(selected, triggerPosition);
+            }
+        }));
     }
 }
