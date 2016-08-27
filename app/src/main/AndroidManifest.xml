@@ -15,8 +15,8 @@
             android:theme="@style/noAnimationTheme" />
         <activity
             android:name=".activities.LauncherActivity"
-            android:screenOrientation="portrait"
             android:label="@string/launcher_activity"
+            android:screenOrientation="portrait"
             android:theme="@style/noAnimationTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,29 +56,32 @@
             android:name=".activities.LoginActivity"
             android:label="@string/sc"
             android:theme="@style/noAnimationTheme" />
-        <activity
-            android:name="com.iknow.imageselect.activities.MultiSelectImageActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme" />/>
-
 
         <activity
             android:name="rawe.gordon.com.business.activities.ContainerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme" />/>
+            android:theme="@style/noAnimationTheme" />
         <activity
-            android:name="com.iknow.imageselect.activities.SingleSelectImageActivity"
-            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:name="rawe.gordon.com.business.activities.TransparentBoxActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme" />/>
-
+            android:theme="@style/TransparentTheme" />
         <activity
             android:name="com.iknow.imageselect.activities.BrowseDetailActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme" />/>
+            android:theme="@style/noAnimationTheme" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="rawe.gordon.com.fruitmarketclient.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -86,4 +89,5 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 </manifest>

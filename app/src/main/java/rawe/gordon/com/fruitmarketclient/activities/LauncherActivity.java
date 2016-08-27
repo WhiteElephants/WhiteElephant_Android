@@ -1,13 +1,14 @@
 package rawe.gordon.com.fruitmarketclient.activities;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.Arrays;
 
-import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.permission.PermissionManager;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
@@ -17,25 +18,18 @@ import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
 /**
  * Created by gordon on 16/7/30.
  */
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends AppCompatActivity {
 
     private ViewPager fragmentPager;
     private LauncherTabLayout tabLayout;
     private PermissionManager permissionManager = new PermissionManager();
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.layout_activity_launcher;
-    }
-
-    @Override
-    protected void bindViews(View rootView) {
-        fragmentPager = (ViewPager) rootView.findViewById(R.id.fragment_pager);
-        tabLayout = (LauncherTabLayout) rootView.findViewById(R.id.tabs);
-    }
-
-    @Override
-    protected void prepareData() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_activity_launcher);
+        fragmentPager = (ViewPager) findViewById(R.id.fragment_pager);
+        tabLayout = (LauncherTabLayout) findViewById(R.id.tabs);
         permissionManager.checkAndRequestPermissions(this, new PermissionManager.PermissionCallback() {
             @Override
             public void onAllGranted() {
@@ -62,7 +56,7 @@ public class LauncherActivity extends BaseActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                addFragmentWithoutEffect(new MultiSelectFragment().setAllowEmpty(false));
+                MultiSelectFragment.startWithBoxActivity(LauncherActivity.this, MultiSelectFragment.INTENTION_TO_POST, false);
             }
 
             @Override
@@ -76,10 +70,5 @@ public class LauncherActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionManager.handlePermission(requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected int amountWhenClose() {
-        return 0;
     }
 }

@@ -1,5 +1,11 @@
 package rawe.gordon.com.fruitmarketclient.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,10 +15,14 @@ import com.iknow.imageselect.fragments.adapters.MultiSelectAdapter;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 import com.iknow.imageselect.fragments.provider.SourceProvider;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import rawe.gordon.com.business.activities.BaseActivity;
+import rawe.gordon.com.business.activities.TransparentBoxActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.business.utils.ToastUtil;
@@ -26,10 +36,13 @@ public class MultiSelectFragment extends BaseFragment {
     public static final int INTENTION_TO_CHOOSE = 1;
     private int intention = INTENTION_TO_POST;
     public static final String KEY_INTENTION_TO_POST = "KEY_INTENTION_TO_POST";
+    public static final String KEY_ALLOW_EMPTY = "KEY_ALLOW_EMPTY";
 
     private RecyclerView recyclerView;
+    private View takeCamera;
     private List<ImageMediaEntry> imageMediaEntries;
     private boolean allowEmpty = true;
+    MultiSelectAdapter adapter;
 
     @Override
     protected int getContentLayout() {
@@ -39,14 +52,42 @@ public class MultiSelectFragment extends BaseFragment {
     @Override
     protected void bindViews(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        takeCamera = rootView.findViewById(R.id.take_photo);
+    }
+
+    private void handleCacheBean() {
+        Object intentionValue = CacheBean.getParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST);
+        Object allowValue = CacheBean.getParam(KEY_ALLOW_EMPTY, KEY_ALLOW_EMPTY);
+        Object listenerValue = CacheBean.getParam(PostComposeFragment.KEY_RESULT_LISTENER, PostComposeFragment.KEY_RESULT_LISTENER);
+        CacheBean.clean(KEY_INTENTION_TO_POST);
+        CacheBean.clean(KEY_ALLOW_EMPTY);
+        CacheBean.clean(PostComposeFragment.KEY_RESULT_LISTENER);
+        intention = intentionValue == null ? INTENTION_TO_POST : (int) intentionValue;
+        allowEmpty = allowValue == null ? false : (boolean) allowValue;
+        if (listenerValue != null) listener = (ResultListener) listenerValue;
     }
 
     @Override
     protected void prepareData() {
-        imageMediaEntries = SourceProvider.getAllImages();
+        handleCacheBean();
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(new MultiSelectAdapter(getActivity(), imageMediaEntries));
+        imageMediaEntries = SourceProvider.getAllImages();
+        recyclerView.setAdapter(adapter = new MultiSelectAdapter(getActivity(), imageMediaEntries));
+        takeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
+    }
+
+    private void reloadPictures(String protocolUrl) {
+        ImageMediaEntry entry = new ImageMediaEntry();
+        entry.setStoragePath(protocolUrl.substring(5));
+        entry.setSelected(true);
+        imageMediaEntries.add(0, entry);
+        adapter.notifyItemInserted(0);
     }
 
     @Override
@@ -71,7 +112,7 @@ public class MultiSelectFragment extends BaseFragment {
             return;
         }
         if (intention == INTENTION_TO_POST) {
-            PostComposeFragment.startWithContainer(getActivity(), null);
+            PostComposeFragment.startWithContainer(getActivity());
             CacheBean.putParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST, filterSelected(imageMediaEntries));
         } else {
             if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
@@ -79,7 +120,7 @@ public class MultiSelectFragment extends BaseFragment {
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
+                getActivity().finish();
             }
         });
 
@@ -95,30 +136,9 @@ public class MultiSelectFragment extends BaseFragment {
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
+                getActivity().finish();
             }
         });
-    }
-
-    public MultiSelectFragment setListener(ResultListener listener) {
-        this.listener = listener;
-        return this;
-    }
-
-    public MultiSelectFragment setIntention(int intention) {
-        this.intention = intention;
-        return this;
-    }
-
-    public MultiSelectFragment setAllowEmpty(boolean allowEmpty) {
-        this.allowEmpty = allowEmpty;
-        return this;
-    }
-
-    private ResultListener listener;
-
-    public interface ResultListener {
-        void onResult(List<ImageMediaEntry> selected);
     }
 
     public List<ImageMediaEntry> filterSelected(List<ImageMediaEntry> src) {
@@ -127,5 +147,81 @@ public class MultiSelectFragment extends BaseFragment {
             if (entry.isSelected()) retValues.add(entry);
         }
         return retValues;
+    }
+
+    public static void startWithBoxActivity(Activity from, int intent, boolean allowEmpty) {
+        if (from == null || from.isFinishing()) return;
+        CacheBean.putParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST, intent);
+        CacheBean.putParam(MultiSelectFragment.KEY_ALLOW_EMPTY, MultiSelectFragment.KEY_ALLOW_EMPTY, allowEmpty);
+        TransparentBoxActivity.startFragmentInside(from, MultiSelectFragment.class);
+    }
+
+    private ResultListener listener;
+
+    public interface ResultListener {
+        void onResult(List<ImageMediaEntry> selected);
+    }
+
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(), "rawe.gordon.com.fruitmarketclient.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
+    }
+
+    public void galleryAddPic1(String file) {
+        File f = new File(file);
+        Uri contentUri = Uri.fromFile(f);
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            galleryAddPic1(mCurrentPhotoPath);
+            reloadPictures(mCurrentPhotoPath);
+        }
     }
 }

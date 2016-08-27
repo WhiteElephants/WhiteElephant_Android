@@ -1,8 +1,6 @@
 package rawe.gordon.com.fruitmarketclient.fragments.posts;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -13,8 +11,7 @@ import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 import java.util.Collections;
 import java.util.List;
 
-import rawe.gordon.com.business.activities.BaseActivity;
-import rawe.gordon.com.business.activities.ContainerActivity;
+import rawe.gordon.com.business.activities.TransparentBoxActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.business.utils.ToastUtil;
@@ -27,6 +24,8 @@ import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
  * Created by gordon on 8/25/16.
  */
 public class PostComposeFragment extends BaseFragment implements PostAdapter.Operation {
+
+    public static final String KEY_RESULT_LISTENER = "KEY_RESULT_LISTENER";
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -54,7 +53,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
             }
         }
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null?Mock.getInitialData():Mock.composeData(data), this));
+        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null ? Mock.getInitialData() : Mock.composeData(data), this));
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -103,7 +102,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                ((BaseActivity)getActivity()).removeFragmentWithoutEffect(PostComposeFragment.this);
+                getActivity().finish();
             }
         });
     }
@@ -118,9 +117,9 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     }
 
-    public static void startWithContainer(Activity from, Bundle bundle) {
+    public static void startWithContainer(Activity from) {
         if (from == null || from.isFinishing()) return;
-        ContainerActivity.startFragmentInside(from, PostComposeFragment.class, bundle);
+        TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
     }
 
     @Override
@@ -135,17 +134,13 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void choosePictures(final int triggerPosition) {
-        ((BaseActivity) getActivity()).addFragmentWithoutEffect(new MultiSelectFragment().setIntention(MultiSelectFragment.INTENTION_TO_CHOOSE).setListener(new MultiSelectFragment.ResultListener() {
+        CacheBean.putParam(KEY_RESULT_LISTENER, KEY_RESULT_LISTENER, new MultiSelectFragment.ResultListener() {
             @Override
-            public void onResult(final List<ImageMediaEntry> selected) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.addMultipleImageNodes(selected, triggerPosition);
-                    }
-                }, 500);
+            public void onResult(List<ImageMediaEntry> selected) {
+                adapter.addMultipleImageNodes(selected, triggerPosition);
             }
-        }));
+        });
+        MultiSelectFragment.startWithBoxActivity(getActivity(), MultiSelectFragment.INTENTION_TO_CHOOSE, true);
     }
 
 

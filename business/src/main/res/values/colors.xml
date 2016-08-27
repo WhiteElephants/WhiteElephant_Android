@@ -15,7 +15,7 @@
     <color name="textDarkGray">#999999</color>
     <color name="textLightGray">#cccccc</color>
     <color name="containerDarkerGray">#aaaaaa</color>
-    <color name="containerLightGray">#cccccc</color>
+    <color name="containerLightGray">#FFF8F9F3</color>
     <color name="iconGrey">#FF8A8AAA</color>
     <color name="iconOrange">#FFFFA694</color>
     <color name="iconDark">#FF21414B</color>
