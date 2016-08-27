@@ -54,15 +54,15 @@ public class LauncherActivity extends BaseActivity {
     private void hooks() {
         fragmentPager.setAdapter(new LauncherFragmentAdapter(getSupportFragmentManager()));
         tabLayout.configure(new LauncherTabLayout.Tab[]{
-                new LauncherTabLayout.Tab(R.drawable.ic_home_orange, "推荐", R.drawable.ic_home_grey),
-                new LauncherTabLayout.Tab(R.drawable.ic_safari_orange, "发现", R.drawable.ic_safari_gray),
+                new LauncherTabLayout.Tab(R.drawable.ic_home_grey, "推荐", R.drawable.ic_home_orange),
+                new LauncherTabLayout.Tab(R.drawable.ic_safari_gray, "发现", R.drawable.ic_safari_orange),
                 new LauncherTabLayout.Tab(R.drawable.ic_add_white, "", R.drawable.ic_add_white),
-                new LauncherTabLayout.Tab(R.drawable.ic_draft_orange, "草稿", R.drawable.ic_draft_gray),
-                new LauncherTabLayout.Tab(R.drawable.ic_person_orange, "个人", R.drawable.ic_person_gray)
+                new LauncherTabLayout.Tab(R.drawable.ic_draft_gray, "草稿", R.drawable.ic_draft_orange),
+                new LauncherTabLayout.Tab(R.drawable.ic_person_gray, "个人", R.drawable.ic_person_orange)
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                addFragmentWithoutEffect(new MultiSelectFragment());
+                addFragmentWithoutEffect(new MultiSelectFragment().setAllowEmpty(false));
             }
 
             @Override

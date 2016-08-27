@@ -30,7 +30,7 @@ public class LauncherTabLayout extends LinearLayout {
     private ViewPager viewPager;
     private int lastIndex = 0;
     private int initialIndex = 0;
-    private static final int defaultColor = 0x99888888, selectedColor = 0x99FFFFFF, stripColor = 0x99EEEEEE, backgroudColor = 0xFF333333;
+    private static final int defaultColor = 0xbb888888, selectedColor = 0xbbFFFFFF, stripColor = 0x99EEEEEE, backgroudColor = 0xFF333333;
 
     public LauncherTabLayout(Context context) {
         super(context);
@@ -93,7 +93,7 @@ public class LauncherTabLayout extends LinearLayout {
                     TabInjector.injectLNode(node.resId, container, node, new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(listener!=null) listener.onCenter();
+                            if (listener != null) listener.onCenter();
                         }
                     });
                 }

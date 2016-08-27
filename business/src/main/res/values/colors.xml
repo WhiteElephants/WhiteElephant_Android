@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="tabLight">#bbFFFFFF</color>
+    <color name="tabDark">#bb888888</color>
+    <!-- 9+ area -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">@color/colorTitleBar</color>
@@ -21,8 +25,11 @@
     <color name="normalTextColor">#FF666666</color>
     <color name="arrowRightLight">#999999</color>
     <color name="okColor">#FF66cc66</color>
-
-
+    <color name="themeBlue">#2980b9</color>
+    <color name="icon_color">@color/themeBlueLight</color>
+    <color name="themeBlueLight">#3498db</color>
+    <color name="themeBlueShalow">#662980b9</color>
+    <color name="themeBlueLightShallow">#663498db</color>
     <!-- 9+ area -->
     <color name="mainDark">#FF333333</color>
     <color name="mainMiddle">#FF888888</color>
