@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 
+import rawe.gordon.com.business.configs.Config;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
@@ -108,8 +109,10 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
                 float fac = (float) animation.getAnimatedValue();
                 threeArea.setTranslationX(-fac * unitExpandDistance);
                 twoArea.setTranslationX(-fac * unitExpandDistance * 2);
-                oneArea.setTranslationX(-fac * unitExpandDistance * 3);
-                oneArea.setAlpha(fac);
+                if (Config.VIDEO) {
+                    oneArea.setTranslationX(-fac * unitExpandDistance * 3);
+                    oneArea.setAlpha(fac);
+                }
                 twoArea.setAlpha(fac);
                 threeArea.setAlpha(fac);
                 add.setRotation(maxRotation * fac);
@@ -185,20 +188,12 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
         if (showArrow) return;
         showArrow = true;
         addSubArea.setVisibility(View.VISIBLE);
-//        animator = ValueAnimator.ofFloat(0F, 1F).setDuration(500);
-//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-//        animator.addUpdateListener(arrowListener);
-//        animator.start();
     }
 
     public void hideArrow() {
         if (!showArrow) return;
         showArrow = false;
         addSubArea.setVisibility(View.GONE);
-//        animator = ValueAnimator.ofFloat(1F, 0F).setDuration(500);
-//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-//        animator.addUpdateListener(arrowListener);
-//        animator.start();
     }
 
     public void setStateChangeListener(StateChangeListener listener) {

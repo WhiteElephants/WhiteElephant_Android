@@ -100,7 +100,12 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        ((BaseActivity)getActivity()).removeFragment(PostComposeFragment.this);
+        closeWithAnimation(new Callback() {
+            @Override
+            public void onAnimationFinish() {
+                ((BaseActivity)getActivity()).removeFragmentWithoutEffect(PostComposeFragment.this);
+            }
+        });
     }
 
     @Override
@@ -120,7 +125,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected String getTitle() {
-        return "写文章";
+        return "创作";
     }
 
     @Override

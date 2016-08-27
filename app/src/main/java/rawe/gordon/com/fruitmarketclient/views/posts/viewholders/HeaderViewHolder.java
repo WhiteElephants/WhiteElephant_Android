@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 
+import rawe.gordon.com.business.configs.Config;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
@@ -109,8 +110,10 @@ public class HeaderViewHolder extends RecyclerView.ViewHolder {
                 float fac = (float) animation.getAnimatedValue();
                 threeArea.setTranslationX(-fac * unitExpandDistance);
                 twoArea.setTranslationX(-fac * unitExpandDistance * 2);
-                oneArea.setTranslationX(-fac * unitExpandDistance * 3);
-                oneArea.setAlpha(fac);
+                if (Config.VIDEO) {
+                    oneArea.setTranslationX(-fac * unitExpandDistance * 3);
+                    oneArea.setAlpha(fac);
+                }
                 twoArea.setAlpha(fac);
                 threeArea.setAlpha(fac);
                 add.setRotation(maxRotation * fac);

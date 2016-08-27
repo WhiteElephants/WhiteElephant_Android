@@ -4,4 +4,7 @@
   <color name="colorPrimaryDark">#2B3131</color>
   <color name="colorAccent">#FF4081</color>
   <color name="color_browse_choose_title_bar">#2B3131</color>
+  <color name="themeBlueLight">#3498db</color>
+  <color name="themeBlueShalow">#662980b9</color>
+  <color name="themeBlueLightShallow">#663498db</color>
 </resources>

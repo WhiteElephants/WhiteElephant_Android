@@ -29,7 +29,6 @@ public abstract class BaseFragment extends Fragment {
     private TextView title;
     private View titleArea;
     private RelativeLayout fragmentContainer;
-    private boolean closing = false;
     protected Bundle data;
 
 
@@ -204,11 +203,6 @@ public abstract class BaseFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if (callback != null) callback.onAnimationFinish();
-//                if (((BaseActivity) getActivity()).fragments.size() <= 1)
-//                    getActivity().finish();
-//                else {
-//                    ((BaseActivity) getActivity()).removeFragment(BaseFragment.this);
-//                }
             }
 
             @Override

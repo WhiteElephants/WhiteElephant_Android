@@ -21,7 +21,11 @@
     <color name="normalTextColor">#FF666666</color>
     <color name="arrowRightLight">#999999</color>
     <color name="okColor">#FF66cc66</color>
-
+    <color name="themeBlue">#2980b9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="themeBlueLight">#3498db</color>
+    <color name="themeBlueShalow">#662980b9</color>
+    <color name="themeBlueLightShallow">#663498db</color>
 
     <!-- 9+ area -->
     <color name="mainDark">#FF333333</color>

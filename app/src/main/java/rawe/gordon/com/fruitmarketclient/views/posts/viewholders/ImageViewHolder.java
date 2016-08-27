@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.iknow.imageselect.display.DisplayOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import rawe.gordon.com.business.configs.Config;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
@@ -112,8 +113,10 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
                 float fac = (float) animation.getAnimatedValue();
                 threeArea.setTranslationX(-fac * unitExpandDistance);
                 twoArea.setTranslationX(-fac * unitExpandDistance * 2);
-                oneArea.setTranslationX(-fac * unitExpandDistance * 3);
-                oneArea.setAlpha(fac);
+                if (Config.VIDEO) {
+                    oneArea.setTranslationX(-fac * unitExpandDistance * 3);
+                    oneArea.setAlpha(fac);
+                }
                 twoArea.setAlpha(fac);
                 threeArea.setAlpha(fac);
                 add.setRotation(maxRotation * fac);

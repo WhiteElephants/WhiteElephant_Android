@@ -35,15 +35,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_area, fragment).commitAllowingStateLoss();
             fragments.add(fragment);
         }
-        checkState();
-    }
-
-    private void checkState() {
-        if (fragments.size() == 0) {
-            findViewById(R.id.fragment_area).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.fragment_area).setVisibility(View.VISIBLE);
-        }
     }
 
     public void addFragment(BaseFragment fragment) {
@@ -51,27 +42,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             getFragmentTransaction().add(R.id.fragment_area, fragment).commitAllowingStateLoss();
             fragments.add(fragment);
         }
-        checkState();
     }
 
     public void removeFragmentWithoutEffect(BaseFragment fragment) {
+        if (amountWhenClose() == fragments.size()) {
+            finish();
+            return;
+        }
         if (fragment != null) {
             if (fragments.size() >= 1) {
                 fragments.remove(fragment);
                 getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
             }
         }
-        checkState();
     }
 
     public void removeFragment(BaseFragment fragment) {
+        if (amountWhenClose() == fragments.size()) {
+            finish();
+            return;
+        }
         if (fragment != null) {
             if (fragments.size() >= 1) {
                 fragments.remove(fragment);
                 getFragmentTransaction().remove(fragment).commitAllowingStateLoss();
             }
         }
-        checkState();
     }
 
     private FragmentTransaction getFragmentTransaction() {
@@ -101,7 +97,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (amountWhenClose() == fragments.size()) {
-            finish();
+            if (amountWhenClose() == 1) {
+                fragments.get(0).closeWithAnimation(new BaseFragment.Callback() {
+                    @Override
+                    public void onAnimationFinish() {
+                        finish();
+                    }
+                });
+            } else finish();
             return;
         }
         if (fragments.size() >= 1) {

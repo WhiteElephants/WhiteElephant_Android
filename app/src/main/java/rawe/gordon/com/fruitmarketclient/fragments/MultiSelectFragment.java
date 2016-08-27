@@ -70,24 +70,16 @@ public class MultiSelectFragment extends BaseFragment {
             ToastUtil.say("至少选选一张图片才行");
             return;
         }
+        if (intention == INTENTION_TO_POST) {
+            PostComposeFragment.startWithContainer(getActivity(), null);
+            CacheBean.putParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST, filterSelected(imageMediaEntries));
+        } else {
+            if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
+        }
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                if (intention == INTENTION_TO_POST) {
-                    PostComposeFragment.startWithContainer(getActivity(), null);
-                    CacheBean.putParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST, filterSelected(imageMediaEntries));
-                } else {
-                    if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
-                }
-                closeWithAnimation(new Callback() {
-                    @Override
-                    public void onAnimationFinish() {
-                        if (getActivity() instanceof BaseActivity)
-                            ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
-                        else
-                            getActivity().getSupportFragmentManager().beginTransaction().remove(MultiSelectFragment.this).commitAllowingStateLoss();
-                    }
-                });
+                ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
             }
         });
 
@@ -103,7 +95,7 @@ public class MultiSelectFragment extends BaseFragment {
         closeWithAnimation(new Callback() {
             @Override
             public void onAnimationFinish() {
-                ((BaseActivity)getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
+                ((BaseActivity) getActivity()).removeFragmentWithoutEffect(MultiSelectFragment.this);
             }
         });
     }
