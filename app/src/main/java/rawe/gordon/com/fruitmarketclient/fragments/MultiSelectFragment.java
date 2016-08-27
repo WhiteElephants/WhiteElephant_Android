@@ -3,15 +3,16 @@ package rawe.gordon.com.fruitmarketclient.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.iknow.imageselect.R;
-import com.iknow.imageselect.fragments.adapters.MultiSelectAdapter;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 import com.iknow.imageselect.fragments.provider.SourceProvider;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.activities.TransparentBoxActivity;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
@@ -73,13 +75,32 @@ public class MultiSelectFragment extends BaseFragment {
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(manager);
         imageMediaEntries = SourceProvider.getAllImages();
-        recyclerView.setAdapter(adapter = new MultiSelectAdapter(getActivity(), imageMediaEntries));
+        recyclerView.setAdapter(adapter = new MultiSelectAdapter(getActivity(), imageMediaEntries, new MultiSelectAdapter.ItemClickListener() {
+            @Override
+            public void onclicked(ImageView view, String url) {
+                SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel();
+                int[] coord = new int[2];
+                view.getLocationOnScreen(coord);
+                model.currentX = coord[0];
+                model.currentY = coord[1];
+                model.currentWidth = view.getWidth();
+                model.currentHeight = view.getHeight();
+                model.imgUrl = url;
+                Bundle data = new Bundle();
+                data.putSerializable(SitoImageViewActivity.KEY_DATA, model);
+                Intent intent = new Intent(getActivity(), SitoImageViewActivity.class);
+                intent.putExtras(data);
+                startActivity(intent);
+            }
+        }));
+
         takeCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
             }
         });
+
     }
 
     private void reloadPictures(String protocolUrl) {
@@ -204,23 +225,17 @@ public class MultiSelectFragment extends BaseFragment {
 
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
+        File f = new File(mCurrentPhotoPath.substring(5));
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         getActivity().sendBroadcast(mediaScanIntent);
     }
 
-    public void galleryAddPic1(String file) {
-        File f = new File(file);
-        Uri contentUri = Uri.fromFile(f);
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            galleryAddPic1(mCurrentPhotoPath);
+            galleryAddPic();
             reloadPictures(mCurrentPhotoPath);
         }
     }

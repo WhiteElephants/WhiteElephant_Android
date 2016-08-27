@@ -68,6 +68,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/TransparentTheme" />
         <activity
+            android:name="rawe.gordon.com.business.activities.SitoImageViewActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/TransparentFullScreenTheme" />
+        <activity
             android:name="com.iknow.imageselect.activities.BrowseDetailActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"

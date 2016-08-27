@@ -1,5 +1,6 @@
-package com.iknow.imageselect.fragments.adapters;
+package rawe.gordon.com.fruitmarketclient.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,9 +24,13 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
 
     List<ImageMediaEntry> data;
     private LayoutInflater inflater;
+    private Context context;
+    private ItemClickListener listener;
 
-    public MultiSelectAdapter(Context context, List<ImageMediaEntry> src) {
+    public MultiSelectAdapter(Context context, List<ImageMediaEntry> src, ItemClickListener listener) {
         this.data = src;
+        this.listener = listener;
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -44,6 +49,12 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
             public void onClick(View view) {
                 entry.setSelected(!entry.isSelected());
                 holder.setChosen(entry.isSelected());
+            }
+        });
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) listener.onclicked(holder.imageView, entry.getProtocolPath());
             }
         });
     }
@@ -69,5 +80,9 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
         public void setChosen(boolean selected) {
             indicator.setImageResource(selected ? R.drawable.ic_chosen : R.drawable.ic_choosable);
         }
+    }
+
+    public interface ItemClickListener {
+        void onclicked(ImageView view, String url);
     }
 }

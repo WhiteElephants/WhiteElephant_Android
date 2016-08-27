@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.Arrays;
 
+import rawe.gordon.com.business.application.SharedParameter;
 import rawe.gordon.com.business.permission.PermissionManager;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
@@ -27,6 +28,7 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedParameter.getInstance().generateScreenParameters(this);
         setContentView(R.layout.layout_activity_launcher);
         fragmentPager = (ViewPager) findViewById(R.id.fragment_pager);
         tabLayout = (LauncherTabLayout) findViewById(R.id.tabs);

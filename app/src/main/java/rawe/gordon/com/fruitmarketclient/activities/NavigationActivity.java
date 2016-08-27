@@ -46,7 +46,6 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /** some initializing work */
-        SharedParameter.getInstance().generateScreenParameters(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_activity_navigation);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
