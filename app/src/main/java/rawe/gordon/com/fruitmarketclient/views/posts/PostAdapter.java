@@ -1,15 +1,18 @@
 package rawe.gordon.com.fruitmarketclient.views.posts;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.iknow.imageselect.activities.BrowseDetailActivity;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
@@ -131,8 +134,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     @Override
-    public void onImageClicked(Node node) {
-        ToastUtil.say("image clicked");
+    public void onImageClicked(Node node, int fromX, int fromY, int fromWidth, int fromHeight) {
+        SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel(((ImageNode)node).getStoragePath(),fromX,fromY,fromWidth,fromHeight);
+        SitoImageViewActivity.goToSitoImageBrowsePage((Activity) context,model);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package rawe.gordon.com.business.activities;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,7 +71,7 @@ public class SitoImageViewActivity extends AppCompatActivity {
         final ValueAnimator valueAnimator = ValueAnimator.ofFloat(0F, 1F);
         int toY = 0;
         int toX = 0;
-        int toWidth = SharedParameter.getInstance().getScreenWidth(), toHeight = SharedParameter.getInstance().getScreenHeight()-DimenUtil.getBarHeight(this);
+        int toWidth = SharedParameter.getInstance().getScreenWidth(), toHeight = SharedParameter.getInstance().getScreenHeight() - DimenUtil.getBarHeight(this);
         final int deltaX = toX - currentX;
         final int deltaY = toY - currentY;
         final int deltaWidth = toWidth - currentWidth;
@@ -112,7 +114,24 @@ public class SitoImageViewActivity extends AppCompatActivity {
         });
     }
 
+    public static void goToSitoImageBrowsePage(Activity from, ImageModel model) {
+        Intent intent = new Intent(from, SitoImageViewActivity.class);
+        Bundle data = new Bundle();
+        data.putSerializable(SitoImageViewActivity.KEY_DATA, model);
+        intent.putExtras(data);
+        from.startActivity(intent);
+    }
+
     public static class ImageModel implements Serializable {
+
+        public ImageModel(String imgUrl, int currentX, int currentY, int currentWidth, int currentHeight) {
+            this.imgUrl = imgUrl;
+            this.currentX = currentX;
+            this.currentY = currentY;
+            this.currentWidth = currentWidth;
+            this.currentHeight = currentHeight;
+        }
+
         public String imgUrl;
         public int currentX;
         public int currentY;

@@ -104,7 +104,10 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         bgImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stateChangeListener != null) stateChangeListener.onImageClicked(model);
+                int[] coord = new int[2];
+                bgImage.getLocationOnScreen(coord);
+                if (stateChangeListener != null)
+                    stateChangeListener.onImageClicked(model, coord[0], coord[1], bgImage.getWidth(), bgImage.getHeight());
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {

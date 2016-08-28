@@ -78,19 +78,10 @@ public class MultiSelectFragment extends BaseFragment {
         recyclerView.setAdapter(adapter = new MultiSelectAdapter(getActivity(), imageMediaEntries, new MultiSelectAdapter.ItemClickListener() {
             @Override
             public void onclicked(ImageView view, String url) {
-                SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel();
                 int[] coord = new int[2];
                 view.getLocationOnScreen(coord);
-                model.currentX = coord[0];
-                model.currentY = coord[1];
-                model.currentWidth = view.getWidth();
-                model.currentHeight = view.getHeight();
-                model.imgUrl = url;
-                Bundle data = new Bundle();
-                data.putSerializable(SitoImageViewActivity.KEY_DATA, model);
-                Intent intent = new Intent(getActivity(), SitoImageViewActivity.class);
-                intent.putExtras(data);
-                startActivity(intent);
+                SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel(url, coord[0], coord[1], view.getWidth(), view.getHeight());
+                SitoImageViewActivity.goToSitoImageBrowsePage(getActivity(), model);
             }
         }));
 
@@ -100,7 +91,6 @@ public class MultiSelectFragment extends BaseFragment {
                 dispatchTakePictureIntent();
             }
         });
-
     }
 
     private void reloadPictures(String protocolUrl) {

@@ -12,7 +12,7 @@ public interface StateChangeListener {
 
     void onRequestAddVideoNode(Node node);
 
-    void onImageClicked(Node node);
+    void onImageClicked(Node node, int fromX, int fromY, int fromWidth, int fromHeight);
 
     void onVideoClicked(Node node);
 }
