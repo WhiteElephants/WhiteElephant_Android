@@ -23,9 +23,9 @@ public abstract class BaseFragment extends Fragment {
     public static final int NO_DRAWABLE = -1;
     public static final String TEXT_NOT_DEFINED = "TEXT_NOT_DEFINED";
 
-    private AppCompatImageView leftIcon, rightIcon;
+    private AppCompatImageView leftIcon, rightIcon, rightIcon2;
     private TextView leftText, rightText;
-    private View leftIconArea, rightIconArea, leftTextArea, rightTextArea;
+    private View leftIconArea, rightIconArea, leftTextArea, rightTextArea, rightIconArea2;
     private TextView title;
     private View titleArea;
     private RelativeLayout fragmentContainer;
@@ -42,9 +42,11 @@ public abstract class BaseFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.layout_base_fragment, container, false);
         leftIcon = (AppCompatImageView) rootView.findViewById(R.id.left_logo);
         rightIcon = (AppCompatImageView) rootView.findViewById(R.id.right_logo);
+        rightIconArea = rootView.findViewById(R.id.right_area);
+        rightIcon2 = (AppCompatImageView) rootView.findViewById(R.id.right_logo_2);
+        rightIconArea2 = rootView.findViewById(R.id.right_area_2);
         title = (TextView) rootView.findViewById(R.id.title);
         leftIconArea = rootView.findViewById(R.id.left_area);
-        rightIconArea = rootView.findViewById(R.id.right_area);
         leftText = (TextView) rootView.findViewById(R.id.left_text);
         rightText = (TextView) rootView.findViewById(R.id.right_text);
         leftTextArea = rootView.findViewById(R.id.left_text_area);
@@ -65,6 +67,18 @@ public abstract class BaseFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     onRightIconClicked();
+                }
+            });
+        } else {
+            rightIconArea.setVisibility(View.GONE);
+        }
+
+        if (getRightDrawable2() != NO_DRAWABLE) {
+            rightIcon2.setImageResource(getRightDrawable2());
+            rightIconArea2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightIcon2Clicked();
                 }
             });
         } else {
@@ -127,6 +141,9 @@ public abstract class BaseFragment extends Fragment {
     protected int getRightDrawable() {
         return NO_DRAWABLE;
     }
+    protected int getRightDrawable2() {
+        return NO_DRAWABLE;
+    }
 
     protected int getLeftDrawable() {
         return NO_DRAWABLE;
@@ -153,6 +170,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void onRightIconClicked() {
+    }
+
+    protected void onRightIcon2Clicked() {
     }
 
     protected void onLeftIconClicked() {

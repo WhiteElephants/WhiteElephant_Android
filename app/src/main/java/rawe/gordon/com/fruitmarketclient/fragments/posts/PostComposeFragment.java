@@ -17,6 +17,7 @@ import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
+import rawe.gordon.com.fruitmarketclient.fragments.preview.PostPreviewFragment;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 
@@ -26,6 +27,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 public class PostComposeFragment extends BaseFragment implements PostAdapter.Operation {
 
     public static final String KEY_RESULT_LISTENER = "KEY_RESULT_LISTENER";
+    public static final String KEY_POST_MODEL = "KEY_POST_MODEL";
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -108,13 +110,24 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     @Override
-    protected String getRightText() {
-        return "发布";
+    protected int getRightDrawable2() {
+        return R.drawable.ic_save_white;
     }
 
     @Override
-    protected void onRightTextClicked() {
+    protected void onRightIcon2Clicked() {
+        CacheBean.putParam(KEY_POST_MODEL, KEY_POST_MODEL, adapter.nodes);
+        PostPreviewFragment.startWithContainer(getActivity());
+    }
 
+    @Override
+    protected int getRightDrawable() {
+        return R.drawable.ic_publish_white;
+    }
+
+    @Override
+    protected void onRightIconClicked() {
+        super.onRightIconClicked();
     }
 
     public static void startWithContainer(Activity from) {
@@ -142,6 +155,4 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         });
         MultiSelectFragment.startWithBoxActivity(getActivity(), MultiSelectFragment.INTENTION_TO_CHOOSE, true);
     }
-
-
 }
