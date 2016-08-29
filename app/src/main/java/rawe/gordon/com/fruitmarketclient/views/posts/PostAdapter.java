@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.iknow.imageselect.activities.BrowseDetailActivity;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.List;
 import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
@@ -22,6 +22,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.VideoNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.FooterViewHolder;
+import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.GroupViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.HeaderViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.ImageViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.TextViewHolder;
@@ -63,6 +64,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 return new ImageViewHolder(inflater.inflate(R.layout.layout_post_compose_item_image, parent, false), new EditTextWatcher());
             case NodeType.VIDEO:
                 return new VideoViewHolder(inflater.inflate(R.layout.layout_post_compose_item_video, parent, false), new EditTextWatcher());
+            case NodeType.GROUP:
+                return new GroupViewHolder(inflater.inflate(R.layout.layout_post_compose_item_group, parent, false), new EditTextWatcher());
             case NodeType.FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.layout_post_compose_item_footer, parent, false));
             default:
@@ -102,8 +105,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 videoViewHolder.bindValue(videoNode);
                 videoViewHolder.setStateChangeListener(this);
                 break;
+            case NodeType.GROUP:
+                GroupNode groupNode = (GroupNode) node;
+                GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
+                groupViewHolder.watcher.setModel(groupNode);
+                groupViewHolder.bindValue(groupNode);
+                break;
             case NodeType.FOOTER:
                 break;
+
         }
     }
 
@@ -135,8 +145,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onImageClicked(Node node, int fromX, int fromY, int fromWidth, int fromHeight) {
-        SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel(((ImageNode)node).getStoragePath(),fromX,fromY,fromWidth,fromHeight);
-        SitoImageViewActivity.goToSitoImageBrowsePage((Activity) context,model);
+        SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel(((ImageNode) node).getStoragePath(), fromX, fromY, fromWidth, fromHeight);
+        SitoImageViewActivity.goToSitoImageBrowsePage((Activity) context, model);
     }
 
     @Override
@@ -175,8 +185,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         for (ImageMediaEntry entry : entries) {
             newValues.add(new ImageNode(entry.getProtocolPath()));
         }
-        nodes.addAll(position + 1, newValues);
-        notifyItemRangeChanged(position + 1, newValues.size());
+//        nodes.addAll(position + 1, newValues);
+//        notifyItemRangeChanged(position + 1, newValues.size());
+        nodes.add(position + 1, new GroupNode(newValues));
+        notifyItemInserted(position + 1);
     }
 
     public interface Operation {

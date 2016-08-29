@@ -9,4 +9,5 @@ public class NodeType {
     public final static int IMAGE = 2;
     public final static int VIDEO = 3;
     public final static int FOOTER = 4;
+    public final static int GROUP = 5;
 }

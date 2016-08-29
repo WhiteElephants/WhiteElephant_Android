@@ -3,6 +3,7 @@ package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 import android.animation.ValueAnimator;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,38 +14,35 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 
-import com.iknow.imageselect.display.DisplayOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import rawe.gordon.com.business.configs.Config;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.StateChangeListener;
-import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
-import rawe.gordon.com.fruitmarketclient.views.posts.subviews.RatioImageView;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
 
 /**
  * Created by gordon on 16/8/23.
  */
-public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatcher {
+public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatcher {
 
     private AppCompatImageView add, addSubImage;
     private View addArea, threeArea, twoArea, oneArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(140);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(100);
     private int maxRotation = 45;
     private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating, showArrow = true;
     ValueAnimator.AnimatorUpdateListener expandListener, textListener, arrowListener;
     ValueAnimator animator;
     private ViewGroup.MarginLayoutParams textAreaMargin;
     private StateChangeListener stateChangeListener;
-    ImageNode model;
+    GroupNode model;
     private EditText editText;
     public EditTextWatcher watcher;
-    private RatioImageView bgImage;
+    private RecyclerView groupView;
     private static final int toAngle = -180;
 
-    public ImageViewHolder(View itemView, EditTextWatcher watcher) {
+    public GroupViewHolder(View itemView, EditTextWatcher watcher) {
         super(itemView);
         this.watcher = watcher;
         add = (AppCompatImageView) itemView.findViewById(R.id.add_icon);
@@ -56,7 +54,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         oneArea = itemView.findViewById(R.id.c_one);
         subInput = itemView.findViewById(R.id.sub_input);
         editText = (EditText) itemView.findViewById(R.id.input);
-        bgImage = (RatioImageView) itemView.findViewById(R.id.image_groups);
+        groupView = (RecyclerView) itemView.findViewById(R.id.image_groups);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
         editText.addTextChangedListener(watcher);
         editText.addTextChangedListener(this);
@@ -101,13 +99,13 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
                 resumeMenu();
             }
         });
-        bgImage.setOnClickListener(new View.OnClickListener() {
+        groupView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int[] coord = new int[2];
-                bgImage.getLocationOnScreen(coord);
+                groupView.getLocationOnScreen(coord);
                 if (stateChangeListener != null)
-                    stateChangeListener.onImageClicked(model, coord[0], coord[1], bgImage.getWidth(), bgImage.getHeight());
+                    stateChangeListener.onImageClicked(model, coord[0], coord[1], groupView.getWidth(), groupView.getHeight());
             }
         });
         expandListener = new ValueAnimator.AnimatorUpdateListener() {
@@ -132,7 +130,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fac = (float) valueAnimator.getAnimatedValue();
                 addSubImage.setRotation(toAngle * fac);
-                textAreaMargin.topMargin = (int) (textTopDistance * fac);
+                textAreaMargin.bottomMargin = (int) (-textTopDistance * fac) + DimenUtil.pix2dip(10);
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
                 if (!textAreaExpanded && fac == 0F) textAreaAnimating = false;
@@ -147,6 +145,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
                 else addSubArea.setVisibility(View.VISIBLE);
             }
         };
+        groupView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
     }
 
     public void resumeMenu() {
@@ -215,18 +214,16 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         this.stateChangeListener = listener;
     }
 
-    public void bindValue(ImageNode model) {
+    public void bindValue(GroupNode model) {
         this.model = model;
         editText.setText(model.getContent());
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
-        if (!TextUtils.isEmpty(model.getStoragePath()))
-            ImageLoader.getInstance().displayImage(model.getStoragePath(), bgImage, DisplayOptions.getCacheNoneFadeOptions());
-        else bgImage.setImageBitmap(null);
+        groupView.setAdapter(new GroupImageAdapter(groupView.getContext(), model.getImageNodes()));
     }
 
     private void setExpanded(boolean expanded) {
-        textAreaMargin.topMargin = expanded ? (int) (textTopDistance) : 0;
+        textAreaMargin.bottomMargin = expanded ? (int) (-textTopDistance) : DimenUtil.pix2dip(10);
         addSubArea.requestLayout();
         addSubImage.setRotation(expanded ? toAngle : 0);
     }

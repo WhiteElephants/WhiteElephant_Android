@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/containerLightGray">
+
+   <View
+       android:background="@color/colorTitleBarDark"
+       android:layout_width="100dp"
+       android:id="@+id/anchor"
+       android:layout_height="100dp"/>
+    <View
+        android:layout_alignRight="@+id/anchor"
+        android:layout_alignBottom="@id/anchor"
+        android:layout_width="50dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginBottom="-10dp"
+        android:background="@color/iconOrange"
+        android:layout_height="50dp"/>
+</RelativeLayout>

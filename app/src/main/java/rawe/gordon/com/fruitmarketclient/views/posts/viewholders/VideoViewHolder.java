@@ -52,7 +52,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder implements TextWatc
         oneArea = itemView.findViewById(R.id.c_one);
         subInput = itemView.findViewById(R.id.sub_input);
         editText = (EditText) itemView.findViewById(R.id.input);
-        bgImage = (RatioImageView) itemView.findViewById(R.id.bg_image);
+        bgImage = (RatioImageView) itemView.findViewById(R.id.image_groups);
         textAreaMargin = (ViewGroup.MarginLayoutParams) subInput.getLayoutParams();
         editText.addTextChangedListener(watcher);
         editText.addTextChangedListener(this);
