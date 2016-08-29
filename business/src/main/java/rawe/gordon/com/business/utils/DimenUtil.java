@@ -1,11 +1,13 @@
 package rawe.gordon.com.business.utils;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.TypedValue;
 
 import java.lang.reflect.Field;
 
 import rawe.gordon.com.business.application.ContextHolder;
+import rawe.gordon.com.business.definitions.Size;
 
 /**
  * Created by gordon on 16/5/17.
@@ -36,5 +38,16 @@ public class DimenUtil {
             e1.printStackTrace();
         }
         return sbar;
+    }
+
+    public static int[] decodeImageSize(String localPath) {
+        if (localPath.startsWith("file")) localPath = localPath.substring(5);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(localPath, options);
+        int[] retValue = new int[2];
+        retValue[0] = options.outWidth;
+        retValue[1] = options.outHeight;
+        return retValue;
     }
 }

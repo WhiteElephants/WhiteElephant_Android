@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 
@@ -37,13 +38,13 @@ public class PreviewAdapter extends RecyclerView.Adapter {
             case NodeType.HEADER:
                 return new HeaderHolder(inflater.inflate(R.layout.layout_preview_header_item, parent, false));
             case NodeType.TEXT:
-                return new HeaderHolder(inflater.inflate(R.layout.layout_preview_text_item, parent, false));
+                return new TextHolder(inflater.inflate(R.layout.layout_preview_text_item, parent, false));
             case NodeType.IMAGE:
-                return new HeaderHolder(inflater.inflate(R.layout.layout_preview_image_item, parent, false));
+                return new ImageHolder(inflater.inflate(R.layout.layout_preview_image_item, parent, false));
             case NodeType.VIDEO:
-                return new HeaderHolder(inflater.inflate(R.layout.layout_preview_video_item, parent, false));
+                return new VIdeoHolder(inflater.inflate(R.layout.layout_preview_video_item, parent, false));
             case NodeType.FOOTER:
-                return new HeaderHolder(inflater.inflate(R.layout.layout_preview_footer_item, parent, false));
+                return new FooterHolder(inflater.inflate(R.layout.layout_preview_footer_item, parent, false));
             default:
                 return new HeaderHolder(inflater.inflate(R.layout.layout_preview_text_item, parent, false));
         }
@@ -51,7 +52,14 @@ public class PreviewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        Node node = nodes.get(position);
+        switch (node.getType()) {
+            case NodeType.IMAGE:
+                ImageHolder imageHolder = (ImageHolder) holder;
+                ImageNode imageNode = (ImageNode) node;
+                imageHolder.aspectImageView.diaplayImage(imageNode.getStoragePath());
+                break;
+        }
     }
 
     @Override
