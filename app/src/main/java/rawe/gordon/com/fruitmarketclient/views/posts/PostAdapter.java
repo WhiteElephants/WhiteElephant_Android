@@ -65,7 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             case NodeType.VIDEO:
                 return new VideoViewHolder(inflater.inflate(R.layout.layout_post_compose_item_video, parent, false), new EditTextWatcher());
             case NodeType.GROUP:
-                return new GroupViewHolder(inflater.inflate(R.layout.layout_post_compose_item_group, parent, false), new EditTextWatcher());
+                return new GroupViewHolder(inflater.inflate(R.layout.layout_post_compose_item_group, parent, false), new EditTextWatcher(), (Activity) context);
             case NodeType.FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.layout_post_compose_item_footer, parent, false));
             default:
@@ -110,6 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
                 groupViewHolder.watcher.setModel(groupNode);
                 groupViewHolder.bindValue(groupNode);
+                groupViewHolder.setStateChangeListener(this);
                 break;
             case NodeType.FOOTER:
                 break;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.fruitmarketclient.views.posts.models.FooterNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
@@ -24,9 +25,11 @@ public class Mock {
     public static List<Node> composeData(List<ImageMediaEntry> src) {
         List<Node> ret = new ArrayList<>();
         ret.add(new HeaderNode());
+        List<ImageNode> imageNodes = new ArrayList<>();
         for (ImageMediaEntry entry : src) {
-            ret.add(new ImageNode(entry.getProtocolPath()));
+            imageNodes.add(new ImageNode(entry.getProtocolPath()));
         }
+        ret.add(new GroupNode(imageNodes));
         ret.add(new FooterNode());
         return ret;
     }

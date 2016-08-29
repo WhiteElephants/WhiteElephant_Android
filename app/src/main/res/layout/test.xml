@@ -10,11 +10,9 @@
        android:id="@+id/anchor"
        android:layout_height="100dp"/>
     <View
-        android:layout_alignRight="@+id/anchor"
-        android:layout_alignBottom="@id/anchor"
+        android:layout_below="@+id/anchor"
+        android:layout_marginTop="-10dp"
         android:layout_width="50dp"
-        android:layout_marginRight="-10dp"
-        android:layout_marginBottom="-10dp"
         android:background="@color/iconOrange"
         android:layout_height="50dp"/>
 </RelativeLayout>

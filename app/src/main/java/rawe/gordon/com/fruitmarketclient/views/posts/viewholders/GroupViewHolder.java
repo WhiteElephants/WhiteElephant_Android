@@ -1,6 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -29,7 +30,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
 
     private AppCompatImageView add, addSubImage;
     private View addArea, threeArea, twoArea, oneArea, addSubArea, subInput;
-    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(100);
+    private float unitExpandDistance = DimenUtil.dip2pix(48), textTopDistance = DimenUtil.dip2pix(135), defaultDistance = -DimenUtil.dip2pix(150);
     private int maxRotation = 45;
     private boolean menuExpanded = false, menuAnimating, textAreaExpanded, textAreaAnimating, showArrow = true;
     ValueAnimator.AnimatorUpdateListener expandListener, textListener, arrowListener;
@@ -41,10 +42,12 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
     public EditTextWatcher watcher;
     private RecyclerView groupView;
     private static final int toAngle = -180;
+    private Activity activity;
 
-    public GroupViewHolder(View itemView, EditTextWatcher watcher) {
+    public GroupViewHolder(View itemView, EditTextWatcher watcher, Activity activity) {
         super(itemView);
         this.watcher = watcher;
+        this.activity = activity;
         add = (AppCompatImageView) itemView.findViewById(R.id.add_icon);
         addSubImage = (AppCompatImageView) itemView.findViewById(R.id.add_sub_text_icon);
         addArea = itemView.findViewById(R.id.add_container);
@@ -130,7 +133,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fac = (float) valueAnimator.getAnimatedValue();
                 addSubImage.setRotation(toAngle * fac);
-                textAreaMargin.bottomMargin = (int) (-textTopDistance * fac) + DimenUtil.pix2dip(10);
+                textAreaMargin.topMargin = (int) ((textTopDistance * fac) + defaultDistance);
                 addSubArea.requestLayout();
                 if (textAreaExpanded && fac == 1F) textAreaAnimating = false;
                 if (!textAreaExpanded && fac == 0F) textAreaAnimating = false;
@@ -219,11 +222,11 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
         editText.setText(model.getContent());
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
-        groupView.setAdapter(new GroupImageAdapter(groupView.getContext(), model.getImageNodes()));
+        groupView.setAdapter(new GroupImageAdapter(activity, model.getImageNodes()));
     }
 
     private void setExpanded(boolean expanded) {
-        textAreaMargin.bottomMargin = expanded ? (int) (-textTopDistance) : DimenUtil.pix2dip(10);
+        textAreaMargin.topMargin = expanded ? (int) (defaultDistance + textTopDistance) : (int) defaultDistance;
         addSubArea.requestLayout();
         addSubImage.setRotation(expanded ? toAngle : 0);
     }
