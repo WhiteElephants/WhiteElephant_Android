@@ -151,7 +151,7 @@ public class MultiSelectFragment extends BaseFragment {
         });
     }
 
-    public List<ImageMediaEntry> filterSelected(List<ImageMediaEntry> src) {
+    public static List<ImageMediaEntry> filterSelected(List<ImageMediaEntry> src) {
         List<ImageMediaEntry> retValues = new ArrayList<>();
         for (ImageMediaEntry entry : src) {
             if (entry.isSelected()) retValues.add(entry);

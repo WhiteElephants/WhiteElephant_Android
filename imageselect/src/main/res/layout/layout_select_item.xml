@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,29 +9,9 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <RelativeLayout
-        android:id="@+id/select_indicator_area"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_gravity="top|right"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/select_indicator"
-            android:layout_width="23dip"
-            android:layout_height="23dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_choosable" />
-    </RelativeLayout>
-
     <ImageView
-        android:id="@+id/video_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/video_icon"
-        android:visibility="gone" />
-</FrameLayout>
+        android:id="@+id/select_indicator"
+        android:layout_width="23dip"
+        android:layout_height="23dip"
+        android:layout_centerInParent="true" />
+</RelativeLayout>
