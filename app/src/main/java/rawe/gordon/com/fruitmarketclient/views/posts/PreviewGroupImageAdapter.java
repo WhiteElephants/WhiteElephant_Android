@@ -23,26 +23,26 @@ import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.GroupImageItemH
 /**
  * Created by gordon on 16/8/23.
  */
-public class GroupImageAdapter extends RecyclerView.Adapter<GroupImageItemHolder> {
+public class PreviewGroupImageAdapter extends RecyclerView.Adapter<GroupImageItemHolder> {
 
     public static int GROUP_ITEM_COLUMN = 3;
-    public static int GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+    public static int GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(20 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
 
     public static void recalc() {
         GROUP_ITEM_COLUMN = GROUP_ITEM_COLUMN == 3 ? 2 : GROUP_ITEM_COLUMN == 2 ? 1 : 3;
-        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(20 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
     }
 
     public static void resetColumn() {
         GROUP_ITEM_COLUMN = 3;
-        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(20 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
     }
 
     public List<ImageNode> nodes;
     private LayoutInflater inflater;
     private Context context;
 
-    public GroupImageAdapter(Context context, List<ImageNode> src) {
+    public PreviewGroupImageAdapter(Context context, List<ImageNode> src) {
         this.nodes = src;
         this.context = context;
         this.inflater = LayoutInflater.from(context);

@@ -12,6 +12,7 @@ import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
+import rawe.gordon.com.fruitmarketclient.views.posts.PreviewGroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.preview.holders.PreviewAdapter;
 
@@ -21,6 +22,7 @@ import rawe.gordon.com.fruitmarketclient.views.preview.holders.PreviewAdapter;
 public class PostPreviewFragment extends BaseFragment {
     private List<Node> nodes;
     private RecyclerView recyclerView;
+    private PreviewAdapter adapter;
 
     @Override
     protected int getContentLayout() {
@@ -41,7 +43,7 @@ public class PostPreviewFragment extends BaseFragment {
 
     private void workFlow() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new PreviewAdapter(nodes,getContext()));
+        recyclerView.setAdapter(adapter = new PreviewAdapter(nodes, getContext()));
     }
 
     @Override
@@ -72,5 +74,11 @@ public class PostPreviewFragment extends BaseFragment {
                 getActivity().finish();
             }
         });
+    }
+
+    @Override
+    protected void onTitleClicked() {
+        PreviewGroupImageAdapter.recalc();
+        adapter.notifyDataSetChanged();
     }
 }
