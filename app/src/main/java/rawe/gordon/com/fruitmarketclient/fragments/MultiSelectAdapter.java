@@ -64,7 +64,7 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
                 return true;
             }
         });
-        holder.imageView.toggleMask(!entry.isSelected() && hasReachLimit());
+        holder.imageView.toggleMask(entry.isSelected());
     }
 
     @Override
