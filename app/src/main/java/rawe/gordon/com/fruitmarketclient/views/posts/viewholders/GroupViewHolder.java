@@ -151,6 +151,10 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
         groupView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
     }
 
+    private void adjustColumn(int column) {
+        groupView.setLayoutManager(new StaggeredGridLayoutManager(column, StaggeredGridLayoutManager.VERTICAL));
+    }
+
     public void resumeMenu() {
         if (menuExpanded) shrinkMenu();
     }
@@ -222,6 +226,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements TextWatc
         editText.setText(model.getContent());
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
+        adjustColumn(GroupImageAdapter.GROUP_ITEM_COLUMN);
         groupView.setAdapter(new GroupImageAdapter(activity, model.getImageNodes()));
     }
 

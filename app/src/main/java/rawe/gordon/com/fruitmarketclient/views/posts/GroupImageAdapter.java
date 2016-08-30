@@ -15,6 +15,7 @@ import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.application.SharedParameter;
 import rawe.gordon.com.business.imageloader.DisplayOptions;
 import rawe.gordon.com.business.utils.DimenUtil;
+import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.GroupImageItemHolder;
@@ -24,7 +25,18 @@ import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.GroupImageItemH
  */
 public class GroupImageAdapter extends RecyclerView.Adapter<GroupImageItemHolder> {
 
-    public static final int GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(60)) / 3);
+    public static int GROUP_ITEM_COLUMN = 3;
+    public static int GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+
+    public static void recalc() {
+        GROUP_ITEM_COLUMN = GROUP_ITEM_COLUMN == 2 ? 3 : 2;
+        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+    }
+
+    public static void resetColumn() {
+        GROUP_ITEM_COLUMN = 3;
+        GROUP_ITEM_WIDTH = (int) ((SharedParameter.getInstance().getScreenWidth() - DimenUtil.dip2pix(40 + (GROUP_ITEM_COLUMN - 1) * 10)) / GROUP_ITEM_COLUMN);
+    }
 
     public List<ImageNode> nodes;
     private LayoutInflater inflater;
@@ -62,6 +74,13 @@ public class GroupImageAdapter extends RecyclerView.Adapter<GroupImageItemHolder
                 holder.imageContainer.getLocationOnScreen(coord);
                 SitoImageViewActivity.ImageModel model = new SitoImageViewActivity.ImageModel(node.getStoragePath(), coord[0], coord[1], holder.imageContainer.getWidth(), holder.imageContainer.getHeight());
                 SitoImageViewActivity.goToSitoImageBrowsePage((Activity) context, model);
+            }
+        });
+        holder.imageContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtil.say("long clicked");
+                return true;
             }
         });
     }

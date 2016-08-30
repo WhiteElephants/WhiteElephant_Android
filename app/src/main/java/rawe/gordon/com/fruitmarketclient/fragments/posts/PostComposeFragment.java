@@ -18,6 +18,7 @@ import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.preview.PostPreviewFragment;
+import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 
@@ -116,8 +117,10 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onRightIcon2Clicked() {
-        CacheBean.putParam(KEY_POST_MODEL, KEY_POST_MODEL, adapter.nodes);
-        PostPreviewFragment.startWithContainer(getActivity());
+//        CacheBean.putParam(KEY_POST_MODEL, KEY_POST_MODEL, adapter.nodes);
+//        PostPreviewFragment.startWithContainer(getActivity());
+        GroupImageAdapter.recalc();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -133,6 +136,12 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     public static void startWithContainer(Activity from) {
         if (from == null || from.isFinishing()) return;
         TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
+    }
+
+    @Override
+    public void closeWithAnimation(Callback callback) {
+        GroupImageAdapter.resetColumn();
+        super.closeWithAnimation(callback);
     }
 
     @Override
