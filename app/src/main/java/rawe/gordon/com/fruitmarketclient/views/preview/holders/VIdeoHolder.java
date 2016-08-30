@@ -6,8 +6,8 @@ import android.view.View;
 /**
  * Created by gordon on 16/8/28.
  */
-public class VIdeoHolder extends RecyclerView.ViewHolder {
-    public VIdeoHolder(View itemView) {
+public class VideoHolder extends RecyclerView.ViewHolder {
+    public VideoHolder(View itemView) {
         super(itemView);
     }
 }

@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
 
 /**
  * Created by gordon on 16/8/28.
@@ -42,7 +44,9 @@ public class PreviewAdapter extends RecyclerView.Adapter {
             case NodeType.IMAGE:
                 return new ImageHolder(inflater.inflate(R.layout.layout_preview_image_item, parent, false));
             case NodeType.VIDEO:
-                return new VIdeoHolder(inflater.inflate(R.layout.layout_preview_video_item, parent, false));
+                return new VideoHolder(inflater.inflate(R.layout.layout_preview_video_item, parent, false));
+            case NodeType.GROUP:
+                return new GroupHolder(inflater.inflate(R.layout.layout_preview_group_item, parent, false), context);
             case NodeType.FOOTER:
                 return new FooterHolder(inflater.inflate(R.layout.layout_preview_footer_item, parent, false));
             default:
@@ -54,10 +58,20 @@ public class PreviewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Node node = nodes.get(position);
         switch (node.getType()) {
-            case NodeType.IMAGE:
-                ImageHolder imageHolder = (ImageHolder) holder;
-                ImageNode imageNode = (ImageNode) node;
-                imageHolder.aspectImageView.diaplayImage(imageNode.getStoragePath());
+            case NodeType.HEADER:
+                HeaderHolder headerHolder = (HeaderHolder) holder;
+                HeaderNode headerNode = (HeaderNode) node;
+                headerHolder.bindValue(headerNode);
+                break;
+            case NodeType.TEXT:
+                TextHolder textHolder = (TextHolder) holder;
+                TextNode textNode = (TextNode) node;
+                textHolder.bindValue(textNode);
+                break;
+            case NodeType.GROUP:
+                GroupHolder groupHolder = (GroupHolder) holder;
+                GroupNode groupNode = (GroupNode) node;
+                groupHolder.bindValue(groupNode);
                 break;
         }
     }

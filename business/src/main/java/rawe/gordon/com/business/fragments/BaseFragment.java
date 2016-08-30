@@ -121,6 +121,12 @@ public abstract class BaseFragment extends Fragment {
             titleArea.setVisibility(View.GONE);
         }
         title.setText(getTitle());
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTitleClicked();
+            }
+        });
         if (performShutEffect())
             performUpDownShutAnimation();
     }

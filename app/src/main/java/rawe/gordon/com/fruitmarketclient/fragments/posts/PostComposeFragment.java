@@ -117,10 +117,8 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onRightIcon2Clicked() {
-//        CacheBean.putParam(KEY_POST_MODEL, KEY_POST_MODEL, adapter.nodes);
-//        PostPreviewFragment.startWithContainer(getActivity());
-        GroupImageAdapter.recalc();
-        adapter.notifyDataSetChanged();
+        CacheBean.putParam(KEY_POST_MODEL, KEY_POST_MODEL, adapter.nodes);
+        PostPreviewFragment.startWithContainer(getActivity());
     }
 
     @Override
@@ -147,6 +145,12 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     @Override
     protected String getTitle() {
         return "创作";
+    }
+
+    @Override
+    protected void onTitleClicked() {
+        GroupImageAdapter.recalc();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
