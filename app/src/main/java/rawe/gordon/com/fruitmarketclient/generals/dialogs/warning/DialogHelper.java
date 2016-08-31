@@ -2,6 +2,7 @@ package rawe.gordon.com.fruitmarketclient.generals.dialogs.warning;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -28,14 +29,29 @@ public class DialogHelper {
         sureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) listener.onYes();
+
+                if (listener != null) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onYes();
+                        }
+                    }, 500);
+                }
                 dialog.dismiss();
             }
         });
         cancelView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) listener.onNo();
+                if (listener != null) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onNo();
+                        }
+                    }, 500);
+                }
                 dialog.dismiss();
             }
         });

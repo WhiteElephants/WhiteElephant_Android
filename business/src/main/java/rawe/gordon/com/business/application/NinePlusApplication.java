@@ -8,6 +8,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.io.File;
+
 import rawe.gordon.com.business.db.DBManager;
 
 
@@ -26,5 +28,13 @@ public class NinePlusApplication extends Application {
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .tasksProcessingOrder(QueueProcessingType.LIFO).build();
         ImageLoader.getInstance().init(config);
+        initialize();
+    }
+
+    private void initialize() {
+        File draftDir = new File(getExternalCacheDir().getAbsolutePath() + "/draft/");
+        if (!draftDir.exists()) {
+            draftDir.mkdirs();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.fragments.posts;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -134,24 +136,18 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
             @Override
             public void onYes() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            saveDraft();
-                            closeWithAnimation(new Callback() {
-                                @Override
-                                public void onAnimationFinish() {
-                                    getActivity().finish();
-                                }
-                            });
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            ToastUtil.say("保存失败");
+                try {
+                    saveDraft();
+                    closeWithAnimation(new Callback() {
+                        @Override
+                        public void onAnimationFinish() {
+                            getActivity().finish();
                         }
-
-                    }
-                }, 500);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtil.say("保存失败");
+                }
             }
 
             @Override
@@ -247,7 +243,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     public void saveDraft() throws IOException {
-        String postName = getContext().getExternalCacheDir().getAbsolutePath() + "/draft/" + UUID.randomUUID().toString() + ".draft";
+        String postName = getContext().getExternalCacheDir().getAbsolutePath() + "/draft/" + UUID.randomUUID().toString().replace("-", "") + ".draft";
         ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(postName));
         outputStream.writeObject(adapter.nodes);
         outputStream.flush();

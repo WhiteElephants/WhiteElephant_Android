@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="已发布的文章" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_published"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="草稿" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_draft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
