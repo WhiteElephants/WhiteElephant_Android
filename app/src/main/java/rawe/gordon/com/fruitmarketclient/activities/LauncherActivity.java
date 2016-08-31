@@ -15,6 +15,7 @@ import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
 import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
+import rawe.gordon.com.fruitmarketclient.generals.dialogs.warning.DialogHelper;
 
 /**
  * Created by gordon on 16/7/30.

@@ -1,23 +1,37 @@
 package rawe.gordon.com.fruitmarketclient.fragments.posts;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import rawe.gordon.com.business.activities.TransparentBoxActivity;
+import rawe.gordon.com.business.application.SharedKeys;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
+import rawe.gordon.com.business.utils.PreferencesHelper;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
 import rawe.gordon.com.fruitmarketclient.fragments.preview.PostPreviewFragment;
+import rawe.gordon.com.fruitmarketclient.generals.dialogs.warning.DialogHelper;
 import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
@@ -117,12 +131,34 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        closeWithAnimation(new Callback() {
+        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
             @Override
-            public void onAnimationFinish() {
-                getActivity().finish();
+            public void onYes() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            saveDraft();
+                            closeWithAnimation(new Callback() {
+                                @Override
+                                public void onAnimationFinish() {
+                                    getActivity().finish();
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            ToastUtil.say("保存失败");
+                        }
+
+                    }
+                }, 500);
             }
-        });
+
+            @Override
+            public void onNo() {
+
+            }
+        }).show();
     }
 
     @Override
@@ -169,6 +205,32 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     @Override
+    public void handleBackPress(Callback callback) {
+        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
+            @Override
+            public void onYes() {
+                try {
+                    saveDraft();
+                    closeWithAnimation(new Callback() {
+                        @Override
+                        public void onAnimationFinish() {
+                            getActivity().finish();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtil.say("保存失败");
+                }
+            }
+
+            @Override
+            public void onNo() {
+
+            }
+        }).show();
+    }
+
+    @Override
     protected boolean performShutEffect() {
         return true;
     }
@@ -183,4 +245,48 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         });
         MultiSelectFragment.startWithBoxActivity(getActivity(), MultiSelectFragment.INTENTION_TO_CHOOSE, true);
     }
+
+    public void saveDraft() throws IOException {
+        String postName = getContext().getExternalCacheDir().getAbsolutePath() + "/draft/" + UUID.randomUUID().toString() + ".draft";
+        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(postName));
+        outputStream.writeObject(adapter.nodes);
+        outputStream.flush();
+        outputStream.close();
+        List<String> draftUuids;
+        if (TextUtils.isEmpty(PreferencesHelper.getInstance().getString(SharedKeys.KEY_DRAFT))) {
+            draftUuids = new ArrayList<>();
+        } else {
+            draftUuids = JSON.parseArray(PreferencesHelper.getInstance().getString(SharedKeys.KEY_DRAFT), String.class);
+        }
+        draftUuids.add(postName);
+        PreferencesHelper.getInstance().putString(SharedKeys.KEY_DRAFT, JSON.toJSONString(draftUuids));
+    }
+
+    /**
+     * text code
+     *
+     * *public static void main(String[] args) {
+     List<ImageNode> nodes = new ArrayList<>();
+     for (int i = 0; i < 10; i++) {
+     nodes.add(new ImageNode("shit" + i));
+     }
+     try {
+     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("data.txt"));
+     outputStream.writeObject(nodes);
+     outputStream.close();
+     } catch (IOException e) {
+     e.printStackTrace();
+     }
+     try {
+     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("data.txt"));
+     List<ImageNode> retrive = (List<ImageNode>) inputStream.readObject();
+     for (ImageNode node : retrive) {
+     System.out.println(node.getStoragePath());
+     }
+     } catch (IOException e) {
+     e.printStackTrace();
+     } catch (ClassNotFoundException e) {
+     e.printStackTrace();
+     }
+     }*/
 }

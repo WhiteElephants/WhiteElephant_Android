@@ -43,7 +43,7 @@ public class TransparentBoxActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        fragment.closeWithAnimation(new BaseFragment.Callback() {
+        fragment.handleBackPress(new BaseFragment.Callback() {
             @Override
             public void onAnimationFinish() {
                 finish();

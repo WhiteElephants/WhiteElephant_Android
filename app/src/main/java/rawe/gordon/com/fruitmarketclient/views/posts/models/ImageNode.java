@@ -1,9 +1,11 @@
 package rawe.gordon.com.fruitmarketclient.views.posts.models;
 
+import java.io.Serializable;
+
 /**
  * Created by gordon on 16/8/23.
  */
-public class ImageNode implements Node {
+public class ImageNode implements Node,Serializable {
 
     private String content;
     private String storagePath;

@@ -6,4 +6,5 @@ package rawe.gordon.com.business.application;
 public class SharedKeys {
     public final static String KEY_SYSTEM_NOTIFICATION = "KEY_SYSTEM_NOTIFICATION";
     public final static String KEY_ACTIVITY_RECOMMENDATION = "KEY_ACTIVITY_RECOMMENDATION";
+    public final static String KEY_DRAFT = "KEY_DRAFT";
 }

@@ -155,4 +155,14 @@
         <item name="android:textColor">@color/textDarkGray</item>
     </style>
 
+    <style name="customDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowAnimationStyle">@style/dialogAnimation</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="dialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down_dialog</item>
+    </style>
+
 </resources>
