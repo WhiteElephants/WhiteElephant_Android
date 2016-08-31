@@ -21,6 +21,9 @@ import rawe.gordon.com.fruitmarketclient.fragments.preview.PostPreviewFragment;
 import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
 
 /**
  * Created by gordon on 8/25/16.
@@ -63,7 +66,8 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
                 if (viewHolder.getAdapterPosition() == 0 || viewHolder.getAdapterPosition() == adapter.nodes.size() - 1)
                     return makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.ACTION_STATE_IDLE);
                 int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-                int swipeFlags = ItemTouchHelper.END;
+                int swipeFlags = adapter.nodes.get(viewHolder.getAdapterPosition()).getType() == NodeType.TEXT
+                        ? ItemTouchHelper.END | ItemTouchHelper.START : ItemTouchHelper.END;
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
 
@@ -78,13 +82,24 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                if (direction == ItemTouchHelper.START || viewHolder.getAdapterPosition() == 0
+                if (viewHolder.getAdapterPosition() == 0
                         || viewHolder.getAdapterPosition() == adapter.nodes.size() - 1) return;
-                if (adapter.nodes.size() == 3) {
-                    ToastUtil.say("至少留点内容吧，都删了还怎么玩");
+                if (direction == ItemTouchHelper.END) {
+                    if (adapter.nodes.size() == 3) {
+                        ToastUtil.say("至少留点内容吧，都删了还怎么玩");
+                        return;
+                    }
+                    adapter.nodes.remove(viewHolder.getAdapterPosition());
+                    adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                } else if (direction == ItemTouchHelper.START) {
+                    //check type first
+                    Node node = adapter.nodes.get(viewHolder.getAdapterPosition());
+                    if (node.getType() != NodeType.TEXT)
+                        return;
+                    TextNode textNode = (TextNode) node;
+                    textNode.setSubTitle(!textNode.isSubTitle());
+                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
                 }
-                adapter.nodes.remove(viewHolder.getAdapterPosition());
-                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
 
             @Override

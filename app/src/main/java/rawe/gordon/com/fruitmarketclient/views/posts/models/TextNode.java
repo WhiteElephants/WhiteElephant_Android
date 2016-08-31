@@ -18,6 +18,16 @@ public class TextNode implements Node {
     public TextNode() {
     }
 
+    private boolean isSubTitle = false;
+
+    public boolean isSubTitle() {
+        return isSubTitle;
+    }
+
+    public void setSubTitle(boolean subTitle) {
+        isSubTitle = subTitle;
+    }
+
     @Override
     public int getType() {
         return NodeType.TEXT;
