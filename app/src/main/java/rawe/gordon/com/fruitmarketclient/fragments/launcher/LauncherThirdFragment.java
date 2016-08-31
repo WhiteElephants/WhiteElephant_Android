@@ -52,7 +52,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
     @Override
     public void fetchNetWorkData() {
-
+        reloadDraft();
     }
 
     @Override
@@ -69,6 +69,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
     }
 
     private void reloadDraft() {
+        if (draftRecyclerView == null) return;
         String draftRecords = PreferencesHelper.getInstance().getString(SharedKeys.KEY_DRAFT);
         List<String> drafts = TextUtils.isEmpty(draftRecords) ? new ArrayList<String>() : JSON.parseArray(draftRecords, String.class);
         draftRecyclerView.setAdapter(new DraftAdapter(getContext(), drafts));
@@ -97,7 +98,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
         @Override
         public void onBindViewHolder(DraftHoler holder, int position) {
-            ((TextView)holder.itemView.findViewById(R.id.post_name)).setText(data.get(position));
+            ((TextView) holder.itemView.findViewById(R.id.post_name)).setText(data.get(position));
         }
 
         @Override
