@@ -10,8 +10,6 @@ import rawe.gordon.com.business.fragments.LauncherBaseFragment;
  */
 public class LauncherThirdFragment extends LauncherBaseFragment {
 
-    private View compose;
-
     public static LauncherThirdFragment newInstance() {
         LauncherThirdFragment thirdLauncher = new LauncherThirdFragment();
         return thirdLauncher;
@@ -24,17 +22,10 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
     @Override
     protected void bindViews(View rootView) {
-        compose = rootView.findViewById(R.id.compose);
     }
 
     @Override
     protected void prepareData() {
-        compose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
