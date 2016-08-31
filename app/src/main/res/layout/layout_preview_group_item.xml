@@ -5,13 +5,16 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:padding="5dp"
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/image_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/textLightGray"
+        android:layout_below="@+id/recycler_view"
+        android:layout_margin="10dp"
+        android:textSize="12dp" />
 </RelativeLayout>

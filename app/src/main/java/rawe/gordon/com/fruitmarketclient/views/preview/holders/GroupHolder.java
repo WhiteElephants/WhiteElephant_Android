@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
+import rawe.gordon.com.fruitmarketclient.views.posts.PreviewGroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 
 /**
@@ -27,8 +28,8 @@ public class GroupHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindValue(GroupNode model) {
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(GroupImageAdapter.GROUP_ITEM_COLUMN, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new GroupImageAdapter(context, model.getImageNodes()));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(PreviewGroupImageAdapter.GROUP_ITEM_COLUMN, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(new PreviewGroupImageAdapter(context, model.getImageNodes()));
         imageText.setText(model.getContent());
     }
 }

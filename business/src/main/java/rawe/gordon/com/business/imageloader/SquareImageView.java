@@ -12,6 +12,8 @@ import android.widget.ImageView;
  */
 public class SquareImageView extends ImageView {
     private int drawingColor = Color.argb(255, 52, 152, 219);
+    private int maskColor = Color.argb(100, 0, 0, 0);
+    private boolean showMask = false;
 
     public SquareImageView(Context context) {
         super(context);
@@ -34,6 +36,7 @@ public class SquareImageView extends ImageView {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         canvas.drawColor(drawingColor);
+        if (showMask) canvas.drawColor(maskColor);
     }
 
     private int getDrawingColor(float alpha) {
@@ -52,5 +55,10 @@ public class SquareImageView extends ImageView {
         });
         animator.setDuration(duration);
         animator.start();
+    }
+
+    public void toggleMask(boolean isShow) {
+        showMask = isShow;
+        invalidate();
     }
 }
