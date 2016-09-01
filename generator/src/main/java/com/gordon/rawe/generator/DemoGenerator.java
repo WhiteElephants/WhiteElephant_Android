@@ -38,6 +38,10 @@ public class DemoGenerator {
         user.addStringProperty("gender");
         user.addStringProperty("creditCardNumber");
         user.addStringProperty("deliveryAddresses");//本地段存储分隔符分割的地址
+        Entity post = schema.addEntity("Post");
+        post.addIdProperty();
+        post.addStringProperty("uuid");
+        post.addStringProperty("data");
         try {
             new DaoGenerator().generateAll(schema, "../business/src/main/java-gen");
         } catch (Exception e) {
