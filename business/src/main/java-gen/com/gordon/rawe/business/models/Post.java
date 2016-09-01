@@ -9,7 +9,9 @@ public class Post {
     private Long id;
     private String uuid;
     private String data;
+    private String createTime;
     private String postName;
+    private String thumbPath;
 
     public Post() {
     }
@@ -18,11 +20,13 @@ public class Post {
         this.id = id;
     }
 
-    public Post(Long id, String uuid, String data, String postName) {
+    public Post(Long id, String uuid, String data, String createTime, String postName, String thumbPath) {
         this.id = id;
         this.uuid = uuid;
         this.data = data;
+        this.createTime = createTime;
         this.postName = postName;
+        this.thumbPath = thumbPath;
     }
 
     public Long getId() {
@@ -49,12 +53,28 @@ public class Post {
         this.data = data;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
     public String getPostName() {
         return postName;
     }
 
     public void setPostName(String postName) {
         this.postName = postName;
+    }
+
+    public String getThumbPath() {
+        return thumbPath;
+    }
+
+    public void setThumbPath(String thumbPath) {
+        this.thumbPath = thumbPath;
     }
 
 }

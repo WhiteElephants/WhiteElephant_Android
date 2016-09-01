@@ -26,7 +26,9 @@ public class PostDao extends AbstractDao<Post, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Uuid = new Property(1, String.class, "uuid", false, "UUID");
         public final static Property Data = new Property(2, String.class, "data", false, "DATA");
-        public final static Property PostName = new Property(3, String.class, "postName", false, "POST_NAME");
+        public final static Property CreateTime = new Property(3, String.class, "createTime", false, "CREATE_TIME");
+        public final static Property PostName = new Property(4, String.class, "postName", false, "POST_NAME");
+        public final static Property ThumbPath = new Property(5, String.class, "thumbPath", false, "THUMB_PATH");
     };
 
 
@@ -45,7 +47,9 @@ public class PostDao extends AbstractDao<Post, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"UUID\" TEXT," + // 1: uuid
                 "\"DATA\" TEXT," + // 2: data
-                "\"POST_NAME\" TEXT);"); // 3: postName
+                "\"CREATE_TIME\" TEXT," + // 3: createTime
+                "\"POST_NAME\" TEXT," + // 4: postName
+                "\"THUMB_PATH\" TEXT);"); // 5: thumbPath
     }
 
     /** Drops the underlying database table. */
@@ -74,9 +78,19 @@ public class PostDao extends AbstractDao<Post, Long> {
             stmt.bindString(3, data);
         }
  
+        String createTime = entity.getCreateTime();
+        if (createTime != null) {
+            stmt.bindString(4, createTime);
+        }
+ 
         String postName = entity.getPostName();
         if (postName != null) {
-            stmt.bindString(4, postName);
+            stmt.bindString(5, postName);
+        }
+ 
+        String thumbPath = entity.getThumbPath();
+        if (thumbPath != null) {
+            stmt.bindString(6, thumbPath);
         }
     }
 
@@ -93,7 +107,9 @@ public class PostDao extends AbstractDao<Post, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // uuid
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // data
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // postName
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // createTime
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // postName
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // thumbPath
         );
         return entity;
     }
@@ -104,7 +120,9 @@ public class PostDao extends AbstractDao<Post, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUuid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setData(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setPostName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCreateTime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setPostName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setThumbPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     /** @inheritdoc */

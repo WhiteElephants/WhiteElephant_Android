@@ -161,13 +161,15 @@ public class DBManager {
         else return null;
     }
 
-    public void savePost(String uuid, String postName, String data) {
+    public void savePost(String uuid, String postName, String data, String createTime, String thumbPath) {
         Post oldPost = getPostByUuid(uuid);
         if (oldPost == null) {
             final Post post = new Post();
             post.setData(data);
             post.setUuid(uuid);
             post.setPostName(postName);
+            post.setCreateTime(createTime);
+            post.setThumbPath(thumbPath);
             final PostDao postDao = session.getPostDao();
             session.runInTx(new Runnable() {
                 @Override

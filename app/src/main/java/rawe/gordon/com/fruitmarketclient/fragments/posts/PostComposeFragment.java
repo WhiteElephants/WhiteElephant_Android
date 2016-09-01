@@ -19,6 +19,7 @@ import rawe.gordon.com.business.activities.TransparentBoxActivity;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
+import rawe.gordon.com.business.utils.DateUtil;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
@@ -27,7 +28,9 @@ import rawe.gordon.com.fruitmarketclient.generals.dialogs.warning.DialogHelper;
 import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
@@ -244,7 +247,16 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     public void saveDraft() throws IOException {
         String postUuid = UUID.randomUUID().toString().replace("-", "");
-        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(adapter.nodes));
+        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(adapter.nodes), DateUtil.currentTime(), getThumbPath());
+    }
+
+    private String getThumbPath() {
+        for (Node node : adapter.nodes) {
+            if (node.getType() == NodeType.IMAGE) return ((ImageNode) node).getStoragePath();
+            if (node.getType() == NodeType.GROUP)
+                return ((GroupNode) node).getImageNodes().get(0).getStoragePath();
+        }
+        return "";
     }
 
     /**

@@ -8,9 +8,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gordon.rawe.business.models.Post;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -78,8 +80,14 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
     public static class DraftHoler extends RecyclerView.ViewHolder {
 
+        public TextView createTime, title;
+        public ImageView thumbView;
+
         public DraftHoler(View itemView) {
             super(itemView);
+            createTime = (TextView) itemView.findViewById(R.id.create_time);
+            title = (TextView) itemView.findViewById(R.id.post_name);
+            thumbView = (ImageView) itemView.findViewById(R.id.post_thumb);
         }
     }
 
@@ -106,6 +114,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
                     ToastUtil.say(data.get(position).getUuid());
                 }
             });
+            ImageLoader.getInstance().displayImage(data.get(position).getThumbPath(), holder.thumbView);
         }
 
         @Override

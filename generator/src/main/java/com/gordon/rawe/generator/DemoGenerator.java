@@ -42,7 +42,9 @@ public class DemoGenerator {
         post.addIdProperty();
         post.addStringProperty("uuid");
         post.addStringProperty("data");
+        post.addStringProperty("createTime");
         post.addStringProperty("postName");
+        post.addStringProperty("thumbPath");
         try {
             new DaoGenerator().generateAll(schema, "../business/src/main/java-gen");
         } catch (Exception e) {
