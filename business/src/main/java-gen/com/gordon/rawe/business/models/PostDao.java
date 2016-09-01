@@ -26,6 +26,7 @@ public class PostDao extends AbstractDao<Post, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Uuid = new Property(1, String.class, "uuid", false, "UUID");
         public final static Property Data = new Property(2, String.class, "data", false, "DATA");
+        public final static Property PostName = new Property(3, String.class, "postName", false, "POST_NAME");
     };
 
 
@@ -43,7 +44,8 @@ public class PostDao extends AbstractDao<Post, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"POST\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"UUID\" TEXT," + // 1: uuid
-                "\"DATA\" TEXT);"); // 2: data
+                "\"DATA\" TEXT," + // 2: data
+                "\"POST_NAME\" TEXT);"); // 3: postName
     }
 
     /** Drops the underlying database table. */
@@ -71,6 +73,11 @@ public class PostDao extends AbstractDao<Post, Long> {
         if (data != null) {
             stmt.bindString(3, data);
         }
+ 
+        String postName = entity.getPostName();
+        if (postName != null) {
+            stmt.bindString(4, postName);
+        }
     }
 
     /** @inheritdoc */
@@ -85,7 +92,8 @@ public class PostDao extends AbstractDao<Post, Long> {
         Post entity = new Post( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // uuid
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // data
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // data
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // postName
         );
         return entity;
     }
@@ -96,6 +104,7 @@ public class PostDao extends AbstractDao<Post, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUuid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setData(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPostName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

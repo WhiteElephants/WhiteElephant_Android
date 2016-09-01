@@ -1,7 +1,6 @@
 package rawe.gordon.com.fruitmarketclient.fragments.launcher;
 
 import android.content.Context;
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
+import com.gordon.rawe.business.models.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import rawe.gordon.com.business.application.SharedKeys;
-import rawe.gordon.com.business.utils.PreferencesHelper;
+import rawe.gordon.com.business.db.DBManager;
+import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 
 /**
  * Created by gordon on 16/7/31.
@@ -70,9 +67,8 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
     private void reloadDraft() {
         if (draftRecyclerView == null) return;
-        String draftRecords = PreferencesHelper.getInstance().getString(SharedKeys.KEY_DRAFT);
-        List<String> drafts = TextUtils.isEmpty(draftRecords) ? new ArrayList<String>() : JSON.parseArray(draftRecords, String.class);
-        draftRecyclerView.setAdapter(new DraftAdapter(getContext(), drafts));
+        List<Post> posts = DBManager.getInstance().getAllPosts();
+        draftRecyclerView.setAdapter(new DraftAdapter(getContext(), posts));
     }
 
     public static class DraftHoler extends RecyclerView.ViewHolder {
@@ -83,10 +79,10 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
     }
 
     public static class DraftAdapter extends RecyclerView.Adapter<DraftHoler> {
-        private List<String> data;
+        private List<Post> data;
         private Context context;
 
-        public DraftAdapter(Context context, List<String> data) {
+        public DraftAdapter(Context context, List<Post> data) {
             this.data = data;
             this.context = context;
         }
@@ -97,8 +93,14 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(DraftHoler holder, int position) {
-            ((TextView) holder.itemView.findViewById(R.id.post_name)).setText(data.get(position));
+        public void onBindViewHolder(DraftHoler holder, final int position) {
+            ((TextView) holder.itemView.findViewById(R.id.post_name)).setText(TextUtils.isEmpty(data.get(position).getPostName())?"未设置标题":data.get(position).getPostName());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtil.say(data.get(position).getUuid());
+                }
+            });
         }
 
         @Override

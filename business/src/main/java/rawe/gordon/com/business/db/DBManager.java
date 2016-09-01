@@ -3,16 +3,18 @@ package rawe.gordon.com.business.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-
 import com.gordon.rawe.business.models.CartOrder;
 import com.gordon.rawe.business.models.CartOrderDao;
 import com.gordon.rawe.business.models.DaoMaster;
 import com.gordon.rawe.business.models.DaoSession;
 import com.gordon.rawe.business.models.DeliveryInformation;
 import com.gordon.rawe.business.models.DeliveryInformationDao;
+import com.gordon.rawe.business.models.Post;
+import com.gordon.rawe.business.models.PostDao;
 import com.gordon.rawe.business.models.User;
 import com.gordon.rawe.business.models.UserDao;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.Query;
@@ -150,52 +152,41 @@ public class DBManager {
         });
     }
 
-//    public void createPerson(String name, String content) {
-//        final Person person = new Person();
-//        person.setComment(content);
-//        person.setName(name);
-//        final PersonDao dao = session.getPersonDao();
-//        session.runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                dao.insert(person);
-//            }
-//        });
-//    }
-//
-//    public List<Person> getAllPeople() {
-//        PersonDao dao = session.getPersonDao();
-//        Query builder = dao.queryBuilder().distinct().build();
-//        List<Person> allPeople = builder.list();
-//        return allPeople;
-//    }
-//
-//    public void deleteAllPeople() {
-//        final PersonDao dao = session.getPersonDao();
-//        session.runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                dao.deleteAll();
-//            }
-//        });
-//    }
-//
-//    public Person getPersonByName(String name) {
-//        final PersonDao dao = session.getPersonDao();
-//        Query query = dao.queryBuilder().where(PersonDao.Properties.Name.eq(name)).build();
-//        List all = query.list();
-//        if (all != null) return (Person) all.get(0);
-//        else return null;
-//    }
-//
-//    public void deletePersonByName(String name) {
-//        final PersonDao dao = session.getPersonDao();
-//        final Person person = getPersonByName(name);
-//        session.runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                dao.delete(person);
-//            }
-//        });
-//    }
+
+    public Post getPostByUuid(String uuid) {
+        PostDao dao = session.getPostDao();
+        Query<Post> query = dao.queryBuilder().where(PostDao.Properties.Uuid.eq(uuid)).build();
+        List<Post> list = query.list();
+        if (list != null && list.size() > 0) return list.get(0);
+        else return null;
+    }
+
+    public void savePost(String uuid, String postName, String data) {
+        Post oldPost = getPostByUuid(uuid);
+        if (oldPost == null) {
+            final Post post = new Post();
+            post.setData(data);
+            post.setUuid(uuid);
+            post.setPostName(postName);
+            final PostDao postDao = session.getPostDao();
+            session.runInTx(new Runnable() {
+                @Override
+                public void run() {
+                    postDao.insert(post);
+                }
+            });
+        } else {
+            PostDao postDao = session.getPostDao();
+            oldPost.setData(data);
+            postDao.update(oldPost);
+        }
+    }
+
+    public List<Post> getAllPosts() {
+        PostDao postDao = session.getPostDao();
+        Query<Post> query = postDao.queryBuilder().build();
+        List<Post> posts = query.list();
+        Collections.reverse(posts);
+        return posts;
+    }
 }

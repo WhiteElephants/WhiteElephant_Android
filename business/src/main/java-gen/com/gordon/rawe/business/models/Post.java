@@ -9,6 +9,7 @@ public class Post {
     private Long id;
     private String uuid;
     private String data;
+    private String postName;
 
     public Post() {
     }
@@ -17,10 +18,11 @@ public class Post {
         this.id = id;
     }
 
-    public Post(Long id, String uuid, String data) {
+    public Post(Long id, String uuid, String data, String postName) {
         this.id = id;
         this.uuid = uuid;
         this.data = data;
+        this.postName = postName;
     }
 
     public Long getId() {
@@ -45,6 +47,14 @@ public class Post {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
     }
 
 }
