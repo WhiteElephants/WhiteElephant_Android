@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -123,28 +124,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
-            @Override
-            public void onYes() {
-                try {
-                    saveDraft();
-                    closeWithAnimation(new Callback() {
-                        @Override
-                        public void onAnimationFinish() {
-                            getActivity().finish();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.say("保存失败");
-                }
-            }
-
-            @Override
-            public void onNo() {
-
-            }
-        }).show();
+        handleBackAction();
     }
 
     @Override
@@ -192,28 +172,58 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void handleBackPress(Callback callback) {
-        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
-            @Override
-            public void onYes() {
-                try {
-                    saveDraft();
+        handleBackAction();
+    }
+
+    private void handleBackAction() {
+        String title = ((HeaderNode) adapter.nodes.get(0)).getContent();
+        if (TextUtils.isEmpty(title)) {
+            DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "保存草稿至少需要标题?", "继续编辑", "直接退出", new DialogHelper.TwoChoiceListener() {
+                @Override
+                public void onYes() {
+
+                }
+
+                @Override
+                public void onNo() {
                     closeWithAnimation(new Callback() {
                         @Override
                         public void onAnimationFinish() {
                             getActivity().finish();
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.say("保存失败");
                 }
-            }
+            }).show();
+        } else {
+            DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "保存", "不保存", new DialogHelper.TwoChoiceListener() {
+                @Override
+                public void onYes() {
+                    try {
+                        saveDraft();
+                        closeWithAnimation(new Callback() {
+                            @Override
+                            public void onAnimationFinish() {
+                                getActivity().finish();
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        ToastUtil.say("保存失败");
+                    }
+                }
 
-            @Override
-            public void onNo() {
+                @Override
+                public void onNo() {
+                    closeWithAnimation(new Callback() {
+                        @Override
+                        public void onAnimationFinish() {
+                            getActivity().finish();
+                        }
+                    });
+                }
+            }).show();
+        }
 
-            }
-        }).show();
     }
 
     @Override

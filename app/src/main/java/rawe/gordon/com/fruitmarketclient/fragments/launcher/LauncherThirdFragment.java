@@ -74,7 +74,6 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
                 draftRecyclerView.setAdapter(new DraftAdapter(getContext(), posts));
             }
         });
-        ToastUtil.say("adapter size "+posts.size());
     }
 
     public static class DraftHoler extends RecyclerView.ViewHolder {
@@ -100,7 +99,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
 
         @Override
         public void onBindViewHolder(DraftHoler holder, final int position) {
-            ((TextView) holder.itemView.findViewById(R.id.post_name)).setText(TextUtils.isEmpty(data.get(position).getPostName())?"未设置标题":data.get(position).getPostName());
+            ((TextView) holder.itemView.findViewById(R.id.post_name)).setText(TextUtils.isEmpty(data.get(position).getPostName()) ? "未设置标题" : data.get(position).getPostName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
