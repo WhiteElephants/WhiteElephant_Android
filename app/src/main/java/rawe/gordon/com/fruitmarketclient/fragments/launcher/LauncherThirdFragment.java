@@ -1,6 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.fragments.launcher;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -66,9 +67,14 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
     }
 
     private void reloadDraft() {
-        if (draftRecyclerView == null) return;
-        List<Post> posts = DBManager.getInstance().getAllPosts();
-        draftRecyclerView.setAdapter(new DraftAdapter(getContext(), posts));
+        final List<Post> posts = DBManager.getInstance().getAllPosts();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                draftRecyclerView.setAdapter(new DraftAdapter(getContext(), posts));
+            }
+        });
+        ToastUtil.say("adapter size "+posts.size());
     }
 
     public static class DraftHoler extends RecyclerView.ViewHolder {
