@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -22,11 +23,11 @@
             android:layout_height="50dp"
             android:background="@color/themeBlueLight">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/ic_launcher" />
+                app:srcCompat="@drawable/ic_photo_camera" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package rawe.gordon.com.fruitmarketclient.views.posts.models;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,15 @@ public class MergedNode {
     private String content;
     private String storagePath;
     private boolean isTitle = false;
+    private boolean expanded = false;
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
 
     public int getType() {
         return type;
@@ -65,20 +76,25 @@ public class MergedNode {
                     break;
                 case NodeType.TEXT:
                     TextNode textNode = (TextNode) node;
+                    if (TextUtils.isEmpty(textNode.getContent())) continue;
                     mergedNode.setContent(textNode.getContent());
+                    mergedNode.setTitle(textNode.isSubTitle());
                     break;
                 case NodeType.IMAGE:
                     ImageNode imageNode = (ImageNode) node;
                     mergedNode.setContent(imageNode.getContent());
                     mergedNode.setStoragePath(imageNode.getStoragePath());
+                    mergedNode.setExpanded(imageNode.isExpanded());
                     break;
                 case NodeType.VIDEO:
                     VideoNode videoNode = (VideoNode) node;
                     mergedNode.setContent(videoNode.getContent());
+                    mergedNode.setExpanded(videoNode.isExpanded());
                     break;
                 case NodeType.GROUP:
                     GroupNode groupNode = (GroupNode) node;
                     mergedNode.setContent(groupNode.getContent());
+                    mergedNode.setExpanded(groupNode.isExpanded());
                     List<String> imageUrls = new ArrayList<>();
                     for (ImageNode tmp : groupNode.getImageNodes()) {
                         imageUrls.add(tmp.getStoragePath());
@@ -104,11 +120,13 @@ public class MergedNode {
                     break;
                 case NodeType.TEXT:
                     TextNode textNode = new TextNode();
+                    textNode.setSubTitle(mergedNode.isTitle());
                     textNode.setContent(mergedNode.getContent());
                     retValues.add(textNode);
                     break;
                 case NodeType.IMAGE:
                     ImageNode imageNode = new ImageNode();
+                    imageNode.setExpanded(mergedNode.isExpanded());
                     imageNode.setContent(mergedNode.getContent());
                     imageNode.setStoragePath(mergedNode.getStoragePath());
                     retValues.add(imageNode);
@@ -116,11 +134,13 @@ public class MergedNode {
                 case NodeType.VIDEO:
                     VideoNode videoNode = new VideoNode();
                     videoNode.setContent(mergedNode.getContent());
+                    videoNode.setExpanded(mergedNode.isExpanded());
                     retValues.add(videoNode);
                     break;
                 case NodeType.GROUP:
                     GroupNode groupNode = new GroupNode();
                     groupNode.setContent(mergedNode.getContent());
+                    groupNode.setExpanded(mergedNode.isExpanded());
                     List<ImageNode> imageNodes = new ArrayList<>();
                     for (String tmp : mergedNode.getImagePaths()) {
                         imageNodes.add(new ImageNode(tmp));

@@ -2,7 +2,6 @@ package rawe.gordon.com.fruitmarketclient.views.posts.viewholders;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -124,6 +123,6 @@ public class TextViewHolder extends RecyclerView.ViewHolder {
     public void bindValue(TextNode model) {
         this.model = model;
         editText.setText(model.getContent());
-        editText.setTextColor(model.isSubTitle()? Color.BLACK:Color.RED);
+        editText.setTextColor(model.isSubTitle() ? Color.BLACK : Color.RED);
     }
 }
