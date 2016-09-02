@@ -71,7 +71,8 @@ public class MultiSelectFragment extends BaseFragment {
     @Override
     protected void prepareData() {
         handleCacheBean();
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+        PreCachingLayoutManager manager = new PreCachingLayoutManager(getActivity(), 3);
+        manager.setExtraLayoutSpace(1400);
         recyclerView.setLayoutManager(manager);
         imageMediaEntries = SourceProvider.getAllImages();
         recyclerView.setAdapter(adapter = new MultiSelectAdapter(getActivity(), imageMediaEntries, new MultiSelectAdapter.ItemClickListener() {

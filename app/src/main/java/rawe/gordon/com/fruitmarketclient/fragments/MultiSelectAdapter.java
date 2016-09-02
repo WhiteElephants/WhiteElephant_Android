@@ -43,8 +43,8 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
     @Override
     public void onBindViewHolder(final MultiSelectAdapter.ImageSelectHolder holder, int position) {
         final ImageMediaEntry entry = data.get(position);
-        Glide.with(context).load(entry.getProtocolPath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageView);
-//        ImageLoader.getInstance().displayImage(entry.getProtocolPath(), holder.imageView, DisplayOptions.getCacheFadeLowerQualityOptions());
+        Glide.clear(holder.imageView);
+        Glide.with(context).load(entry.getProtocolPath()).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(holder.imageView);
         holder.setChosen(entry.isSelected());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
