@@ -6,20 +6,24 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import rawe.gordon.com.business.generals.grids.AbstractRecyclerGrid;
 import rawe.gordon.com.business.network.responses.pojo.CommodityModel;
 import rawe.gordon.com.business.utils.ViewSizeRegulator;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.CommodityDetailActivity;
-import rawe.gordon.com.business.generals.grids.AbstractRecyclerGrid;
 
 /**
  * Created by gordon on 5/13/16.
  */
 public class PopularGrids extends AbstractRecyclerGrid<CommodityModel> {
+    private Context context;
+
     public PopularGrids(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class PopularGrids extends AbstractRecyclerGrid<CommodityModel> {
     @Override
     protected void bindViews(View view, final CommodityModel model, final Activity activity) {
         ImageView draweeView = (ImageView) view.findViewById(R.id.image);
-        ImageLoader.getInstance().displayImage(model.getThumbnail(), draweeView);
+        Glide.with(context).load(model.getThumbnail()).diskCacheStrategy(DiskCacheStrategy.ALL).into(draweeView);
         try {
             ViewSizeRegulator.regulateViewRatio(view, 4 / 3F);
         } catch (Exception e) {

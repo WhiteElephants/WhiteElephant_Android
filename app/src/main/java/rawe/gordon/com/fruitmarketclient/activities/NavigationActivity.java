@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import rawe.gordon.com.business.application.SharedParameter;
+import rawe.gordon.com.business.generals.pulls.PullToRefreshLayout;
+import rawe.gordon.com.business.generals.slides.SlideView;
 import rawe.gordon.com.business.network.RestClient;
 import rawe.gordon.com.business.network.responses.PopularResponse;
 import rawe.gordon.com.business.network.responses.SlideResponse;
@@ -23,8 +25,6 @@ import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.business.utils.ViewSizeRegulator;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.generals.dialogs.filter.FilterDialog;
-import rawe.gordon.com.business.generals.pulls.PullToRefreshLayout;
-import rawe.gordon.com.business.generals.slides.SlideView;
 import rawe.gordon.com.fruitmarketclient.views.homepage.populars.PopularGrids;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,7 +70,7 @@ public class NavigationActivity extends AppCompatActivity
         ViewSizeRegulator.regulateScreenRatio(slideView, 16 / 9F);
         getFirstBatchOfPopulars();
         refreshView.setOnRefreshListener(this);
-        ImageLoader.getInstance().displayImage("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg", logo);
+        Glide.with(NavigationActivity.this).load("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg").diskCacheStrategy(DiskCacheStrategy.ALL).into(logo);
     }
 
     private void getFirstBatchOfPopulars() {

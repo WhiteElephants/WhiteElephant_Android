@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SlideView extends LinearLayout {
             ImageView draweeView;
             views.add(draweeView = (ImageView) LayoutInflater.from(context).inflate(R.layout.layout_slides_sub_view, rootView, false));
             if (slide.getImageUrl() != null)
-                ImageLoader.getInstance().displayImage(slide.getImageUrl(), draweeView);
+                Glide.with(getContext()).load(slide.getImageUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(draweeView);
         }
         length = sourceData.size();
         viewPager.setAdapter(new SlideViewAdapter());

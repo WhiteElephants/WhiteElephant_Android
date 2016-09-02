@@ -8,7 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
@@ -152,7 +153,7 @@ public class CategorySelectDialog extends AbstractDialog {
                 view = inflater.inflate(R.layout.layout_category_item, viewGroup, false);
             }
             ((TextView) view.findViewById(R.id.text1)).setText(getItem(i).getTile());
-            ImageLoader.getInstance().displayImage(getItem(i).getLogo(), (ImageView) view.findViewById(R.id.drawee));
+            Glide.with(getActivity()).load(getItem(i).getLogo()).diskCacheStrategy(DiskCacheStrategy.ALL).into((ImageView) view.findViewById(R.id.drawee));
             final View mask = view.findViewById(R.id.select_mask);
             mask.setVisibility(selectedCategories.contains(getItem(i).getTile()) ? View.VISIBLE : View.GONE);
             view.setOnClickListener(new View.OnClickListener() {

@@ -3,7 +3,6 @@ package rawe.gordon.com.business.activities;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.Serializable;
 
 import rawe.gordon.com.business.R;
 import rawe.gordon.com.business.application.SharedParameter;
-import rawe.gordon.com.business.imageloader.DisplayOptions;
 import rawe.gordon.com.business.utils.DimenUtil;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -90,28 +87,9 @@ public class SitoImageViewActivity extends AppCompatActivity {
             }
         });
         valueAnimator.setDuration(500);
-        ImageLoader.getInstance().displayImage(url, sitoImage, DisplayOptions.getCacheNoneFadeOptions(), new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                sitoArea.setVisibility(View.VISIBLE);
-                valueAnimator.start();
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-
-            }
-        });
+        Glide.with(this).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).into(sitoImage);
+        sitoArea.setVisibility(View.VISIBLE);
+        valueAnimator.start();
     }
 
     public static void goToSitoImageBrowsePage(Activity from, ImageModel model) {

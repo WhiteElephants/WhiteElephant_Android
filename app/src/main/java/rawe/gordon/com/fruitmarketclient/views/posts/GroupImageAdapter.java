@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
 import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.application.SharedParameter;
-import rawe.gordon.com.business.imageloader.DisplayOptions;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
@@ -66,7 +66,7 @@ public class GroupImageAdapter extends RecyclerView.Adapter<GroupImageItemHolder
         ViewGroup.LayoutParams layoutParams = holder.imageContainer.getLayoutParams();
         layoutParams.height = GROUP_ITEM_WIDTH * size[1] / size[0];
         holder.imageContainer.setLayoutParams(layoutParams);
-        ImageLoader.getInstance().displayImage(node.getStoragePath(), holder.imageView, DisplayOptions.getCacheNoneFadeOptions());
+        Glide.with(context).load(node.getStoragePath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageView);
         holder.imageContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

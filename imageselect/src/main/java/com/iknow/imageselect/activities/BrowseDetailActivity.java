@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.iknow.imageselect.R;
-import com.iknow.imageselect.display.DisplayOptions;
 import com.iknow.imageselect.model.MediaInfo;
 import com.iknow.imageselect.utils.DrawableUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -224,8 +224,7 @@ public class BrowseDetailActivity extends AppCompatActivity implements View.OnCl
             }
             videoIcon.setVisibility(mediaInfo.mediaType == 3 ? View.VISIBLE : View.GONE);
             videoSizeTv.setVisibility(mediaInfo.mediaType == 3 ? View.VISIBLE : View.GONE);
-            ImageLoader.getInstance().displayImage(medias.get(position).getMedia().fileName, (ImageView) itemView.findViewById(R.id.photo_view),
-                    DisplayOptions.getCacheNoneFadeOptions());
+            Glide.with(BrowseDetailActivity.this).load(medias.get(position).getMedia().fileName).diskCacheStrategy(DiskCacheStrategy.ALL).into((ImageView) itemView.findViewById(R.id.photo_view));
             return itemView;
         }
 

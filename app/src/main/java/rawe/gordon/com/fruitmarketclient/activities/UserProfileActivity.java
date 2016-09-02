@@ -2,17 +2,17 @@ package rawe.gordon.com.fruitmarketclient.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gordon.rawe.business.models.User;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import rawe.gordon.com.business.activities.BaseActivity;
 import rawe.gordon.com.business.db.DBManager;
-import rawe.gordon.com.business.landscape.ProvinceUtil;
+import rawe.gordon.com.business.fragments.EditBaseFragment;
 import rawe.gordon.com.business.network.RestClient;
 import rawe.gordon.com.business.network.responses.UserResponse;
 import rawe.gordon.com.business.network.responses.pojo.UserModel;
@@ -20,14 +20,7 @@ import rawe.gordon.com.business.utils.LoginManager;
 import rawe.gordon.com.business.utils.NullTransformer;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.business.fragments.EditBaseFragment;
-import rawe.gordon.com.fruitmarketclient.fragments.edits.EditDistrictFragment;
-import rawe.gordon.com.fruitmarketclient.fragments.edits.EditEmailFragment;
-import rawe.gordon.com.fruitmarketclient.fragments.edits.EditGenderFragment;
-import rawe.gordon.com.fruitmarketclient.fragments.edits.EditNameFragment;
-import rawe.gordon.com.fruitmarketclient.fragments.edits.EditPhoneFragment;
 import rawe.gordon.com.fruitmarketclient.generals.pops.LocationEntity;
-import rawe.gordon.com.fruitmarketclient.generals.pops.PopChooser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +82,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             sync(user.getUuid());
         }
         setupListeners();
-        ImageLoader.getInstance().displayImage("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg", logo);
+        Glide.with(UserProfileActivity.this).load("http://depot.nipic.com/file/20150605/13378630_23102978350.jpg").diskCacheStrategy(DiskCacheStrategy.ALL).into(logo);
     }
 
 //    @Override

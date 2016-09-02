@@ -13,9 +13,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 
-import com.iknow.imageselect.display.DisplayOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import rawe.gordon.com.business.application.ContextHolder;
 import rawe.gordon.com.business.configs.Config;
 import rawe.gordon.com.business.utils.DimenUtil;
 import rawe.gordon.com.fruitmarketclient.R;
@@ -221,7 +222,7 @@ public class ImageViewHolder extends RecyclerView.ViewHolder implements TextWatc
         setExpanded(model.isExpanded());
         textAreaExpanded = model.isExpanded();
         if (!TextUtils.isEmpty(model.getStoragePath()))
-            ImageLoader.getInstance().displayImage(model.getStoragePath(), bgImage, DisplayOptions.getCacheNoneFadeOptions());
+            Glide.with(ContextHolder.getInstance().getContext()).load(model.getStoragePath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(bgImage);
         else bgImage.setImageBitmap(null);
     }
 

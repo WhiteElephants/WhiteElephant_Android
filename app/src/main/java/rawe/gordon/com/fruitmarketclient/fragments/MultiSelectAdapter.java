@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.iknow.imageselect.R;
-import com.iknow.imageselect.display.DisplayOptions;
 import com.iknow.imageselect.fragments.models.ImageMediaEntry;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -43,7 +43,8 @@ public class MultiSelectAdapter extends RecyclerView.Adapter<MultiSelectAdapter.
     @Override
     public void onBindViewHolder(final MultiSelectAdapter.ImageSelectHolder holder, int position) {
         final ImageMediaEntry entry = data.get(position);
-        ImageLoader.getInstance().displayImage(entry.getProtocolPath(), holder.imageView, DisplayOptions.getCacheFadeLowerQualityOptions());
+        Glide.with(context).load(entry.getProtocolPath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.imageView);
+//        ImageLoader.getInstance().displayImage(entry.getProtocolPath(), holder.imageView, DisplayOptions.getCacheFadeLowerQualityOptions());
         holder.setChosen(entry.isSelected());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

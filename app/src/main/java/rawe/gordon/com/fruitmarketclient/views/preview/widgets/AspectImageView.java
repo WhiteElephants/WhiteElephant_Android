@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import rawe.gordon.com.business.application.SharedParameter;
-import rawe.gordon.com.business.imageloader.DisplayOptions;
 import rawe.gordon.com.business.utils.DimenUtil;
 
 /**
@@ -32,7 +32,7 @@ public class AspectImageView extends ImageView {
         init();
     }
 
-    private void init(){
+    private void init() {
         setScaleType(ScaleType.FIT_XY);
     }
 
@@ -48,13 +48,13 @@ public class AspectImageView extends ImageView {
         int screenWidth = SharedParameter.getInstance().getScreenWidth();
         if (size[0] >= screenWidth) {
             innerWidth = screenWidth;
-            innerHeight = size[1]*screenWidth/size[0];
+            innerHeight = size[1] * screenWidth / size[0];
         } else {
             innerWidth = size[0];
             innerHeight = size[1];
         }
         invalidate();
-        ImageLoader.getInstance().displayImage(localPath, this, DisplayOptions.getCacheNoneFadeOptions());
+        Glide.with(getContext()).load(localPath).diskCacheStrategy(DiskCacheStrategy.ALL).into(this);
     }
 
 }

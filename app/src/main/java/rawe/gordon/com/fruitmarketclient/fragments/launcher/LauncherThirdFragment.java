@@ -12,15 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gordon.rawe.business.models.Post;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.fragments.LauncherBaseFragment;
-import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.posts.PostComposeFragment;
 
@@ -124,10 +124,10 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PostComposeFragment.resumeFromDb((Activity) context,post.getData(),post.getUuid());
+                    PostComposeFragment.resumeFromDb((Activity) context, post.getData(), post.getUuid());
                 }
             });
-            ImageLoader.getInstance().displayImage(data.get(position).getThumbPath(), holder.thumbView);
+            Glide.with(context).load(data.get(position).getThumbPath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.thumbView);
             holder.createTime.setText(post.getCreateTime());
             holder.title.setText(TextUtils.isEmpty(post.getPostName()) ? "未设置标题" : data.get(position).getPostName());
         }
