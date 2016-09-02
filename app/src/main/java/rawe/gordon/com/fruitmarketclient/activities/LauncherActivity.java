@@ -54,7 +54,7 @@ public class LauncherActivity extends AppCompatActivity {
                 new LauncherTabLayout.Tab(R.drawable.ic_home_grey, "推荐", R.drawable.ic_home_orange),
                 new LauncherTabLayout.Tab(R.drawable.ic_safari_gray, "发现", R.drawable.ic_safari_orange),
                 new LauncherTabLayout.Tab(R.drawable.ic_add_white, "", R.drawable.ic_add_white),
-                new LauncherTabLayout.Tab(R.drawable.ic_draft_gray, "草稿", R.drawable.ic_draft_orange),
+                new LauncherTabLayout.Tab(R.drawable.ic_draft_gray, "文章", R.drawable.ic_draft_orange),
                 new LauncherTabLayout.Tab(R.drawable.ic_person_gray, "个人", R.drawable.ic_person_orange)
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override

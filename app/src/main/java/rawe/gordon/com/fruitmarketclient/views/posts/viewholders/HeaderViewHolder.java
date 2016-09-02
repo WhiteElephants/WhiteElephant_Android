@@ -68,6 +68,7 @@ public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     public void bindValue(HeaderNode model) {
         this.model = model;
+        editText.setText(model.getContent());
     }
 
     public void setStateChangeListener(StateChangeListener listener) {

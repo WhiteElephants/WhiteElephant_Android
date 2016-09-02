@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +19,7 @@ import rawe.gordon.com.business.activities.TransparentBoxActivity;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.fragments.BaseFragment;
 import rawe.gordon.com.business.utils.CacheBean;
+import rawe.gordon.com.business.utils.DateUtil;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
@@ -26,7 +28,10 @@ import rawe.gordon.com.fruitmarketclient.generals.dialogs.warning.DialogHelper;
 import rawe.gordon.com.fruitmarketclient.views.posts.GroupImageAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.PostAdapter;
 import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.MergedNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
@@ -38,12 +43,14 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     public static final String KEY_RESULT_LISTENER = "KEY_RESULT_LISTENER";
     public static final String KEY_POST_MODEL = "KEY_POST_MODEL";
+    public static final String KEY_POST_MODEL_RESUME = "KEY_POST_MODEL_RESUME";
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ItemTouchHelper itemTouchHelper;
     private PostAdapter adapter;
     private List<ImageMediaEntry> data;
+    String postUuid = UUID.randomUUID().toString().replace("-", "");
 
     @Override
     protected int getContentLayout() {
@@ -57,15 +64,21 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void prepareData() {
+        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         if (CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST) != null) {
             try {
                 data = (List<ImageMediaEntry>) CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST);
+                CacheBean.clean(MultiSelectFragment.KEY_INTENTION_TO_POST);
+                recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.composeData(data), this));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null ? Mock.getInitialData() : Mock.composeData(data), this));
+        if (CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME) != null) {
+            ResumeModel resumedNodes = (ResumeModel) CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME);
+            postUuid = resumedNodes.uuid;
+            recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), resumedNodes.nodes, this));
+        }
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -123,28 +136,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void onLeftIconClicked() {
-        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
-            @Override
-            public void onYes() {
-                try {
-                    saveDraft();
-                    closeWithAnimation(new Callback() {
-                        @Override
-                        public void onAnimationFinish() {
-                            getActivity().finish();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.say("保存失败");
-                }
-            }
-
-            @Override
-            public void onNo() {
-
-            }
-        }).show();
+        handleBackAction();
     }
 
     @Override
@@ -168,8 +160,17 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         super.onRightIconClicked();
     }
 
-    public static void startWithContainer(Activity from) {
+    public static void startWithContainer(Activity from, List<ImageMediaEntry> images) {
         if (from == null || from.isFinishing()) return;
+        CacheBean.putParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST, images);
+        TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
+    }
+
+    public static void resumeFromDb(Activity from, String postData, String uuid) {
+        if (from == null || from.isFinishing()) return;
+        List<MergedNode> nodes = JSON.parseArray(postData, MergedNode.class);
+        ResumeModel resumeModel = new ResumeModel(uuid, MergedNode.toNodes(nodes));
+        CacheBean.putParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME, resumeModel);
         TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
     }
 
@@ -192,28 +193,57 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void handleBackPress(Callback callback) {
-        DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "是的", "算了", new DialogHelper.TwoChoiceListener() {
-            @Override
-            public void onYes() {
-                try {
-                    saveDraft();
+        handleBackAction();
+    }
+
+    private void handleBackAction() {
+        String title = ((HeaderNode) adapter.nodes.get(0)).getContent();
+        if (TextUtils.isEmpty(title)) {
+            DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "保存草稿至少需要标题?", "继续编辑", "直接退出", new DialogHelper.TwoChoiceListener() {
+                @Override
+                public void onYes() {
+
+                }
+
+                @Override
+                public void onNo() {
                     closeWithAnimation(new Callback() {
                         @Override
                         public void onAnimationFinish() {
                             getActivity().finish();
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.say("保存失败");
                 }
-            }
+            }).show();
+        } else {
+            DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "是否要保存草稿?", "保存", "不保存", new DialogHelper.TwoChoiceListener() {
+                @Override
+                public void onYes() {
+                    try {
+                        saveDraft();
+                        closeWithAnimation(new Callback() {
+                            @Override
+                            public void onAnimationFinish() {
+                                getActivity().finish();
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        ToastUtil.say("保存失败");
+                    }
+                }
 
-            @Override
-            public void onNo() {
-
-            }
-        }).show();
+                @Override
+                public void onNo() {
+                    closeWithAnimation(new Callback() {
+                        @Override
+                        public void onAnimationFinish() {
+                            getActivity().finish();
+                        }
+                    });
+                }
+            }).show();
+        }
     }
 
     @Override
@@ -233,35 +263,55 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     public void saveDraft() throws IOException {
-        String postUuid = UUID.randomUUID().toString().replace("-", "");
-        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(adapter.nodes));
+        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(MergedNode.toMergedNodes(adapter.nodes)), DateUtil.currentTime(), getThumbPath());
     }
+
+    private String getThumbPath() {
+        for (Node node : adapter.nodes) {
+            if (node.getType() == NodeType.IMAGE) return ((ImageNode) node).getStoragePath();
+            if (node.getType() == NodeType.GROUP)
+                return ((GroupNode) node).getImageNodes().get(0).getStoragePath();
+        }
+        return "";
+    }
+
 
     /**
      * text code
-     *
+     * <p/>
      * *public static void main(String[] args) {
-     List<ImageNode> nodes = new ArrayList<>();
-     for (int i = 0; i < 10; i++) {
-     nodes.add(new ImageNode("shit" + i));
-     }
-     try {
-     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("data.txt"));
-     outputStream.writeObject(nodes);
-     outputStream.close();
-     } catch (IOException e) {
-     e.printStackTrace();
-     }
-     try {
-     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("data.txt"));
-     List<ImageNode> retrive = (List<ImageNode>) inputStream.readObject();
-     for (ImageNode node : retrive) {
-     System.out.println(node.getStoragePath());
-     }
-     } catch (IOException e) {
-     e.printStackTrace();
-     } catch (ClassNotFoundException e) {
-     e.printStackTrace();
-     }
-     }*/
+     * List<ImageNode> nodes = new ArrayList<>();
+     * for (int i = 0; i < 10; i++) {
+     * nodes.add(new ImageNode("shit" + i));
+     * }
+     * try {
+     * ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("data.txt"));
+     * outputStream.writeObject(nodes);
+     * outputStream.close();
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * }
+     * try {
+     * ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("data.txt"));
+     * List<ImageNode> retrive = (List<ImageNode>) inputStream.readObject();
+     * for (ImageNode node : retrive) {
+     * System.out.println(node.getStoragePath());
+     * }
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * } catch (ClassNotFoundException e) {
+     * e.printStackTrace();
+     * }
+     * }
+     */
+
+    public static class ResumeModel {
+        public String uuid;
+        public List<Node> nodes;
+
+        public ResumeModel(String uuid, List<Node> nodes) {
+            this.uuid = uuid;
+            this.nodes = nodes;
+        }
+    }
 }
