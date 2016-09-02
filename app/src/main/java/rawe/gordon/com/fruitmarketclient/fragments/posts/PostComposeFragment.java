@@ -76,6 +76,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         }
         if (CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME) != null) {
             ResumeModel resumedNodes = (ResumeModel) CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME);
+            CacheBean.clean(KEY_POST_MODEL_RESUME);
             postUuid = resumedNodes.uuid;
             recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), resumedNodes.nodes, this));
         }
