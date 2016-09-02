@@ -51,6 +51,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     private PostAdapter adapter;
     private List<ImageMediaEntry> data;
     String postUuid = UUID.randomUUID().toString().replace("-", "");
+    private String initialStringData = "";
 
     @Override
     protected int getContentLayout() {
@@ -78,6 +79,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
             ResumeModel resumedNodes = (ResumeModel) CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME);
             CacheBean.clean(KEY_POST_MODEL_RESUME);
             postUuid = resumedNodes.uuid;
+            initialStringData = JSON.toJSONString(resumedNodes.nodes);
             recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), resumedNodes.nodes, this));
         }
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
@@ -198,6 +200,15 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     private void handleBackAction() {
+        if (initialStringData.equals(JSON.toJSONString(adapter.nodes))) {
+            closeWithAnimation(new Callback() {
+                @Override
+                public void onAnimationFinish() {
+                    getActivity().finish();
+                }
+            });
+            return;
+        }
         String title = ((HeaderNode) adapter.nodes.get(0)).getContent();
         if (TextUtils.isEmpty(title)) {
             DialogHelper.createTwoChoiceDialog(getActivity(), "提示", "保存草稿至少需要标题?", "继续编辑", "直接退出", new DialogHelper.TwoChoiceListener() {
