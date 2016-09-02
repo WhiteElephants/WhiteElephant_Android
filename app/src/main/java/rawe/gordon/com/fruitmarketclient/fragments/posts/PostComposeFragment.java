@@ -31,6 +31,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.mock.Mock;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.ImageNode;
+import rawe.gordon.com.fruitmarketclient.views.posts.models.MergedNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
@@ -42,12 +43,14 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     public static final String KEY_RESULT_LISTENER = "KEY_RESULT_LISTENER";
     public static final String KEY_POST_MODEL = "KEY_POST_MODEL";
+    public static final String KEY_POST_MODEL_RESUME = "KEY_POST_MODEL_RESUME";
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ItemTouchHelper itemTouchHelper;
     private PostAdapter adapter;
     private List<ImageMediaEntry> data;
+    String postUuid = UUID.randomUUID().toString().replace("-", "");
 
     @Override
     protected int getContentLayout() {
@@ -61,15 +64,21 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     protected void prepareData() {
+        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         if (CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST) != null) {
             try {
                 data = (List<ImageMediaEntry>) CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST);
+                CacheBean.clean(MultiSelectFragment.KEY_INTENTION_TO_POST);
+                recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.composeData(data), this));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), data == null ? Mock.getInitialData() : Mock.composeData(data), this));
+        if (CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME) != null) {
+            ResumeModel resumedNodes = (ResumeModel) CacheBean.getParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME);
+            postUuid = resumedNodes.uuid;
+            recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), resumedNodes.nodes, this));
+        }
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -151,8 +160,17 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         super.onRightIconClicked();
     }
 
-    public static void startWithContainer(Activity from) {
+    public static void startWithContainer(Activity from, List<ImageMediaEntry> images) {
         if (from == null || from.isFinishing()) return;
+        CacheBean.putParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST, images);
+        TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
+    }
+
+    public static void resumeFromDb(Activity from, String postData, String uuid) {
+        if (from == null || from.isFinishing()) return;
+        List<MergedNode> nodes = JSON.parseArray(postData, MergedNode.class);
+        ResumeModel resumeModel = new ResumeModel(uuid, MergedNode.toNodes(nodes));
+        CacheBean.putParam(KEY_POST_MODEL_RESUME, KEY_POST_MODEL_RESUME, resumeModel);
         TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
     }
 
@@ -226,7 +244,6 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
                 }
             }).show();
         }
-
     }
 
     @Override
@@ -246,8 +263,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     }
 
     public void saveDraft() throws IOException {
-        String postUuid = UUID.randomUUID().toString().replace("-", "");
-        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(adapter.nodes), DateUtil.currentTime(), getThumbPath());
+        DBManager.getInstance().savePost(postUuid, ((HeaderNode) adapter.nodes.get(0)).getContent(), JSON.toJSONString(MergedNode.toMergedNodes(adapter.nodes)), DateUtil.currentTime(), getThumbPath());
     }
 
     private String getThumbPath() {
@@ -259,31 +275,43 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         return "";
     }
 
+
     /**
      * text code
-     *
+     * <p/>
      * *public static void main(String[] args) {
-     List<ImageNode> nodes = new ArrayList<>();
-     for (int i = 0; i < 10; i++) {
-     nodes.add(new ImageNode("shit" + i));
-     }
-     try {
-     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("data.txt"));
-     outputStream.writeObject(nodes);
-     outputStream.close();
-     } catch (IOException e) {
-     e.printStackTrace();
-     }
-     try {
-     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("data.txt"));
-     List<ImageNode> retrive = (List<ImageNode>) inputStream.readObject();
-     for (ImageNode node : retrive) {
-     System.out.println(node.getStoragePath());
-     }
-     } catch (IOException e) {
-     e.printStackTrace();
-     } catch (ClassNotFoundException e) {
-     e.printStackTrace();
-     }
-     }*/
+     * List<ImageNode> nodes = new ArrayList<>();
+     * for (int i = 0; i < 10; i++) {
+     * nodes.add(new ImageNode("shit" + i));
+     * }
+     * try {
+     * ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("data.txt"));
+     * outputStream.writeObject(nodes);
+     * outputStream.close();
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * }
+     * try {
+     * ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("data.txt"));
+     * List<ImageNode> retrive = (List<ImageNode>) inputStream.readObject();
+     * for (ImageNode node : retrive) {
+     * System.out.println(node.getStoragePath());
+     * }
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * } catch (ClassNotFoundException e) {
+     * e.printStackTrace();
+     * }
+     * }
+     */
+
+    public static class ResumeModel {
+        public String uuid;
+        public List<Node> nodes;
+
+        public ResumeModel(String uuid, List<Node> nodes) {
+            this.uuid = uuid;
+            this.nodes = nodes;
+        }
+    }
 }

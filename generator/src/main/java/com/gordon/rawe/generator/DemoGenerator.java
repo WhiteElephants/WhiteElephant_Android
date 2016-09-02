@@ -45,6 +45,8 @@ public class DemoGenerator {
         post.addStringProperty("createTime");
         post.addStringProperty("postName");
         post.addStringProperty("thumbPath");
+        post.addStringProperty("tag");
+        post.addStringProperty("category");
         try {
             new DaoGenerator().generateAll(schema, "../business/src/main/java-gen");
         } catch (Exception e) {

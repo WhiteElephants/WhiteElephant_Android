@@ -180,6 +180,10 @@ public class DBManager {
         } else {
             PostDao postDao = session.getPostDao();
             oldPost.setData(data);
+            oldPost.setUuid(uuid);
+            oldPost.setPostName(postName);
+            oldPost.setCreateTime(createTime);
+            oldPost.setThumbPath(thumbPath);
             postDao.update(oldPost);
         }
     }

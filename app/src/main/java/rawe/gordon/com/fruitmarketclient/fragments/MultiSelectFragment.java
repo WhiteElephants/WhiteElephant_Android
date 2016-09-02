@@ -122,8 +122,7 @@ public class MultiSelectFragment extends BaseFragment {
             return;
         }
         if (intention == INTENTION_TO_POST) {
-            PostComposeFragment.startWithContainer(getActivity());
-            CacheBean.putParam(KEY_INTENTION_TO_POST, KEY_INTENTION_TO_POST, filterSelected(imageMediaEntries));
+            PostComposeFragment.startWithContainer(getActivity(),filterSelected(imageMediaEntries));
         } else {
             if (listener != null) listener.onResult(filterSelected(imageMediaEntries));
         }
