@@ -3,12 +3,15 @@ package rawe.gordon.com.business.network;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
+import rawe.gordon.com.business.network.requests.AddPostRequest;
 import rawe.gordon.com.business.network.responses.CategoriesResponse;
 import rawe.gordon.com.business.network.responses.CommodityResponse;
 import rawe.gordon.com.business.network.responses.OrderResponse;
 import rawe.gordon.com.business.network.responses.PopularResponse;
-import rawe.gordon.com.business.network.responses.UserResponse;
 import rawe.gordon.com.business.network.responses.SlideResponse;
+import rawe.gordon.com.business.network.responses.UserResponse;
+import rawe.gordon.com.business.utils.RequestUtil;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,8 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by gordon on 16/5/4.
  */
 public class RestClient {
-//        public static final String BASE_URL = "http://192.168.0.102:1128/";
-    public static final String BASE_URL = "http://10.32.64.121:1128/";
+    public static final String BASE_URL = "http://10.32.64.121:9999/";
     private static RestClient ourInstance = new RestClient();
     private FruitRequestService sharedService;
 
@@ -82,5 +84,14 @@ public class RestClient {
         params.put("price", price);
         params.put("name", name);
         sharedService.createOrder(params).enqueue(callback);
+    }
+
+
+    /**
+     * 以上的工程不相关的请求，从别的app拷贝过来的，直接忽视，不过有些可以用的可以拷贝下来。
+     */
+
+    public void createPost(AddPostRequest postRequest, Callback<ResponseBody> callback) {
+        sharedService.createPost(postRequest).enqueue(callback);
     }
 }
