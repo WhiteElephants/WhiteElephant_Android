@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.utils.DateUtil;
+import rawe.gordon.com.fruitmarketclient.compose.mock.Mock;
 import rawe.gordon.com.fruitmarketclient.compose.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.compose.models.MergedNode;
 import rawe.gordon.com.fruitmarketclient.compose.models.NodeFilter;
@@ -48,6 +49,10 @@ public class PostComposePresenter implements PostComposeScenario.Presenter {
         if (TextUtils.isEmpty(title)) {
             view.renderHintEmpty();
         } else {
+            if (model.initialStringData.equals(JSON.toJSONString(model.nodes))) {
+                view.finishPage();
+                return;
+            }
             view.renderHintSave();
         }
     }

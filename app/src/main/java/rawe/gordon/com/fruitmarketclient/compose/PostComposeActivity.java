@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +46,8 @@ public class PostComposeActivity extends AppCompatActivity implements PostCompos
         } else if (passedData instanceof PostComposeFragment.ResumeModel) {
             PostComposeFragment.ResumeModel resumeModel = (PostComposeFragment.ResumeModel) passedData;
             new PostComposePresenter(this, model = new PostCompostModel().passParams(resumeModel.nodes));
+            model.postUuid = resumeModel.uuid;
+            model.initialStringData = JSON.toJSONString(resumeModel.nodes);
         } else {
             finishPage();
         }
