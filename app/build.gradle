@@ -13,5 +13,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(":business")
     compile project(':pick')
-    compile project(":pull")
+    compile project(':qiniu')
 }

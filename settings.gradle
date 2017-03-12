@@ -1,1 +1,1 @@
-include ':app', ':generator', ':business', ':pull', ':pick'
+include ':app', ':generator', ':business', ':qiniu', ':pick'
