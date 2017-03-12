@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="1dp">
 
-    <rawe.gordon.com.pick.pick.view.SquareImageView
+    <rawe.gordon.com.pick.view.SquareImageView
         android:id="@+id/img_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

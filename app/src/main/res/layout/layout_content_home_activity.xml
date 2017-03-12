@@ -92,7 +92,7 @@
                         android:background="@color/colorPrimary" />
                 </LinearLayout>
 
-                <rawe.gordon.com.fruitmarketclient.views.homepage.populars.PopularGrids
+                <rawe.gordon.com.fruitmarketclient.old.views.homepage.populars.PopularGrids
                     android:id="@+id/populars"
                     android:layout_marginLeft="@dimen/material_design_smaller"
                     android:layout_marginRight="@dimen/material_design_smaller"

@@ -14,7 +14,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout
+        <rawe.gordon.com.fruitmarketclient.old.activities.launcher.LauncherTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="50dp" />

@@ -44,7 +44,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <rawe.gordon.com.fruitmarketclient.views.posts.subviews.RatioImageView
+            <rawe.gordon.com.fruitmarketclient.compose.subviews.RatioImageView
                 android:id="@+id/image_groups"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

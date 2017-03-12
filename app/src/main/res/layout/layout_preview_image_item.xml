@@ -5,7 +5,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp">
 
-    <rawe.gordon.com.fruitmarketclient.views.preview.widgets.AspectImageView
+    <rawe.gordon.com.fruitmarketclient.old.views.preview.widgets.AspectImageView
         android:id="@+id/aspect_image_view"
         android:layout_width="match_parent"
         android:layout_height="100dp" />

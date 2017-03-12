@@ -117,15 +117,16 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/filter_area"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="52dp"
         android:background="#aa111111"
         android:clickable="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:visibility="gone">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -142,9 +143,9 @@
         </ScrollView>
     </RelativeLayout>
 
-    <rawe.gordon.com.pick.pick.view.LoadingView
+    <rawe.gordon.com.pick.view.LoadingView
         android:id="@+id/loading_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </RelativeLayout>

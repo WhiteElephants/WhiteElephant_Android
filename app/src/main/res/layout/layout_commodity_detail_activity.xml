@@ -154,7 +154,7 @@
                     android:text="@string/comments" />
             </LinearLayout>
 
-            <rawe.gordon.com.fruitmarketclient.views.comments.CommentGrids
+            <rawe.gordon.com.fruitmarketclient.old.views.comments.CommentGrids
                 android:id="@+id/comment_grids"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
