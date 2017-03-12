@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import rawe.gordon.com.pick.R;
@@ -15,15 +14,8 @@ import rawe.gordon.com.pick.R;
  * Created by WindPush on 15/5/31.
  */
 public class LoadingView extends FrameLayout {
-    public static final int NORMAL = 0;
-    public static final int IOS = 1;
 
     private TextView mTxProgressValue;
-    private ProgressBar mProgress;
-
-    private boolean mCanTouch = false;
-    private int mProgressType = 0;
-    private boolean isPreview = false;
 
     public LoadingView(Context context) {
         super(context);
@@ -48,7 +40,10 @@ public class LoadingView extends FrameLayout {
 
     private void initView() {
         mTxProgressValue = (TextView) findViewById(R.id.tx_progressvaule);
-        mProgress = (ProgressBar) findViewById(R.id.progress);
+    }
+
+    public void setProgress(int progress) {
+        mTxProgressValue.setText(String.valueOf(progress));
     }
 
     public void disMiss() {
@@ -58,19 +53,7 @@ public class LoadingView extends FrameLayout {
 
     public void show() {
         setVisibility(VISIBLE);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (mCanTouch) {
-            return super.onInterceptTouchEvent(ev);
-        } else {
-            return true;
-        }
-    }
-
-    public void init() {
-        mProgress.setVisibility(VISIBLE);
+        setProgress(85);
     }
 
     @Override
