@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.iknow.imageselect.fragments.models.ImageMediaEntry;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +26,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.ImageViewHolder
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.TextViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.viewholders.VideoViewHolder;
 import rawe.gordon.com.fruitmarketclient.views.posts.watch.EditTextWatcher;
+import rawe.gordon.com.pick.pick.model.MediaInfo;
 
 /**
  * Created by gordon on 16/8/23.
@@ -181,10 +180,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     @Override
-    public void addMultipleImageNodes(List<ImageMediaEntry> entries, int position) {
+    public void addMultipleImageNodes(List<MediaInfo> entries, int position) {
         List<ImageNode> newValues = new ArrayList<>();
-        for (ImageMediaEntry entry : entries) {
-            newValues.add(new ImageNode(entry.getProtocolPath()));
+        for (MediaInfo entry : entries) {
+            newValues.add(new ImageNode(entry.getProtocaledPath()));
         }
 //        nodes.addAll(position + 1, newValues);
 //        notifyItemRangeChanged(position + 1, newValues.size());

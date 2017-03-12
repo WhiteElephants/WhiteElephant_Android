@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Pick</string>
+    <string name="chat_im_send_camel">Send</string>
+    <string name="chat_im_original">Original</string>
+    <string name="chat_im_choose">Choose</string>
+    <string name="chat_im_photo_browse_send">Send</string>
+    <string name="chat_im_chat_one_time_max_prefix">You can choose at most </string>
+    <string name="chat_im_chat_one_time_max_suffix"> pictures.</string>
+    <string name="chat_im_all_videos">All Videos</string>
+    <string name="chat_im_all_images">All Images</string>
+    <string name="chat_im_all_mix">Images Videos</string>
+</resources>

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
-import com.iknow.imageselect.fragments.models.ImageMediaEntry;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -35,6 +34,7 @@ import rawe.gordon.com.fruitmarketclient.views.posts.models.MergedNode;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.Node;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.NodeType;
 import rawe.gordon.com.fruitmarketclient.views.posts.models.TextNode;
+import rawe.gordon.com.pick.pick.model.MediaInfo;
 
 /**
  * Created by gordon on 8/25/16.
@@ -49,7 +49,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
     private LinearLayoutManager linearLayoutManager;
     private ItemTouchHelper itemTouchHelper;
     private PostAdapter adapter;
-    private List<ImageMediaEntry> data;
+    private List<MediaInfo> data;
     String postUuid = UUID.randomUUID().toString().replace("-", "");
     private String initialStringData = "";
 
@@ -68,7 +68,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         recyclerView.setLayoutManager(linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         if (CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST) != null) {
             try {
-                data = (List<ImageMediaEntry>) CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST);
+                data = (List<MediaInfo>) CacheBean.getParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST);
                 CacheBean.clean(MultiSelectFragment.KEY_INTENTION_TO_POST);
                 recyclerView.setAdapter(adapter = new PostAdapter(getActivity(), Mock.composeData(data), this));
             } catch (Exception e) {
@@ -163,7 +163,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
         super.onRightIconClicked();
     }
 
-    public static void startWithContainer(Activity from, List<ImageMediaEntry> images) {
+    public static void startWithContainer(Activity from, List<MediaInfo> images) {
         if (from == null || from.isFinishing()) return;
         CacheBean.putParam(MultiSelectFragment.KEY_INTENTION_TO_POST, MultiSelectFragment.KEY_INTENTION_TO_POST, images);
         TransparentBoxActivity.startFragmentInside(from, PostComposeFragment.class);
@@ -265,13 +265,7 @@ public class PostComposeFragment extends BaseFragment implements PostAdapter.Ope
 
     @Override
     public void choosePictures(final int triggerPosition) {
-        CacheBean.putParam(KEY_RESULT_LISTENER, KEY_RESULT_LISTENER, new MultiSelectFragment.ResultListener() {
-            @Override
-            public void onResult(List<ImageMediaEntry> selected) {
-                adapter.addMultipleImageNodes(selected, triggerPosition);
-            }
-        });
-        MultiSelectFragment.startWithBoxActivity(getActivity(), MultiSelectFragment.INTENTION_TO_CHOOSE, true);
+
     }
 
     public void saveDraft() throws IOException {

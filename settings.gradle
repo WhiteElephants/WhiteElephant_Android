@@ -1,1 +1,1 @@
-include ':app', ':generator', ':business', ':imageselect', ':pull'
+include ':app', ':generator', ':business', ':pull', ':pick'

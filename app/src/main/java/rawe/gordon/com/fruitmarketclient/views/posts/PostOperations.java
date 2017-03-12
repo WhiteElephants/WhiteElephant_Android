@@ -1,8 +1,8 @@
 package rawe.gordon.com.fruitmarketclient.views.posts;
 
-import com.iknow.imageselect.fragments.models.ImageMediaEntry;
-
 import java.util.List;
+
+import rawe.gordon.com.pick.pick.model.MediaInfo;
 
 /**
  * Created by gordon on 8/24/16.
@@ -14,5 +14,5 @@ public interface PostOperations {
 
     void addOneVideoNode(int position);
 
-    void addMultipleImageNodes(List<ImageMediaEntry> entries,int position);
+    void addMultipleImageNodes(List<MediaInfo> entries, int position);
 }

@@ -8,14 +8,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Arrays;
+import java.util.List;
 
 import rawe.gordon.com.business.application.SharedParameter;
 import rawe.gordon.com.business.permission.PermissionManager;
+import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
 import rawe.gordon.com.fruitmarketclient.activities.adapter.LauncherFragmentAdapter;
 import rawe.gordon.com.fruitmarketclient.activities.launcher.LauncherTabLayout;
-import rawe.gordon.com.fruitmarketclient.fragments.MultiSelectFragment;
-import rawe.gordon.com.fruitmarketclient.generals.dialogs.warning.DialogHelper;
+import rawe.gordon.com.pick.pick.manage.PhotoChooseListener;
+import rawe.gordon.com.pick.pick.manage.PhotoPictureManager;
+import rawe.gordon.com.pick.pick.model.MediaInfo;
 
 /**
  * Created by gordon on 16/7/30.
@@ -59,7 +62,12 @@ public class LauncherActivity extends AppCompatActivity {
         }, 0).setListener(new LauncherTabLayout.SwitchListener() {
             @Override
             public void onCenter() {
-                MultiSelectFragment.startWithBoxActivity(LauncherActivity.this, MultiSelectFragment.INTENTION_TO_POST, false);
+                PhotoPictureManager.getInstance().startToChooseMedias(LauncherActivity.this, new PhotoChooseListener() {
+                    @Override
+                    public void getResult(List<MediaInfo> result) {
+                        ToastUtil.say("get "+result.size());
+                    }
+                },9);
             }
 
             @Override

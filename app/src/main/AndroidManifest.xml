@@ -62,6 +62,13 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/noAnimationTheme" />
+
+        <activity android:name="rawe.gordon.com.pick.pick.photobrowse.PhotoBrowseActivity"
+            android:theme="@style/noAnimationTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name="rawe.gordon.com.pick.pick.photochoose.PhotoChooseActivity"
+            android:theme="@style/noAnimationTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="rawe.gordon.com.business.activities.TransparentBoxActivity"
             android:label="@string/app_name"
@@ -72,11 +79,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentFullScreenTheme" />
-        <activity
-            android:name="com.iknow.imageselect.activities.BrowseDetailActivity"
-            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/noAnimationTheme" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
