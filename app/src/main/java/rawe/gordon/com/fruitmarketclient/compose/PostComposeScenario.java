@@ -14,16 +14,26 @@ public class PostComposeScenario {
 
     public static final String POST_COMPOSE_DATA = "POST_COMPOSE_DATA";
 
-    public interface View extends BaseView<Presenter>{
+    public interface View extends BaseView<Presenter> {
         void findViews();
 
         void bindActions();
 
         void displayData(List<MediaInfo> mediaInfos);
+
+        void finishPage();
+
+        void renderHintEmpty();
+
+        void renderHintSave();
     }
 
-    public interface Presenter extends BasePresenter{
+    public interface Presenter extends BasePresenter {
+        void handleSure();
 
+        void handleCancel();
+
+        void saveDraft();
     }
 
 }

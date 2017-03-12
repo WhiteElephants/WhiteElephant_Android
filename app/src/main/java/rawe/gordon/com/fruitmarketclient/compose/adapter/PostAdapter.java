@@ -12,6 +12,7 @@ import java.util.List;
 import rawe.gordon.com.business.activities.SitoImageViewActivity;
 import rawe.gordon.com.business.utils.ToastUtil;
 import rawe.gordon.com.fruitmarketclient.R;
+import rawe.gordon.com.fruitmarketclient.compose.PostCompostModel;
 import rawe.gordon.com.fruitmarketclient.compose.models.GroupNode;
 import rawe.gordon.com.fruitmarketclient.compose.models.HeaderNode;
 import rawe.gordon.com.fruitmarketclient.compose.models.ImageNode;
@@ -39,12 +40,18 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public static final int INDEX_NOT_FOUND = -1;
     private Operation outSideOperation;
 
-    public PostAdapter(Context context, List<Node> src, Operation outSideOperation) {
-        this.nodes = src;
+    public PostAdapter(Context context, PostCompostModel model, Operation outSideOperation) {
+        this.nodes = model.nodes;
         this.outSideOperation = outSideOperation;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+    }
 
+    public PostAdapter(Context context, List<Node> model, Operation outSideOperation) {
+        this.nodes = model;
+        this.outSideOperation = outSideOperation;
+        this.context = context;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
