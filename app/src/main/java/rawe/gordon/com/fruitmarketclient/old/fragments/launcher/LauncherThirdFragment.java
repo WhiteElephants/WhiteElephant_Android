@@ -22,7 +22,7 @@ import java.util.List;
 import rawe.gordon.com.business.db.DBManager;
 import rawe.gordon.com.business.fragments.LauncherBaseFragment;
 import rawe.gordon.com.fruitmarketclient.R;
-import rawe.gordon.com.fruitmarketclient.old.fragments.posts.PostComposeFragment;
+import rawe.gordon.com.fruitmarketclient.router.ActivityHelper;
 
 /**
  * Created by gordon on 16/7/31.
@@ -124,7 +124,7 @@ public class LauncherThirdFragment extends LauncherBaseFragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PostComposeFragment.resumeFromDb((Activity) context, post.getData(), post.getUuid());
+                    ActivityHelper.getDBPost((Activity) context, post.getData(), post.getUuid());
                 }
             });
             Glide.with(context).load(data.get(position).getThumbPath()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.thumbView);
