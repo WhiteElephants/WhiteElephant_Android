@@ -23,7 +23,6 @@ import rawe.gordon.com.pick.utils.StringUtil;
  * Created by gordon on 8/26/16.
  */
 public class PhotoChooseModel {
-
     public String ALL_TAG;
     public String VIDEO_TAG;
 
@@ -36,6 +35,10 @@ public class PhotoChooseModel {
 
     public List<MediaInfo> getWorkingGroup() {
         return categorizedData.get(workingTag);
+    }
+
+    public List<MediaInfo> getSpecificGroup(String specificTag) {
+        return categorizedData.get(specificTag);
     }
 
     public List<MediaInfo> getDiff() {
@@ -51,8 +54,8 @@ public class PhotoChooseModel {
 
     private void buildCategorizedData() {
         categorizedData = new LinkedHashMap<>();
-        categorizedData.put(ALL_TAG, new ArrayList<>(originalData));
-        if (criterion.allowMix)
+        if(originalData.size()>0)categorizedData.put(ALL_TAG, new ArrayList<>(originalData));
+        if (criterion.allowMix && PhotoFilter.filterVideos(originalData).size() > 0)
             categorizedData.put(VIDEO_TAG, new ArrayList<>(PhotoFilter.filterVideos(originalData)));
         for (MediaInfo mediaInfo : originalData) {
             List<MediaInfo> tmpGroup = categorizedData.get(mediaInfo.folderName);
@@ -115,6 +118,8 @@ public class PhotoChooseModel {
             + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 
     public static List<MediaInfo> getAllImages(Context context) {
+        if(PhotoPictureManager.getInstance().getImages()!=null)
+            return PhotoPictureManager.getInstance().getImages();
         MediaInfo info;
         List<MediaInfo> retValues = new ArrayList<>();
         try {
@@ -142,11 +147,14 @@ public class PhotoChooseModel {
                 return another.createTime.compareTo(one.createTime);
             }
         });
+        PhotoPictureManager.getInstance().storeImages(retValues);
         return retValues;
     }
 
 
     public static List<MediaInfo> getAllVideoFiles(Context mContext) {
+        if(PhotoPictureManager.getInstance().getVideos()!=null)
+            return PhotoPictureManager.getInstance().getVideos();
         MediaInfo videoInfo;
         List<MediaInfo> videos = new ArrayList<>();
         ContentResolver contentResolver = mContext.getContentResolver();
@@ -177,6 +185,7 @@ public class PhotoChooseModel {
                 return another.createTime.compareTo(one.createTime);
             }
         });
+        PhotoPictureManager.getInstance().storeVideos(videos);
         return videos;
     }
 
@@ -184,6 +193,8 @@ public class PhotoChooseModel {
      * 这种方法使用细节查询的办法，查询两次
      */
     public static List<MediaInfo> getAllMediaFilesWithDetail(Context mContext) {
+        if(PhotoPictureManager.getInstance().getMedias()!=null)
+            return PhotoPictureManager.getInstance().getMedias();
         List<MediaInfo> images = getAllImages(mContext);
         List<MediaInfo> videos = getAllVideoFiles(mContext);
         images.addAll(videos);
@@ -193,6 +204,7 @@ public class PhotoChooseModel {
                 return another.createTime.compareTo(one.createTime);
             }
         });
+        PhotoPictureManager.getInstance().storeMedias(images);
         return images;
     }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="chat_im_photo_choose_send_green">#FF45C018</color>
-    <color name="chat_im_photo_choose_send_green_dark">#8845C018</color>
+    <color name="chat_im_photo_choose_send_green">#1BA9FF</color>
+    <color name="chat_im_photo_choose_send_green_dark">#0768A3</color>
+    <color name="chat_im_photo_select_normal">#FFFFFF</color>
+    <color name="chat_im_photo_select_dark">#AAAAAA</color>
 </resources>

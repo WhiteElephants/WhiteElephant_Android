@@ -90,7 +90,7 @@ public class PhotoBrowseActivity extends AppCompatActivity implements PhotoBrows
     public void addIcons() {
         backImage.setImageDrawable(DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.ic_arrow_back));
         originalImage.setImageDrawable(DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.ic_radio_button_unchecked));
-        chooseImage.setImageDrawable(DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.ic_choosable));
+        chooseImage.setImageDrawable(DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.chat_im_photo_unselected));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class PhotoBrowseActivity extends AppCompatActivity implements PhotoBrows
     @Override
     public void renderChooseIcon(boolean chosen) {
         chooseImage.setImageDrawable(chosen ? DrawableUtil.decodeFromVector(getApplicationContext(),
-                R.drawable.ic_chosen) : DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.ic_choosable));
+                R.drawable.chat_im_photo_selected) : DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.chat_im_photo_unselected));
     }
 
     @Override
@@ -137,7 +137,7 @@ public class PhotoBrowseActivity extends AppCompatActivity implements PhotoBrows
             sendArea.setCardBackgroundColor(sendArea.getResources().getColor(R.color.chat_im_photo_choose_send_green_dark));
             return;
         }
-        tvSend.setText(tvSend.getResources().getString(R.string.chat_im_photo_browse_send) + "(" + cur + "/" + total + ")");
+        tvSend.setText(tvSend.getResources().getString(R.string.chat_im_photo_browse_send) + " (" + cur + "/" + total + ")");
         sendArea.setCardBackgroundColor(sendArea.getResources().getColor(R.color.chat_im_photo_choose_send_green));
     }
 

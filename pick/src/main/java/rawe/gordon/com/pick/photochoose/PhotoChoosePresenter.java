@@ -25,6 +25,7 @@ import rx.schedulers.Schedulers;
 
 public class PhotoChoosePresenter implements PhotoChooseScenario.Presenter {
 
+
     private PhotoChooseScenario.View view;
 
     private PhotoChooseModel model;

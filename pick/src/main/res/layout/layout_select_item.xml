@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/select_indicator"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:padding="10dp" />
@@ -25,7 +25,7 @@
         android:layout_alignBottom="@+id/img_view"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:paddingBottom="3dp"
         android:layout_marginLeft="10dp"
+        android:paddingBottom="3dp"
         android:textColor="@android:color/white" />
 </RelativeLayout>

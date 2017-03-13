@@ -3,7 +3,7 @@ package rawe.gordon.com.pick.manage;
 import android.app.Activity;
 import android.text.TextUtils;
 
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,5 +88,36 @@ public class PhotoPictureManager {
     public void startToChooseMedias(Activity from, PhotoChooseListener listener, int max) {
         listeners.add(listener);
         ActivityHelper.choosePicturesOrVideos(from, PhotoChooseScenario.Criterion.buildPicturesCriterion(max, listener.uuidIdentifier));
+    }
+
+    private WeakReference<List<MediaInfo>> videos;
+    private WeakReference<List<MediaInfo>> images;
+    private WeakReference<List<MediaInfo>> medias;
+
+    public void storeVideos(List<MediaInfo> videos) {
+        this.videos = new WeakReference<>(videos);
+    }
+
+    public void storeImages(List<MediaInfo> images) {
+        this.images = new WeakReference<>(images);
+    }
+
+    public void storeMedias(List<MediaInfo> medias) {
+        this.medias = new WeakReference<>(medias);
+    }
+
+    public List<MediaInfo> getVideos() {
+        if(videos == null) return null;
+        return videos.get();
+    }
+
+    public List<MediaInfo> getImages() {
+        if(images == null) return null;
+        return images.get();
+    }
+
+    public List<MediaInfo> getMedias() {
+        if(medias == null) return null;
+        return medias.get();
     }
 }

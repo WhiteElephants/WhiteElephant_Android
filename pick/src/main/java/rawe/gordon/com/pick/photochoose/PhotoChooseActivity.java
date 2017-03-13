@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,15 +44,14 @@ import rx.functions.Action1;
  */
 
 public class PhotoChooseActivity extends AppCompatActivity implements PhotoChooseScenario.View, View.OnClickListener {
-
     RecyclerView rvPhotos;
     TextView tvSend;
     CardView sendArea;
     TextView tvTitle;
     View back;
     ImageView backImage;
-    TextView photoFilter, photoPreview;
-    View filterArea;
+    TextView photoPreview;
+    View filterArea, photoFilter;
     ViewGroup filterList;
     LoadingView loadingView;
 
@@ -145,10 +145,12 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
     public void changeSendBtnStatus(int cur, int total) {
         if (cur == 0) {
             tvSend.setText(tvSend.getResources().getString(R.string.chat_im_send_camel));
+            photoPreview.setVisibility(View.GONE);
             sendArea.setCardBackgroundColor(sendArea.getResources().getColor(R.color.chat_im_photo_choose_send_green_dark));
             return;
         }
-        tvSend.setText(tvSend.getResources().getString(R.string.chat_im_send_camel) + "(" + cur + "/" + total + ")");
+        photoPreview.setVisibility(View.VISIBLE);
+        tvSend.setText(tvSend.getResources().getString(R.string.chat_im_send_camel) + " (" + cur + "/" + total + ")");
         sendArea.setCardBackgroundColor(sendArea.getResources().getColor(R.color.chat_im_photo_choose_send_green));
     }
 
@@ -160,7 +162,6 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
     @Override
     public void refreshFirst(String title) {
         tvTitle.setText(title);
-        photoFilter.setText(title);
     }
 
     @Override
@@ -170,7 +171,6 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
         } else {
             filterArea.setVisibility(View.GONE);
         }
-        photoFilter.setText(StringUtil.firstCamel(filter));
         tvTitle.setText(StringUtil.firstCamel(filter));
     }
 
@@ -193,17 +193,36 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
 
     @Override
     public void renderFilterList(List<String> filters) {
+        filterList.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(PhotoChooseActivity.this);
         for (final String filter : filters) {
             View view;
+            List<MediaInfo> group = model.getSpecificGroup(filter);
+            TextView filterTitle, filterCount;
+            ImageView filterIcon, filterIndicator;
             filterList.addView(view = inflater.inflate(R.layout.layout_photo_choose_filter_item, filterList, false));
-            ((TextView) view.findViewById(R.id.filter_title)).setText(StringUtil.firstCamel(filter));
+            filterTitle = ((TextView) view.findViewById(R.id.filter_title));
+            filterCount = ((TextView) view.findViewById(R.id.filter_count));
+            filterIcon = (ImageView) view.findViewById(R.id.filter_icon);
+            filterIndicator = (ImageView) view.findViewById(R.id.filter_indicator);
+
+            filterTitle.setText(StringUtil.firstCamel(filter));
+            filterCount.setText(String.valueOf(group.size()));
+            Glide.with(this).load(group.get(0).path)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(filterIcon);
+            filterIndicator.setVisibility(TextUtils.equals(model.workingTag, filter) ? View.VISIBLE : View.GONE);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (ViewUtil.isFastDoubleClick()) return;
                     presenter.switchFilter(filter);
                     presenter.hideFilter();
+                    filterList.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            presenter.fillFilterList();
+                        }
+                    });
                 }
             });
         }
@@ -249,7 +268,7 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
         backImage = (ImageView) findViewById(R.id.back_image);
         filterList = (ViewGroup) findViewById(R.id.filter_list);
         filterArea = findViewById(R.id.filter_area);
-        photoFilter = (TextView) findViewById(R.id.photo_filter);
+        photoFilter = findViewById(R.id.photo_filter);
         photoPreview = (TextView) findViewById(R.id.photo_preview);
         backImage.setImageDrawable(DrawableUtil.decodeFromVector(getApplicationContext(), R.drawable.ic_arrow_back));
     }
@@ -382,8 +401,8 @@ public class PhotoChooseActivity extends AppCompatActivity implements PhotoChoos
             }
 
             public void setChosen(boolean selected) {
-                if (selected) indicator.setImageResource(R.drawable.ic_chosen);
-                else indicator.setImageResource(R.drawable.ic_choosable);
+                if (selected) indicator.setImageResource(R.drawable.chat_im_photo_selected);
+                else indicator.setImageResource(R.drawable.chat_im_photo_unselected);
                 if (PhotoChooseScenario.Criterion.showMask) imageView.toggleMask(selected);
             }
         }
