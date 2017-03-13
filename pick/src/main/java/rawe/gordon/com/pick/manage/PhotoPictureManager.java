@@ -108,16 +108,31 @@ public class PhotoPictureManager {
 
     public List<MediaInfo> getVideos() {
         if(videos == null) return null;
-        return videos.get();
+        List<MediaInfo> values = videos.get();
+        for (MediaInfo value : values) {
+            value.setSelected(false);
+        }
+
+        return values;
     }
 
     public List<MediaInfo> getImages() {
         if(images == null) return null;
-        return images.get();
+        List<MediaInfo> values = images.get();
+        for (MediaInfo value : values) {
+            value.setSelected(false);
+        }
+
+        return values;
     }
 
     public List<MediaInfo> getMedias() {
         if(medias == null) return null;
-        return medias.get();
+        List<MediaInfo> values = medias.get();
+        for (MediaInfo value : values) {
+            value.setSelected(false);
+        }
+
+        return values;
     }
 }

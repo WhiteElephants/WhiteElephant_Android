@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            android:layout_height="52dp"
             android:background="@color/mainDark">
 
             <TextView
@@ -29,6 +29,7 @@
                 android:id="@+id/right_area"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true">
 
                 <android.support.v7.widget.AppCompatImageView
@@ -42,6 +43,7 @@
                 android:id="@+id/right_text_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:padding="10dp">
 
@@ -71,6 +73,7 @@
                 android:id="@+id/left_text_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:padding="10dp">
 
